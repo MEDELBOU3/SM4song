@@ -24,19 +24,19 @@ Below is a preview of some images used in this project.
 
 ## Gallery
 
-| ![Image 1](src/image1.jpg) | ![Image 2](src/image2.jpg) | ![Image 3](src/image3.jpg) |
+| ![Image 1](src/image1.jpeg) | ![Image 2](src/image2.jpeg) | ![Image 3](src/image3.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 1 Description         | Image 2 Description         | Image 3 Description         |
 
-| ![Image 4](src/image4.jpg) | ![Image 5](src/image5.jpg) | ![Image 6](src/image6.jpg) |
+| ![Image 4](src/image4.jpeg) | ![Image 5](src/image5.jpeg) | ![Image 6](src/image6.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 4 Description         | Image 5 Description         | Image 6 Description         |
 
-| ![Image 7](src/image7.jpg) | ![Image 8](src/image8.jpg) | ![Image 9](src/image9.jpg) |
+| ![Image 7](src/image7.jpeg) | ![Image 8](src/image8.jpeg) | ![Image 9](src/image9.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 4 Description         | Image 5 Description         | Image 6 Description         |
 
-| ![Image 10](src/image12.jpg) | ![Image 11](src/image12.jpg) | ![Image 12](src/image12.jpg) |
+| ![Image 10](src/image12.jpeg) | ![Image 11](src/image12.jpeg) | ![Image 12](src/image12.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 4 Description         | Image 5 Description         | Image 6 Description         |
 ---

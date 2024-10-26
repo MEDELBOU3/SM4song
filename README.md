@@ -52,4 +52,4 @@ Add or remove images by updating the `src` path and descriptions as needed.
 1. Clone the repository:
    ```bash
    git clone https://github.com/MEDELBOU3/SM4song.git
-   cd music-app
+   cd SM4song

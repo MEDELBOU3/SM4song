@@ -40,7 +40,7 @@ Below is a preview of some images used in this project.
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 10 Description         | Image 11 Description         | Image 12 Description         |
 
-| ![Image 13](src/image12.jpeg) | ![Image 14](src/image12.jpeg) |
+| ![Image 13](src/image13.jpeg) | ![Image 14](src/image14.jpeg) |
 |:---------------------------:|:---------------------------:|
 | Image 13 Description         | Image 14 Description         |
 ---

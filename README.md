@@ -34,11 +34,15 @@ Below is a preview of some images used in this project.
 
 | ![Image 7](src/image7.jpeg) | ![Image 8](src/image8.jpeg) | ![Image 9](src/image9.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 4 Description         | Image 5 Description         | Image 6 Description         |
+| Image 7 Description         | Image 8 Description         | Image 9 Description         |
 
 | ![Image 10](src/image12.jpeg) | ![Image 11](src/image12.jpeg) | ![Image 12](src/image12.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 4 Description         | Image 5 Description         | Image 6 Description         |
+| Image 10 Description         | Image 11 Description         | Image 12 Description         |
+
+| ![Image 13](src/image12.jpeg) | ![Image 14](src/image12.jpeg) |
+|:---------------------------:|:---------------------------:|
+| Image 13 Description         | Image 14 Description         |
 ---
 
 Add or remove images by updating the `src` path and descriptions as needed.

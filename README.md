@@ -30,19 +30,19 @@ Below is a preview of some images used in this project.
 
 | ![Image 4](src/image4.jpeg) | ![Image 5](src/image5.jpeg) | ![Image 6](src/image6.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 4 Description         | Image 5 Description         | Image 6 Description         |
+| Your playlist songs saved dark-mode | Image 5 Description         | Your playlist songs saved light-mode         |
 
 | ![Image 7](src/image7.jpeg) | ![Image 8](src/image8.jpeg) | ![Image 9](src/image9.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 7 Description         | Image 8 Description         | Image 9 Description         |
+| Top 8 artist by likes        | latest additions Tracks       | Tracks        |
 
 | ![Image 10](src/image10.jpeg) | ![Image 11](src/image11.jpeg) | ![Image 12](src/image12.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 10 Description         | Image 11 Description         | Image 12 Description         |
+| Home section site introduction light-mode | Home section site introduction dark-mode      | The New Releases         |
 
 | ![Image 13](src/image13.jpeg) | ![Image 14](src/image14.jpeg) |
 |:---------------------------:|:---------------------------:|
-| Image 13 Description         | Image 14 Description         |
+| Search results Dark-mode       | Songs of artists searched        |
 ---
 
 Add or remove images by updating the `src` path and descriptions as needed.

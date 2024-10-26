@@ -26,7 +26,7 @@ Below is a preview of some images used in this project.
 
 | ![Image 1](src/image1.jpeg) | ![Image 2](src/image2.jpeg) | ![Image 3](src/image3.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
-| Image 1 Description         | Image 2 Description         | Image 3 Description         |
+| Search results of artists or channels light-mode|  artists and channels info, tracks & videos dark-mode        | lyrics   |
 
 | ![Image 4](src/image4.jpeg) | ![Image 5](src/image5.jpeg) | ![Image 6](src/image6.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|

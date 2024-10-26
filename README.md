@@ -36,7 +36,7 @@ Below is a preview of some images used in this project.
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 7 Description         | Image 8 Description         | Image 9 Description         |
 
-| ![Image 10](src/image12.jpeg) | ![Image 11](src/image12.jpeg) | ![Image 12](src/image12.jpeg) |
+| ![Image 10](src/image10.jpeg) | ![Image 11](src/image11.jpeg) | ![Image 12](src/image12.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Image 10 Description         | Image 11 Description         | Image 12 Description         |
 

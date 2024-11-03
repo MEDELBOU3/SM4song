@@ -1431,7 +1431,7 @@
                                <div class="video-grid">
                                    <div class="video-item">
                                       <h3>Introduction to Music Production</h3>
-                                      <iframe width="100%" height="315" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                      <iframe width="100%" height="500" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                       <p>This video provides an introduction to music production, perfect for beginners who want to explore the basics. Follow along to learn essential techniques and get started on your music journey.</p>
                                    </div>
                                </div>

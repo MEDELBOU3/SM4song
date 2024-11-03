@@ -1162,18 +1162,45 @@
                                 font-size: 2rem;
                                 margin-bottom: 1rem;
                             }
-                    
+                            #featured-video {
+                                 background-color: var(--hover-bg1);
+                                 padding: 2rem;
+                                 border-radius: 20px;
+                                 margin-bottom: 3rem;
+                             }
+                             
+#featured-video h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.video-item {
+    background-color: var(--background-color);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.video-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.video-item p {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+}
                             .news-grid {
                                 display: grid;
                                 grid-template-columns: repeat(3, 1fr);
                                 gap: 20px;
                             }
-                            #usage{
-                                background-color: var(--background-color);
-                                padding: 1rem;
-                                color: var(text-color);
-                                border-radius: 10px;
-                            }
+                            
                             .news-item {
                                 background-color: var(--background-color);
                                 padding: 1rem;
@@ -1398,11 +1425,16 @@
                                     </div>
                                 </div>
                             </section>
-                            <section id="usage">
-                            <h1>Usage</h1>
-                              <div class="video-usage">
-                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                              </div>
+
+                            <section id="featured-video">
+                               <h2>Featured Tutorial Video</h2>
+                               <div class="video-grid">
+                                   <div class="video-item">
+                                      <h3>Introduction to Music Production</h3>
+                                      <iframe width="100%" height="315" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                      <p>This video provides an introduction to music production, perfect for beginners who want to explore the basics. Follow along to learn essential techniques and get started on your music journey.</p>
+                                   </div>
+                               </div>
                             </section>
                             <section id="music-news">
                                 <h2>Music News</h2>

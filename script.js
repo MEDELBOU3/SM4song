@@ -1169,32 +1169,32 @@
                                  margin-bottom: 3rem;
                              }
                              
-#featured-video h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
+                             #featured-video h2 {
+                                 font-size: 2rem;
+                                 margin-bottom: 1rem;
+                             }
 
-.video-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
+                             .video-grid {
+                                 display: grid;
+                                 grid-template-columns: 1fr;
+                                 gap: 20px;
+                             }
 
-.video-item {
-    background-color: var(--background-color);
-    padding: 1rem;
-    border-radius: 10px;
-}
+                            .video-item {
+                                 background-color: var(--hover-bg2);
+                                 padding: 1rem;
+                                 border-radius: 10px;
+                            }
 
-.video-item h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-}
+                            .video-item h3 {
+                                 font-size: 1.2rem;
+                                 margin-bottom: 0.5rem;
+                            }
 
-.video-item p {
-    font-size: 0.9rem;
-    color: var(--secondary-text-color);
-}
+                           .video-item p {
+                                 font-size: 0.9rem;
+                                 color: var(--secondary-text-color);
+                            }
                             .news-grid {
                                 display: grid;
                                 grid-template-columns: repeat(3, 1fr);
@@ -1431,11 +1431,12 @@
                                <div class="video-grid">
                                    <div class="video-item">
                                       <h3>Introduction to Music Production</h3>
-                                      <iframe width="100%" height="500" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                      <iframe width="100%" height="800" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                       <p>This video provides an introduction to music production, perfect for beginners who want to explore the basics. Follow along to learn essential techniques and get started on your music journey.</p>
                                    </div>
                                </div>
                             </section>
+                            
                             <section id="music-news">
                                 <h2>Music News</h2>
                                 <div class="news-grid">

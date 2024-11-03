@@ -1168,7 +1168,12 @@
                                 grid-template-columns: repeat(3, 1fr);
                                 gap: 20px;
                             }
-                    
+                            #usage{
+                                background-color: var(--background-color);
+                                padding: 1rem;
+                                color: var(text-color);
+                                border-radius: 10px;
+                            }
                             .news-item {
                                 background-color: var(--background-color);
                                 padding: 1rem;
@@ -1393,7 +1398,12 @@
                                     </div>
                                 </div>
                             </section>
-                    
+                            <section id="usage">
+                            <h1>Usage</h1>
+                              <div class="video-usage">
+                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                              </div>
+                            </section>
                             <section id="music-news">
                                 <h2>Music News</h2>
                                 <div class="news-grid">

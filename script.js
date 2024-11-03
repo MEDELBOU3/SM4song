@@ -1289,7 +1289,7 @@
                                         <i class='bx bxl-twitter'></i>
                                     </div>
                                 </div>
-                                <img src="https://www.canva.com/design/DAGVc237A7E/DyG2P1IID-0GcnwSx2LSmQ/view" alt="Hero Image">
+                                <img src="brandmark.png" alt="Hero Image">
                             </section>
                     
                             <section id="features">

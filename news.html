@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | SM.studio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196f3;
+            --secondary-color: #ff4081;
+            --accent-color: #ffd700;
+            --bg-light: #ffffff;
+            --text-light: #333333;
+            --bg-dark: #121212;
+            --text-dark: #ffffff;
+            --card-dark: #1e1e1e;
+            --card-light: #ffffff;
+        }
+
+        body {
+            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .navbar-brand:hover::after {
+            transform: scaleX(1);
+        }
+
+        .logo-img {
+            width: 150px;       
+            transition: transform 0.3s ease-in-out;
+        }
+        
+       
+        .logo-img:hover {
+            transform: scale(1.1); 
+            opacity: 0.9;          
+        }
+
+        .news-card {
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: var(--card-light);
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .dark-mode .news-card {
+            background-color: var(--card-dark);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+            border-radius: 15px;
+        }
+
+        .news-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .news-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .news-image {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .news-card:hover .news-image {
+            transform: scale(1.1);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .search-bar {
+            border-radius: 25px;
+            padding: 12px 25px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-bar:focus {
+            width: 350px;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+            outline: none;
+        }
+
+        .theme-switch {
+            width: 70px;
+            height: 35px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-switch::before {
+            content: '🌙';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .theme-switch.light::before {
+            content: '☀️';
+            transform: translateX(35px);
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(33,150,243,0.1);
+            border-top: 6px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        .category-buttons {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 15px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            position: relative;
+        }
+
+        .category-buttons::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 50px;
+            background: linear-gradient(to right, transparent, var(--bg-light));
+            pointer-events: none;
+        }
+
+        .dark-mode .category-buttons::after {
+            background: linear-gradient(to right, transparent, var(--bg-dark));
+        }
+
+        .category-buttons::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .category-btn:hover::before {
+            left: 100%;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .news-meta {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .dark-mode .news-meta {
+            color: #aaa;
+        }
+
+        .news-source {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .read-more-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .read-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .read-more-btn:hover::before {
+            left: 100%;
+        }
+
+        .read-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+            text-decoration: none;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            z-index: 1001;
+            transform: translateX(200%);
+            transition: transform 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                width: 200px;
+            }
+            .search-bar:focus {
+                width: 250px;
+            }
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            .category-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Bookmark feature styles */
+        .bookmark-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+
+        .bookmark-btn i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .bookmark-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .bookmarked i {
+            color: var(--secondary-color);
+        }
+
+        /* Share feature styles */
+        .share-btn {
+            position: absolute;
+            top: 65px;
+            left: 15px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+
+        .share-btn i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeIn" href="index.html">
+                <img src="brandmark.png" alt="logo"  class="logo-img">
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <div class="theme-switch" id="themeSwitch" title="Toggle theme"></div>
+                <form class="d-flex" id="searchForm">
+                    <input class="form-control search-bar" type="search" placeholder="Search news..." id="searchInput">
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Responsive category buttons container -->
+        <div class="category-buttons mb-4 d-flex flex-wrap justify-content-center" id="categories">
+            <button class="category-btn active btn btn-outline-primary mx-1 my-1" data-category="general">General</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="business">Business</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="technology">Technology</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="sports">Sports</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="entertainment">Entertainment</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="music">Music</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="science">Science</button>
+            <button class="category-btn btn btn-outline-primary mx-1 my-1" data-category="health">Health</button>
+        </div>
+    
+        <!-- Loader container with responsive alignment -->
+        <div id="loader" class="loader mx-auto my-3"></div>
+    
+        <!-- News container with responsive row layout -->
+        <div class="row g-3" id="newsContainer"></div>
+    </div>
+    
+    
+
+    <div class="scroll-to-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_KEY = 'c3f1f1ea2b14265deb409dc3208001d7';
+        let currentCategory = 'general';
+        let currentPage = 1;
+        let isLoading = false;
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+
+        const themeSwitch = document.getElementById('themeSwitch');
+        const newsContainer = document.getElementById('newsContainer');
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const scrollTop = document.getElementById('scrollTop');
+        const notification = document.getElementById('notification');
+
+        // Theme Switching
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeSwitch.classList.toggle('light');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            showNotification('Theme updated!');
+        });
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeSwitch.classList.add('light');
+        }
+
+        // Category Selection
+        document.getElementById('categories').addEventListener('click', (e) => {
+            if (e.target.classList.contains('category-btn')) {
+                document.querySelectorAll('.category-btn').forEach(btn => 
+                    btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.category;
+                currentPage = 1;
+                newsContainer.innerHTML = '';
+                fetchNews();
+                showNotification(`Showing ${currentCategory} news`);
+            }
+        });
+
+        // Search Functionality
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            currentPage = 1;
+            newsContainer.innerHTML = '';
+            fetchNews(searchInput.value);
+            showNotification(`Searching for: ${searchInput.value}`);
+        });
+
+        // Infinite Scroll
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000 && !isLoading) {
+                currentPage++;
+                fetchNews();
+            }
+
+            scrollTop.classList.toggle('visible', window.scrollY > 500);
+        });
+
+        // Scroll to top functionality
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Notification function
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Bookmark functionality
+        function toggleBookmark(article) {
+            const index = bookmarks.findIndex(bookmark => bookmark.title === article.title);
+            if (index === -1) {
+                bookmarks.push(article);
+                showNotification('Article bookmarked!');
+            } else {
+                bookmarks.splice(index, 1);
+                showNotification('Bookmark removed!');
+            }
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+            return index === -1;
+        }
+
+        // Share functionality
+        async function shareArticle(article) {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: article.title,
+                        text: article.description,
+                        url: article.url
+                    });
+                    showNotification('Article shared successfully!');
+                } catch (err) {
+                    showNotification('Error sharing article');
+                }
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(article.url);
+                showNotification('Link copied to clipboard!');
+            }
+        }
+
+        async function fetchNews(searchQuery = '') {
+            if (isLoading) return;
+            isLoading = true;
+            loader.style.display = 'block';
+
+            let url = searchQuery
+                ? `https://gnews.io/api/v4/search?q=${searchQuery}&token=${API_KEY}&lang=en&page=${currentPage}`
+                : `https://gnews.io/api/v4/top-headlines?category=${currentCategory}&token=${API_KEY}&lang=en&page=${currentPage}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayNews(data.articles);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                newsContainer.innerHTML += '<div class="col-12 text-center">Error loading news. Please try again later.</div>';
+                showNotification('Error loading news');
+            } finally {
+                loader.style.display = 'none';
+                isLoading = false;
+            }
+        }
+
+        function displayNews(articles) {
+            const newsHTML = articles.map(article => {
+                const isBookmarked = bookmarks.some(bookmark => bookmark.title === article.title);
+                return `
+                    <div class="col-md-4 mb-4 animate__animated animate__fadeIn">
+                        <div class="news-card h-100">
+                            <div class="news-image-container">
+                                <img src="${article.image || 'https://via.placeholder.com/300x200'}" alt="${article.title}" class="news-image">
+                                <span class="category-badge">${currentCategory}</span>
+                                <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark(${JSON.stringify(article).replace(/"/g, '&quot;')})">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="share-btn" onclick="shareArticle(${JSON.stringify(article).replace(/"/g, '&quot;')})">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                            <div class="card-body" style="padding: 1rem;">
+                                <h5 class="card-title">${article.title}</h5>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> ${new Date(article.publishedAt).toLocaleDateString()}</span>
+                                    <span class="news-source"><i class="far fa-newspaper"></i> ${article.source.name}</span>
+                                </div>
+                                <p class="card-text">${article.description}</p>
+                                <a href="${article.url}" class="read-more-btn" target="_blank">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            newsContainer.innerHTML += newsHTML;
+        }
+
+        // Initial load
+        fetchNews();
+    </script>
+</body>
+</html>

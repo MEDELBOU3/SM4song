@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
     <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
         :root {
             --primary-color: #2196f3;
             --secondary-color: #ff4081;
@@ -169,10 +170,11 @@
             outline: none;
         }
 
+       /* Theme switch container styling */
         .theme-switch {
             width: 70px;
             height: 35px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             position: relative;
             cursor: pointer;
@@ -180,21 +182,24 @@
             transition: all 0.3s;
             backdrop-filter: blur(5px);
         }
-
+        
+        /* Default icon - Moon */
         .theme-switch::before {
-            content: '🌙';
+            content: '\f186'; /* Font Awesome moon icon */
+            font-family: "Font Awesome 5 Free"; /* Specify Font Awesome font */
+            font-weight: 900;
             position: absolute;
             left: 5px;
             top: 5px;
             font-size: 1.2rem;
             transition: transform 0.3s;
         }
-
+        
+        /* Light mode icon - Sun */
         .theme-switch.light::before {
-            content: '☀️';
-            transform: translateX(35px);
+            content: '\f185'; /* Font Awesome sun icon */
+            transform: translateX(35px); /* Move to the other side */
         }
-
         .loader {
             width: 60px;
             height: 60px;

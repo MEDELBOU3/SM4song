@@ -8,7 +8,9 @@ SM4music is a web music application developed using *HTML, **CSS, **JavaScript, 
 
 ## How to Use SM4music
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/s1iPXBny9Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+To see a demonstration on how to use SM4music, click the video below:
+
+[![SM4music Tutorial](https://img.youtube.com/vi/s1iPXBny9Ec/0.jpg)](https://youtu.be/s1iPXBny9Ec?si=7za99P12bDacKE7f)
 
 ---
 

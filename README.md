@@ -4,6 +4,7 @@ A dynamic and responsive music streaming web application built with HTML, CSS, J
 
 # SM4music
 
+![Image 6](brandmark.png)
 SM4music is a web music application developed using *HTML, **CSS, **JavaScript, and integrates with **Spotify's API* using client and secret IDs. This app is designed to provide users with a smooth music streaming experience, offering access to Spotify's vast music library.
 
 ## How to Use SM4music

@@ -2,6 +2,24 @@
 
 A dynamic and responsive music streaming web application built with HTML, CSS, JavaScript, and Node.js, utilizing Spotify's API for a seamless user experience. The app allows users to explore, search, and play songs with real-time data integration.
 
+# SM4music
+
+SM4music is a web music application developed using *HTML, **CSS, **JavaScript, and integrates with **Spotify's API* using client and secret IDs. This app is designed to provide users with a smooth music streaming experience, offering access to Spotify's vast music library.
+
+## How to Use SM4music
+
+To see a demonstration on how to use SM4music, watch the tutorial video:
+
+[![SM4music Tutorial](https://img.youtube.com/vi/s1iPXBny9Ec/0.jpg)](https://youtu.be/s1iPXBny9Ec?si=7za99P12bDacKE7f)
+
+Click the image or the link below to open the video in a new tab:
+
+[Watch the tutorial on YouTube](https://youtu.be/s1iPXBny9Ec?si=7za99P12bDacKE7f)
+
+---
+
+The video explains how to navigate the interface, search for songs, and utilize various features that SM4music offers. It’s perfect for getting started with the app and understanding its capabilities.
+
 ## 🚀 Features
 
 - **Interactive Interface**: Responsive and modern UI for music streaming.
@@ -28,9 +46,9 @@ Below is a preview of some images used in this project.
 |:---------------------------:|:---------------------------:|:---------------------------:|
 | Search results of artists or channels light-mode|  artists and channels info, tracks & videos dark-mode        | lyrics   |
 
-| ![Image 4](src/image4.jpeg) | ![Image 5](src/image5.jpeg) | ![Image 6](src/image6.jpeg) |
-|:---------------------------:|:---------------------------:|:---------------------------:|
-| Your playlist songs saved dark-mode | Image 5 Description         | Your playlist songs saved light-mode         |
+| ![Image 4](src/image4.jpeg)  | ![Image 6](src/image6.jpeg) |
+|:---------------------------:|:---------------------------:|
+| Your playlist songs saved dark-mode | Your playlist songs saved light-mode |
 
 | ![Image 7](src/image7.jpeg) | ![Image 8](src/image8.jpeg) | ![Image 9](src/image9.jpeg) |
 |:---------------------------:|:---------------------------:|:---------------------------:|
@@ -45,7 +63,7 @@ Below is a preview of some images used in this project.
 | Search results Dark-mode       | Songs of artists searched        |
 ---
 
-Add or remove images by updating the `src` path and descriptions as needed.
+
 
 ## ⚙️ Installation
 

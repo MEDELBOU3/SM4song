@@ -966,7 +966,7 @@
       
 
         async function displayRecommendedTracks() {
-            const data = await fetchSpotifyData('recommendations?seed_genres=pop,rock,hip-hop&limit=20');
+            const data = await fetchSpotifyData('recommendations?seed_genres=pop,rock,hip-hop&limit=100');
             displayTracks(data.tracks);
         }
 

@@ -178,74 +178,23 @@
             addGridItemListeners();
         }
 
-        let newReleasesOffset = 0;
-        const LIMIT = 120;
-
-        async function displayNewReleases(append = false) {
-           const data = await fetchSpotifyData(`browse/new-releases?limit=${LIMIT}&offset=${newReleasesOffset}`);
-           const albums = data.albums.items;
-           let html = !append ? '<h2>New Releases</h2><div class="grid">' : '';
-    
-           albums.forEach(album => {
-           html += `
-                <div class="grid-item" data-type="album" data-id="${album.id}">
-                   <img src="${album.images[0].url}" alt="${album.name}">
-                   <p>${album.name}</p>
-                   <p>${album.artists[0].name}</p>
-                </div>
-             `;
-          });
-                  if (!append) {
-        html += '</div>';
-        document.getElementById('content').innerHTML = html;
-       } else {
-          document.querySelector('.grid').insertAdjacentHTML('beforeend', html);
-       }
-    
-    // Add load more button if there are more items
-    if (data.albums.total > newReleasesOffset + LIMIT) {
-        const loadMoreButton = document.querySelector('.load-more-button') || document.createElement('button');
-        loadMoreButton.className = 'load-more-button';
-        loadMoreButton.textContent = 'Load More';
-        loadMoreButton.onclick = loadMoreNewReleases;
-        if (!append) {
-            document.getElementById('content').appendChild(loadMoreButton);
+        async function displayNewReleases() {
+            const data = await fetchSpotifyData('browse/new-releases');
+            const albums = data.albums.items;
+            let html = '<h2>New Releases</h2><div class="grid">';
+            albums.forEach(album => {
+                html += `
+                    <div class="grid-item" data-type="album" data-id="${album.id}">
+                        <img src="${album.images[0].url}" alt="${album.name}">
+                        <p>${album.name}</p>
+                        <p>${album.artists[0].name}</p>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            document.getElementById('content').innerHTML = html;
+            addGridItemListeners();
         }
-    } else {
-        const existingButton = document.querySelector('.load-more-button');
-        if (existingButton) {
-            existingButton.remove();
-        }
-    }
-    
-    addGridItemListeners();
-}
-        async function loadMoreNewReleases() {
-    newReleasesOffset += LIMIT;
-    await displayNewReleases(true);
-}
-
-// Add this CSS
-const style = document.createElement('style');
-style.textContent = `
-    .load-more-button {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background-color: #1DB954;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .load-more-button:hover {
-        background-color: #1ed760;
-    }
-`;
-document.head.appendChild(style);
-
 
         async function displayCategories() {
             const data = await fetchSpotifyData('browse/categories');

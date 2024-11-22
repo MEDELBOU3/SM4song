@@ -1036,23 +1036,23 @@ displayFeaturedPlaylists = async function() {
             }
         }
 
-        function addGridItemListeners() {
-            const gridItems = document.querySelectorAll('.grid-item');
-            gridItems.forEach(item => {
-            item.addEventListener('click', () => {
-               const type = item.dataset.type;
-               const id = item.dataset.id;
-               addToHistory({ type, id });
-            
-               if (type === 'playlist') {
-                  displayPlaylistTracks(id);
-              } else if (type === 'album') {
-                displayAlbumTracks(id);
-               }
-            });
-          });
+       // Modify your existing event listeners to use the navigation system
+       function addGridItemListeners() {
+           const gridItems = document.querySelectorAll('.grid-item');
+           gridItems.forEach(item => {
+                 item.addEventListener('click', () => {
+                     const type = item.dataset.type;
+                     const id = item.dataset.id;
+                     loadPage({ type, id });
+                });
+           });
         }
 
+ document.addEventListener('DOMContentLoaded', () => {
+    createNavigationButtons();
+    // Load initial featured playlists
+    loadPage({ type: 'featured' });
+});
         //play-track
       
             function playTrack(index, isPersonalPlaylist = false) {

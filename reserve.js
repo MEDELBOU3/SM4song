@@ -27,41 +27,101 @@
          let startX, startY, startLeft, startTop, startWidth, startHeight;
          let currentResizeHandle;
          // this at the beginning of your script with other constants
-         const navigationHistory = [];
-         let currentPage = null;
+         let navigationHistory = [];
+         let currentHistoryIndex = -1;
 
-        //  these navigation functions
+        // Enhanced navigation functions
         function navigateBack() {
-            if (navigationHistory.length > 1) {
-              navigationHistory.pop(); // Remove current page
-              const previousPage = navigationHistory[navigationHistory.length - 1];
-              loadPage(previousPage);
-            }
+          if (currentHistoryIndex > 0) {
+             currentHistoryIndex--;
+             const previousPage = navigationHistory[currentHistoryIndex];
+             loadPage(previousPage, false);
+             updateNavigationButtons();
+          }
         }
-          
         function navigateForward() {
-          // This would require maintaining a forward history as well
-          // For now, we'll just keep track of "back" functionality
+            if (currentHistoryIndex < navigationHistory.length - 1) {
+               currentHistoryIndex++;
+               const nextPage = navigationHistory[currentHistoryIndex];
+               loadPage(nextPage, false);
+               updateNavigationButtons();
+             }
         }
          function addToHistory(pageData) {
-            navigationHistory.push(pageData);
-            currentPage = pageData;
-         }
-         function loadPage(pageData) {
-            switch (pageData.type) {
-              case 'featured':
-                   displayFeaturedPlaylists();
-                   break;
-              case 'new-releases':
-                  displayNewReleases();
-                  break;
-              case 'playlist':
-                  displayPlaylistTracks(pageData.id);
-                  break;
-            }
+           // Remove any forward history when adding new page
+          if (currentHistoryIndex < navigationHistory.length - 1) {
+              navigationHistory = navigationHistory.slice(0, currentHistoryIndex + 1);
+          }
+    
+          navigationHistory.push(pageData);
+          currentHistoryIndex++;
+          updateNavigationButtons();
          }
 
-       
+          function updateNavigationButtons() {
+            const backButton = document.getElementById('backButton');
+            const forwardButton = document.getElementById('forwardButton');
+    
+            if (backButton && forwardButton) {
+               backButton.disabled = currentHistoryIndex <= 0;
+               forwardButton.disabled = currentHistoryIndex >= navigationHistory.length - 1;
+            }
+           }
+
+        function loadPage(pageData, addToHistoryFlag = true) {
+    if (!pageData) return;
+
+    if (addToHistoryFlag) {
+        addToHistory(pageData);
+    }
+
+    switch (pageData.type) {
+        case 'featured':
+            displayFeaturedPlaylists();
+            break;
+        case 'new-releases':
+            displayNewReleases();
+            break;
+        case 'playlist':
+            displayPlaylistTracks(pageData.id);
+            break;
+        case 'artist':
+            displayArtistDetails(pageData.id);
+            break;
+        case 'album':
+            displayAlbumTracks(pageData.id);
+            break;
+        case 'category':
+            displayCategoryPlaylists(pageData.id);
+            break;
+        case 'search':
+            // Handle search results
+            break;
+    }
+}
+
+
+//navigation buttons in the UI
+function createNavigationButtons() {
+    const navigationContainer = document.createElement('div');
+    navigationContainer.className = 'navigation-buttons';
+    navigationContainer.innerHTML = `
+        <button id="backButton" onclick="navigateBack()" disabled>
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button id="forwardButton" onclick="navigateForward()" disabled>
+            <i class="fas fa-arrow-right"></i> Forward
+        </button>
+    `;
+    
+    // Insert at the top of the content area
+    const contentArea = document.getElementById('content');
+    if (contentArea) {
+        contentArea.insertBefore(navigationContainer, contentArea.firstChild);
+    }
+}
+
+        
          // Expand button functionality
          expandBtn.onclick = function() {
              if (!isExpanded) {

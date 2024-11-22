@@ -26,18 +26,19 @@
          let isDragging = false;
          let startX, startY, startLeft, startTop, startWidth, startHeight;
          let currentResizeHandle;
-         // Add this at the beginning of your script with other constants
+         // this at the beginning of your script with other constants
          const navigationHistory = [];
          let currentPage = null;
 
-        // Add these navigation functions
+        //  these navigation functions
         function navigateBack() {
             if (navigationHistory.length > 1) {
               navigationHistory.pop(); // Remove current page
               const previousPage = navigationHistory[navigationHistory.length - 1];
-              executeNavigation(previousPage, false);
+              loadPage(previousPage);
             }
         }
+          
         function navigateForward() {
           // This would require maintaining a forward history as well
           // For now, we'll just keep track of "back" functionality
@@ -45,39 +46,22 @@
          function addToHistory(pageData) {
             navigationHistory.push(pageData);
             currentPage = pageData;
-            updateNavigationButtons();
+         }
+         function loadPage(pageData) {
+            switch (pageData.type) {
+              case 'featured':
+                   displayFeaturedPlaylists();
+                   break;
+              case 'new-releases':
+                  displayNewReleases();
+                  break;
+              case 'playlist':
+                  displayPlaylistTracks(pageData.id);
+                  break;
+            }
          }
 
-         function executeNavigation(pageData, addToHist = true) {
-               switch (pageData.type) {
-                   case 'featured':
-                      displayFeaturedPlaylists();
-                      break;
-                   case 'new-releases':
-                      displayNewReleases();
-                      break;
-                   case 'categories':
-                      displayCategories();
-                      break;
-                   case 'playlist':
-                       displayPlaylistTracks(pageData.id);
-                       break;
-                   case 'album':
-                       displayAlbumTracks(pageData.id);
-                       break;
-                   case 'category':
-                       displayCategoryPlaylists(pageData.id);
-                       break;
-                   case 'artist':
-                        displayArtistDetails(pageData.id);
-                       break;
-               }
-    
-              if (addToHist) {
-                 addToHistory(pageData);
-              }
-          }
-
+       
          // Expand button functionality
          expandBtn.onclick = function() {
              if (!isExpanded) {

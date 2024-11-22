@@ -279,8 +279,8 @@
     html += '</div>';
     document.getElementById('content').innerHTML = html;
 }
-//  this CSS for navigation buttons
-const navigationStyles = document.createElement('style');
+        //  this CSS for navigation buttons
+        const navigationStyles = document.createElement('style');
 navigationStyles.textContent = `
     .navigation-buttons {
         padding: 10px;
@@ -319,11 +319,14 @@ navigationStyles.textContent = `
 `;
 document.head.appendChild(navigationStyles);
 
-// Initialize the first page
-window.onload = function() {
-    executeNavigation({ type: 'featured' });
+// Initialize the first page in history when loading featured playlists
+const originalDisplayFeaturedPlaylists = displayFeaturedPlaylists;
+displayFeaturedPlaylists = async function() {
+    await originalDisplayFeaturedPlaylists();
+    if (navigationHistory.length === 0) {
+        addToHistory({ type: 'featured' });
+    }
 };
-
 
         async function displayAlbumTracks(albumId) {
             const data = await fetchSpotifyData(`albums/${albumId}/tracks`);
@@ -972,25 +975,24 @@ window.onload = function() {
        
         //display trsacks
         function displayTracks(tracks) {
-            currentPlaylist = tracks.filter(track => track.preview_url);
-            let html = '<h2>Tracks</h2><div class="grid">';
-            currentPlaylist.forEach((track, index) => {
-                html += `
-                    <div class="grid-item" data-type="track" data-index="${index}">
-                        <img src="${track.album?.images[0]?.url || 'https://via.placeholder.com/150'}" alt="${track.name}">
-                        <p>${track.name}</p>
-                        <p>${track.artists[0].name}</p>
-                        <button onclick="addToPersonalPlaylist(currentPlaylist[${index}])" style="background: linear-gradient(to 45deg, #ff7e5f, #feb47b);
-                        outlin: none; border: none; border-radius: 50%; cursor: pointer; font-weight: bold; display: inline-flex; font-size: 18px; 
-                        alingn-items: center; padding: 10px ; margin: 1rem auto;
-                        transition: background 0.3s ease;"><i class="fas fa-plus-circle"></i></button>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            document.getElementById('content').innerHTML = html;
-            addGridItemListeners();
+        let html = `
+           <div class="navigation-buttons">
+            <button onclick="navigateBack()" ${navigationHistory.length <= 1 ? 'disabled' : ''}>
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+        </div>
+        <div class="tracks-container">
+    `;
+    
+    tracks.forEach((track, index) => {
+        if (track) {  // Check if track exists
+            html += createTrackHTML(track, index);
         }
+    });
+    
+    html += '</div>';
+    document.getElementById('content').innerHTML = html;
+}
        
 
         async function searchTracks() {

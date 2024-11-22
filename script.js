@@ -1279,7 +1279,8 @@
                         <div id="content">
                             <section id="hero">
                                 <div class="hero-text">
-                                    <h1>Welcome to SpotifyApp</h1>
+                                    <h1>Welcome to SM4music</h1>
+                                    <h3>Made by SM.studio</h3>
                                     <p>Discover, stream, and share a constantly expanding mix of music from emerging and major artists around the world.</p>
                                     <a onclick="goToNewReleases()" class="cta-button">Start Listening</a>
                                     <div class="social-media">

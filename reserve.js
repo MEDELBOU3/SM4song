@@ -1002,28 +1002,20 @@ window.onload = function() {
         }
 
         function addGridItemListeners() {
-            document.querySelectorAll('.grid-item').forEach(item => {
-                item.addEventListener('click', async () => {
-                    const type = item.dataset.type;
-                    const id = item.dataset.id;
-                    const index = item.dataset.index;
-
-                    switch(type) {
-                        case 'playlist':
-                            await displayPlaylistTracks(id);
-                            break;
-                        case 'album':
-                            await displayAlbumTracks(id);
-                            break;
-                        case 'category':
-                            await displayCategoryPlaylists(id);
-                            break;
-                        case 'track':
-                            playTrack(parseInt(index));
-                            break;
-                    }
-                });
+            const gridItems = document.querySelectorAll('.grid-item');
+            gridItems.forEach(item => {
+            item.addEventListener('click', () => {
+               const type = item.dataset.type;
+               const id = item.dataset.id;
+               addToHistory({ type, id });
+            
+               if (type === 'playlist') {
+                  displayPlaylistTracks(id);
+              } else if (type === 'album') {
+                displayAlbumTracks(id);
+               }
             });
+          });
         }
 
         //play-track

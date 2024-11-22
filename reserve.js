@@ -196,55 +196,40 @@
         }
 
         //playlist-content
-        async function displayFeaturedPlaylists() {
-    const data = await fetchSpotifyData('browse/featured-playlists');
-    const playlists = data.playlists.items;
-    let html = `
-        <div class="navigation-buttons">
-            <button onclick="navigateBack()" ${navigationHistory.length <= 1 ? 'disabled' : ''}>
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-        </div>
-        <h2>Featured Playlists</h2>
-        <div class="grid">
-    `;
-    playlists.forEach(playlist => {
-        html += `
-            <div class="grid-item" onclick="executeNavigation({type: 'playlist', id: '${playlist.id}'})">
-                <img src="${playlist.images[0].url}" alt="${playlist.name}">
-                <p>${playlist.name}</p>
-            </div>
-        `;
-    });
-    html += '</div>';
-    document.getElementById('content').innerHTML = html;
-}
+          async function displayFeaturedPlaylists() {
+            const data = await fetchSpotifyData('browse/featured-playlists');
+            const playlists = data.playlists.items;
+            let html = '<h2>Featured Playlists</h2><div class="grid">';
+            playlists.forEach(playlist => {
+                html += `
+                    <div  class="grid-item" data-type="playlist" data-id="${playlist.id}">
+                        <img src="${playlist.images[0].url}" alt="${playlist.name}">
+                        <p>${playlist.name}</p>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            document.getElementById('content').innerHTML = html;
+            addGridItemListeners();
+        }     
 
-        async function displayNewReleases() {
-    const data = await fetchSpotifyData('browse/new-releases');
-    const albums = data.albums.items;
-    let html = `
-        <div class="navigation-buttons">
-            <button onclick="navigateBack()" ${navigationHistory.length <= 1 ? 'disabled' : ''}>
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-        </div>
-        <h2>New Releases</h2>
-        <div class="grid">
-    `;
-    albums.forEach(album => {
-        html += `
-            <div class="grid-item" onclick="executeNavigation({type: 'album', id: '${album.id}'})">
-                <img src="${album.images[0].url}" alt="${album.name}">
-                <p>${album.name}</p>
-                <p>${album.artists[0].name}</p>
-            </div>
-        `;
-    });
-    html += '</div>';
-    document.getElementById('content').innerHTML = html;
-}
-
+      async function displayNewReleases() {
+            const data = await fetchSpotifyData('browse/new-releases');
+            const albums = data.albums.items;
+            let html = '<h2>New Releases</h2><div class="grid">';
+            albums.forEach(album => {
+                html += `
+                    <div class="grid-item" data-type="album" data-id="${album.id}">
+                        <img src="${album.images[0].url}" alt="${album.name}">
+                        <p>${album.name}</p>
+                        <p>${album.artists[0].name}</p>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            document.getElementById('content').innerHTML = html;
+            addGridItemListeners();
+        }         
     
         async function displayCategories() {
             const data = await fetchSpotifyData('browse/categories');
@@ -263,26 +248,14 @@
             addGridItemListeners();
         }
 
-        async function displayPlaylistTracks(playlistId) {
-    const data = await fetchSpotifyData(`playlists/${playlistId}/tracks`);
-    let html = `
-        <div class="navigation-buttons">
-            <button onclick="navigateBack()" ${navigationHistory.length <= 1 ? 'disabled' : ''}>
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-        </div>
-    `;
-    html += '<div class="tracks-container">';
-    data.items.forEach((item, index) => {
-        html += createTrackHTML(item.track, index);
-    });
-    html += '</div>';
-    document.getElementById('content').innerHTML = html;
-}
+       async function displayPlaylistTracks(playlistId) {
+            const data = await fetchSpotifyData(`playlists/${playlistId}/tracks`);
+            displayTracks(data.items.map(item => item.track));
+        }    
         //  this CSS for navigation buttons
         const navigationStyles = document.createElement('style');
-navigationStyles.textContent = `
-    .navigation-buttons {
+        navigationStyles.textContent = `
+        .navigation-buttons {
         padding: 10px;
         margin-bottom: 20px;
     }

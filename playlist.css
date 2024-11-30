@@ -45,3 +45,305 @@
                              0 0 40px #098133cc;
             --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
         }
+
+         .tab-content{
+            background-color: transparent;
+            padding: 1.5rem;
+            z-index: 0;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: linear-gradient(to right, var(--spotify-black), var(--spotify-light-black));
+            border-radius: 15px;
+        }
+        
+        .tab-button {
+            background: linear-gradient(145deg, var(--spotify-green), var(--spotify-green1));
+            color: var(--spotify-white);
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .tab-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab-button:hover::before {
+            left: 100%;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(145deg, var(--spotify-green1), var(--spotify-green));
+            box-shadow: 0 0 15px var(--spotify-green1),
+                        0 0 30px var(--spotify-green);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px var(--spotify-green1),
+                            0 0 30px var(--spotify-green);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--spotify-green1),
+                            0 0 40px var(--spotify-green);
+            }
+            100% {
+                box-shadow: 0 0 15px var(--spotify-green1),
+                            0 0 30px var(--spotify-green);
+            }
+        }
+        
+        
+        #recentAdditions{
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 2rem auto;
+        }
+        .tab-pane {
+            display: none;
+        }
+        
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #playlistStats {
+            background-color: var(--hover-color);
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .chart-wrapper {
+            width: 48%;
+            background-color: var(--hover-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .stat-section {
+            width: 48%;
+            background-color: var(--hover-bg);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .stat-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .stat-list li {
+            background-color: var(--hover-color);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-list li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-list li span {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .duration-info p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .recent-additions {
+            background-color: var(--hover-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .recent-additions h3 {
+            margin-top: 0;
+            color: var(--text-color);
+        }
+
+        .recent-additions p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: var(--hover-bg);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .recent-additions p:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .chart-wrapper, .stat-section {
+                width: 100%;
+            }
+        }
+
+        /* Container styles */
+        #videoContainer {
+            padding: 20px;
+            background-color: var(--hover-bg1);
+            color: var(--text-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Header styles */
+        #videoContainer h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        /* Video gallery layout */
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Individual video item styles */
+        .video-item {
+            background-color: var(--spotify-green);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .video-item iframe {
+            width: 100%;
+            height: 157px;
+            border: none;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .video-item p {
+            padding: 10px;
+            font-size: 16px;
+            color: var(--text-color);
+            background-color: var(--spotify-green);
+            text-align: center;
+            margin: 0;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        /* Hover effects for video items */
+        .video-item:hover {
+            transform: translateY(-8px);
+        }
+        
+        .video-item:hover p {
+            background-color: var(--spotify-green);
+            color: var(--text-color);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .video-item iframe {
+                height: 180px;
+            }
+            #videoContainer h3 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #videoContainer {
+                padding: 15px;
+            }
+            #videoContainer h3 {
+                font-size: 18px;
+            }
+            .video-item p {
+                font-size: 14px;
+            }
+        } 

@@ -1,0 +1,47 @@
+  :root {
+            --spotify-green: #1DB954;
+            --spotify-green1: #1db954a6;
+            --spotify-green1: #1db954a6;
+            --spotify-black: #dadada;
+            --spotify-light-black: azure;
+            --spotify-grey: #575757;
+            --spotify-white: #111010;
+            --text-color: black;
+            --hover-bg: white;
+            --hover-bg1: white;
+            --header-bg: rgba(220, 255, 245, 0.87);
+            --hover-bg2: #dfdddd;
+            --hover-bg3: #eff5f4;
+            --transition-speed: 0.3s;
+            --card-background: rgba(255, 246, 246, 0.8);
+            --playlist-bg: #e7eedf;
+            --art-bg: silver;
+            --tab-countent: rgba(255, 255, 255, 0.4);
+            --active-shadow: 0 0 8px #2be0d7,
+                             0 0 25px #2be0d7,
+                             0 0 40px #2be0d7;
+            --active-bg: linear-gradient(to bottom left, rgb(189, 65, 189), rgb(3, 151, 209), rgb(72, 233, 233));
+        }
+
+        .dark-mode {
+            --spotify-green: #1DB954;
+            --spotify-black: #191414;
+            --spotify-light-black: #282828;
+            --spotify-grey: #B3B3B3;
+            --spotify-white: #FFFFFF;
+            --text-color: #fff;
+            --hover-bg: #333;
+            --hover-bg1: #111;
+            --spotify-green1: #00e6508f;
+            --header-bg: rgba(21, 54, 44, 0.87);
+            --hover-bg2: #3E3E3E;
+            --hover-bg3: #122020;
+            --card-background: rgba(25, 20, 20, 0.8);
+            --playlist-bg: #110707;
+            --art-bg: rgb(19, 18, 18);
+            --tab-countent: rgba(0, 0, 0, 0.4);
+            --active-shadow: 0 0 8px #1db985,
+                             0 0 25px #1d88b9,
+                             0 0 40px #098133cc;
+            --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
+        }

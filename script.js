@@ -1,6 +1,6 @@
         //consts
-        const CLIENT_ID = '31f25c15fa8a4c4a845595ffbcb2d076';
-        const CLIENT_SECRET = 'b6d93473aaeb4079aadbd1973854ec9f';
+        const CLIENT_ID = '0af62921a92b42fa9e16f9cb39c3afe5';
+        const CLIENT_SECRET = '8588a90e851846f3999284b4a4aecf27';
         const modeToggle = document.getElementById('mode-toggle');
         let accessToken = '';
         let audioPlayer = new Audio();

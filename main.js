@@ -1572,6 +1572,9 @@
         });
 
 
+        // Call initialization when page loads
+        document.addEventListener('DOMContentLoaded', initializePage);
+
         // Initialize the app
         getAccessToken().then(() => {
             displayFeaturedPlaylists();

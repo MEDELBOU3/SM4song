@@ -1,0 +1,410 @@
+:root {
+    --spotify-green: #1DB954;
+    --spotify-green1: #1db954a6;
+    
+    --spotify-black: #dadada;
+    --spotify-light-black: azure;
+    --rating-color: rgb(0, 160, 27);
+    --spotify-grey: #575757;
+    --spotify-white: #111010;
+    --text-color: black;
+    --hover-bg: white;
+    --hover-bg1: white;
+    --header-bg: rgba(220, 255, 245, 0.87);
+    --hover-bg2: #dfdddd;
+    --hover-bg3: #eff5f4;
+    --transition-speed: 0.3s;
+    --card-background: rgba(255, 246, 246, 0.8);
+    --meta-bg: rgba(82, 1, 1, 0.616);
+    --playlist-bg: #e7eedf;
+    --art-bg: silver;
+    --tab-countent: rgba(255, 255, 255, 0.4);
+    --active-shadow: 0 0 8px #2be0d7,
+                     0 0 25px #2be0d7,
+                     0 0 40px #2be0d7;
+    --active-bg: linear-gradient(to bottom left, rgb(189, 65, 189), rgb(3, 151, 209), rgb(72, 233, 233));
+}
+
+.dark-mode {
+    --spotify-green: #1DB954;
+    --spotify-black: #191414;
+    --spotify-light-black: #282828;
+    --spotify-grey: #B3B3B3;
+    --spotify-white: #FFFFFF;
+    --text-color: #fff;
+    --hover-bg: #333;
+    --hover-bg1: #111;
+    --spotify-green1: #00e6508f;
+    --header-bg: rgba(21, 54, 44, 0.87);
+    --hover-bg2: #3E3E3E;
+    --hover-bg3: #122020;
+    --card-background: rgba(25, 20, 20, 0.8);
+    --meta-bg: rgba(73, 73, 73, 0.3);
+    --playlist-bg: #110707;
+    --art-bg: rgb(19, 18, 18);
+    --tab-countent: rgba(0, 0, 0, 0.4);
+    --active-shadow: 0 0 8px #1db985,
+                     0 0 25px #1d88b9,
+                     0 0 40px #098133cc;
+    --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
+}
+
+
+/* Base Styles */
+#movies-btn {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    padding: 12px 24px;
+    background: var(--spotify-green);
+    color: var(--text-color);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    z-index: 1000;
+}
+
+#movies-btn:hover {
+    background: var(--spotify-green);
+}
+
+/* Modal Styles */
+.side-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 90%;
+    max-width: 800px;
+    height: 100vh;
+    background: var(--spotify-light-black);
+    transition: right var(--transition-speed);
+    z-index: 1001;
+    overflow-y: auto;
+}
+
+.side-modal.active {
+    right: 0;
+}
+
+.modal-header {
+    padding: 20px;
+    background: var(--header-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: var(--text-color);
+    margin: 0;
+}
+
+.modal-controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 15px 10px;
+}
+
+
+
+.modal-search {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.modal-search input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--spotify-grey);
+    border-radius: 4px;
+    background: var(--spotify-light-black);
+    color: var(--text-color);
+}
+
+.modal-search button {
+    padding: 10px 20px;
+    background: var(--spotify-green);
+    color: var(--spotify-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Movies Tabs */
+.movies-tabs {
+    display: flex;
+    padding: 0 20px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: var(--tab-countent);
+    border: none;
+    border-radius: 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.tab-btn.active {
+    background: var(--spotify-green);
+    color: var(--spotify-white);
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 15px;
+}
+
+.movie-card {
+    background: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 180px;
+    max-height: 350px;
+    transition: transform var(--transition-speed);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.movie-poster {
+    position: relative;
+    aspect-ratio: 3/4;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+}
+
+.movie-card:hover .movie-overlay {
+    opacity: 1;
+}
+
+.movie-details-btn {
+    padding: 10px 20px;
+    background: var(--spotify-green);
+    color: var(--spotify-white);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.movie-info {
+    padding: 15px;
+}
+
+.movie-info h3 {
+    margin: 0;
+    color: var(--text-color);
+    overflow: hidden;
+    font-size: 1rem;
+    height: 30px;
+    width: 145px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.movie-meta {
+    background-color: var(--meta-bg);
+    padding: 5px 4px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: var(--rating-color);
+}
+
+/* Movie Details Modal */
+.movie-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+}
+
+
+.details-content {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    background: var(--spotify-light-black);
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.movie-backdrop {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.backdrop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--spotify-light-black));
+}
+
+.details-main {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    margin-top: -100px;
+    position: relative;
+}
+
+.detail-poster {
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.detail-info {
+    flex: 1;
+    color: var(--text-color);
+}
+
+.close-details {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    z-index: 100;
+}
+
+.close-details:hover{
+    background: rgba(255, 0, 0, 0.8);
+    transform: rotate(90deg);
+}
+.genres {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.genres span {
+    padding: 5px 15px;
+    background: var(--spotify-green1);
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.play-trailer {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--spotify-green);
+    color: var(--spotify-white);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Trailer Modal */
+.trailer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1003;
+}
+
+.trailer-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    aspect-ratio: 16/9;
+}
+
+.close-trailer {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .details-main {
+        flex-direction: column;
+    }
+    
+    .detail-poster {
+        width: 150px;
+        margin: 0 auto;
+    }
+    
+    .movie-backdrop {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .movies-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1;
+        text-align: center;
+    }
+}

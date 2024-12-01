@@ -296,7 +296,6 @@
 .detail-poster {
     width: 300px;
     height: 500px;
-    object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -392,6 +391,7 @@
     
     .detail-poster {
         width: 150px;
+        height: 250px;
         margin: 0 auto;
     }
     

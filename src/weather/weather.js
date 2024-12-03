@@ -76,7 +76,7 @@
         }
         .weather-content{
             overflow-y: auto;
-            height: 80vh;
+            height: 83vh;
             padding: 10px;
             background-color: var(--spotify-black);
         }

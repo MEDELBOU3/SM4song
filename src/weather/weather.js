@@ -63,17 +63,18 @@
     <style>
     
         .weather-modal {
-            right: auto !important;
-            left: 0;
+            position: fixed;
+            top: 0;
+            right: -50%;
             height: 100vh;
             width: 41.5%;
-            transform: translateX(-100%);
+            transition: right var(--transition-speed);
             background: var(--spotify-black);
             z-index: 1000;
         }
     
         .weather-modal.active {
-            transform: translateX(0);
+            right: 58.5%;
         }
         
         .weather-content{

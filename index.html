@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="playlist.css">
@@ -88,6 +89,15 @@
             <div class="menu-item" data-page="playlist" onclick="openPlaylistModal()">
                 <i class='bx bxs-playlist'></i>
                 My list
+            </div>
+            <!--  Discover menu item -->
+           <div class="menu-item" data-page="discover" onclick="toggleDiscoverButtons()">
+            <i class="fas fa-compass"></i>
+               Discover
+            </div>
+            <!-- Container for buttons -->
+            <div id="discover-buttons" style="display: none; padding-left: 20px;">
+                <!-- Buttons will be added here dynamically -->
             </div>
         </div>
         <div class="main-content">
@@ -229,7 +239,49 @@
             <div class="resize-handle bottom-right"></div>
         </div>
     </div>
-    
+    <script>
+        function toggleDiscoverButtons() {
+            const buttonsContainer = document.getElementById('discover-buttons');
+            
+            if (buttonsContainer.style.display === 'none') {
+                // Show buttons container
+                buttonsContainer.style.display = 'block';
+                
+                // Clear existing buttons
+                buttonsContainer.innerHTML = '';
+                
+                // Add Movies button
+                const moviesBtn = document.createElement('div');
+                moviesBtn.className = 'submenu-item';
+                moviesBtn.innerHTML = '<i class="fas fa-film"></i> Movies';
+                moviesBtn.onclick = () => {
+                    const existingBtn = document.getElementById('movies-btn');
+                    if (!existingBtn) {
+                        addMoviesButton();
+                    }
+                    toggleMoviesModal();
+                };
+                buttonsContainer.appendChild(moviesBtn);
+                
+                // Add Stats button
+                const statsBtn = document.createElement('div');
+                statsBtn.className = 'submenu-item';
+                statsBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Usage Statistics';
+                statsBtn.onclick = () => {
+                    const existingBtn = document.getElementById('statsButton');
+                    if (!existingBtn) {
+                        createStatsButton();
+                    }
+                    // Trigger click on the actual stats button
+                    document.getElementById('statsButton').click();
+                };
+                buttonsContainer.appendChild(statsBtn);
+            } else {
+                // Hide buttons container
+                buttonsContainer.style.display = 'none';
+            }
+        }
+    </script>
  
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="main.js"></script>

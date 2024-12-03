@@ -397,7 +397,7 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1003;
             left: 0;
             top: 0;
             width: 100%;
@@ -818,3 +818,22 @@
           ::-webkit-scrollbar-thumb:hover {
             background: #1ed760;
           }
+
+          
+          .submenu-item {
+            padding: 8px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .submenu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        #discover-buttons {
+            transition: all 0.3s ease;
+        }

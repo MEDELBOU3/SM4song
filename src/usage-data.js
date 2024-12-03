@@ -526,28 +526,7 @@ class AdvancedUserTracker {
         
         // Add styles
         const styles = `
-            #statsButton {
-                position: fixed;
-                bottom: 80px;
-                right: 20px;
-                padding: 12px 20px;
-                background: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 25px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                transition: all 0.3s ease;
-                z-index: 1000;
-            }
-        
-            #statsButton:hover {
-                transform: scale(1.05);
-                background: #45a049;
-            }
+           
         
             .stats-modal {
                 display: none;

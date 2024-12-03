@@ -1,5 +1,6 @@
-        // Add these constants at the top of your main.js
+        //these constants at the top of your main.js
         const TMDB_API_KEY = '431fb541e27bceeb9db2f4cab69b54e1';
+        const GNEWS_API_KEY = 'c3f1f1ea2b14265deb409dc3208001d7';
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
         const TMDB_IMAGE_BASE_URL1 = 'https://image.tmdb.org/t/p/w1280';
@@ -26,6 +27,7 @@
             // Log to check if function is called
             console.log('Movies button added');
         }
+        
 
         // Create and add movies modal to the DOM
         function createMoviesModal() {
@@ -36,9 +38,16 @@
                 <div class="modal-header">
                     <h2>Movies</h2>
                     <div class="modal-controls">
+                        <button id="openNews" class="news-btn">
+                           <i class="fas fa-newspaper"></i>
+                        </button>
+                        <button id="openWeather" class="weather-btn">
+                          <i class="fas fa-cloud-sun"></i>
+                        </button>
                         <button id="closeMovies"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
+                <div class="main-cont">
                 <div class="modal-search">
                     <input type="text" id="movieSearch" placeholder="Search movies...">
                     <button id="searchMovieBtn"><i class="fas fa-search"></i></button>
@@ -49,10 +58,13 @@
                     <button class="tab-btn" data-category="upcoming">Upcoming</button>
                 </div>
                 <div class="movies-content"></div>
+                </div>
                 
             `;
             document.body.appendChild(moviesModal);
             setupMoviesEventListeners();
+            createNewsModal();
+            createWeatherModal();
         }
         
         function playMovieTrailer(trailerKey) {

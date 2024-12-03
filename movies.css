@@ -437,7 +437,7 @@
 
 
 .side-modal.with-news {
-    width: 45%; /* نصف العرض عند فتح الأخبار */
+    width: 55%; /* نصف العرض عند فتح الأخبار */
     transition: all var(--transition-speed);
 }
 

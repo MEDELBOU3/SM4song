@@ -61,9 +61,10 @@
     // css styles
     const weatherStyles = `
     <style>
+    
         .weather-modal {
             right: auto !important;
-            left: 0;
+            left: -100%;
             height: 100vh;
             width: 41.5%;
             transform: translateX(-100%);
@@ -72,8 +73,9 @@
         }
     
         .weather-modal.active {
-            transform: translateX(0);
+            left: 0;
         }
+        
         .weather-content{
             overflow-y: auto;
             height: 85vh;

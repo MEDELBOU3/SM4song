@@ -9,6 +9,7 @@
     --spotify-white: #111010;
     --text-color: black;
     --hover-bg: white;
+    --modal-controls-bg: rgba(0, 0, 0, 0.4);
     --hover-bg1: white;
     --header-bg: rgba(220, 255, 245, 0.87);
     --hover-bg2: #dfdddd;
@@ -34,6 +35,7 @@
     --text-color: #fff;
     --hover-bg: #333;
     --hover-bg1: #111;
+    --modal-controls-bg: rgba(255, 255, 255, 0.1);
     --spotify-green1: #00e6508f;
     --header-bg: rgba(21, 54, 44, 0.87);
     --hover-bg2: #3E3E3E;
@@ -50,25 +52,6 @@
 }
 
 
-/* Base Styles */
-#movies-btn {
-    position: fixed;
-    bottom: 100px;
-    left: 20px;
-    padding: 12px 24px;
-    background: var(--spotify-green);
-    color: var(--text-color);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all var(--transition-speed);
-    z-index: 1000;
-}
-
-#movies-btn:hover {
-    background: var(--spotify-green);
-}
-
 /* Modal Styles */
 .side-modal {
     position: fixed;
@@ -77,10 +60,10 @@
     width: 90%;
     max-width: 800px;
     height: 100vh;
-    background: var(--spotify-light-black);
+    background: var(--spotify-black);
     transition: right var(--transition-speed);
     z-index: 1001;
-    overflow-y: auto;
+    overflow-y: none;
 }
 
 .side-modal.active {
@@ -101,12 +84,12 @@
 }
 
 .modal-controls button {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--modal-controls-bg);
     border: none;
     color: var(--text-color);
     font-size: 24px;
     cursor: pointer;
-    padding: 15px 10px;
+    padding: 10px 15px;
 }
 
 
@@ -138,27 +121,38 @@
 /* Movies Tabs */
 .movies-tabs {
     display: flex;
-    padding: 0 20px;
+    justify-content: center;
     gap: 10px;
-    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--header-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .tab-btn {
-    padding: 10px 20px;
-    background: var(--tab-countent);
+    padding: 8px 16px;
     border: none;
     border-radius: 20px;
+    background: var(--hover-bg);
     color: var(--text-color);
     cursor: pointer;
-    transition: all var(--transition-speed);
+    transition: all 0.2s ease;
 }
 
 .tab-btn.active {
     background: var(--spotify-green);
-    color: var(--spotify-white);
+    color: white;
+    box-shadow: var(--active-shadow);
 }
 
 /* Movie Grid */
+.movies-content{
+    overflow-y: auto;
+    width: 100%;
+    height: 60vh;
+    background: var(--spotify-black);
+}
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -374,14 +368,259 @@
 
 .close-trailer {
     position: absolute;
-    top: -40px;
-    right: 0;
-    background: none;
+    top: -24;
+    right: -42px;
+    background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: var(--text-color);
     font-size: 24px;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
+    size: 24px;
+    color: var(--text-color);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    z-index: 100;
 }
+.close-trailer:hover{
+    background-color: rgba(255, 0, 0, 0.753);
+    transform: rotate(90deg);
+}
+
+/* تعديل أنماط المودال */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    font-size: 1.2em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid var(--spotify-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .loading span {
+    animation: fadeText 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes fadeText {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+
+.side-modal.with-news {
+    width: 45%; /* نصف العرض عند فتح الأخبار */
+    transition: all var(--transition-speed);
+}
+
+.news-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 45%;
+    height: 100vh;
+    background: var(--spotify-black) ;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: right var(--transition-speed);
+}
+
+.news-modal.visible {
+    right: 0;
+}
+
+/* تعديل موقع المودال عندما تكون الأخبار مفتوحة */
+.side-modal.with-news {
+    right: 45%; /* يتحرك لليسار بمقدار عرض مودال الأخبار */
+}
+
+/* تحسين مظهر البطاقات */
+.news-content{
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.news-card {
+    margin: 15px;
+    padding: 15px;
+    background: linear-gradient(to bottom right, var(--spotify-black), var(--hover-bg),var(--spotify-green1));
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+}
+
+.news-image {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.news-details h3 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    line-height: 1.4;
+}
+
+.news-details p {
+    color: var(--spotify-grey);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.news-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--spotify-grey);
+}
+
+.news-actions button {
+    background: none;
+    border: none;
+    color: var(--spotify-green);
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.2s ease;
+}
+
+.news-actions button:hover {
+    transform: scale(1.1);
+    color: var(--spotify-green);
+}
+
+.read-more {
+    color: var(--spotify-green);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 15px;
+    background: var(--hover-bg);
+    transition: all 0.2s ease;
+}
+
+.read-more:hover {
+    background: var(--spotify-green);
+    color: var(--spotify-white);
+}
+
+/* تحسين شريط التبويبات */
+.news-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: var(--header-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.news-tabs .tab-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    background: var(--hover-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.news-tabs .tab-btn.active {
+    background: var(--spotify-green);
+    color: white;
+    box-shadow: var(--active-shadow);
+}
+
+/* تحسين شريط البحث */
+.modal-search {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    background: var(--header-bg);
+}
+
+.modal-search input {
+    flex: 1;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--hover-bg);
+    color: var(--text-color);
+}
+
+.modal-search button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--spotify-green);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-search button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--active-shadow);
+}
+
+/* تحسين التجاوب */
+@media (max-width: 1200px) {
+    .side-modal.with-news {
+        width: 50%;
+    }
+    .news-modal {
+        width: 50%;
+    }
+    .side-modal.with-news {
+        right: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-modal.with-news {
+        width: 100%;
+        right: 100%;
+    }
+    .news-modal {
+        width: 100%;
+    }
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

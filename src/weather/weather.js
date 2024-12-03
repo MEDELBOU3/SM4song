@@ -64,7 +64,7 @@
     
         .weather-modal {
             right: auto !important;
-            left: -100%;
+            left: 0;
             height: 100vh;
             width: 41.5%;
             transform: translateX(-100%);
@@ -73,7 +73,7 @@
         }
     
         .weather-modal.active {
-            left: 0;
+            transform: translateX(0);
         }
         
         .weather-content{

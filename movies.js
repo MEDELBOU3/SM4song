@@ -1,4 +1,4 @@
-        //these constants at the top of your main.js
+       // Add these constants at the top of your main.js
         const TMDB_API_KEY = '431fb541e27bceeb9db2f4cab69b54e1';
         const GNEWS_API_KEY = 'd605509d52ed69ee619920835a0a60e8';
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -44,20 +44,23 @@
                         <button id="openWeather" class="weather-btn">
                           <i class="fas fa-cloud-sun"></i>
                         </button>
+                        <button id="openSports" class="sports-btn">
+                          <i class="fas fa-futbol"></i>
+                        </button>
                         <button id="closeMovies"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <div class="main-cont">
-                <div class="modal-search">
-                    <input type="text" id="movieSearch" placeholder="Search movies...">
-                    <button id="searchMovieBtn"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="movies-tabs">
-                    <button class="tab-btn active" data-category="popular">Popular</button>
-                    <button class="tab-btn" data-category="top_rated">Top Rated</button>
-                    <button class="tab-btn" data-category="upcoming">Upcoming</button>
-                </div>
-                <div class="movies-content"></div>
+                    <div class="modal-search">
+                       <input type="text" id="movieSearch" placeholder="Search movies...">
+                       <button id="searchMovieBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="movies-tabs">
+                       <button class="tab-btn active" data-category="popular">Popular</button>
+                       <button class="tab-btn" data-category="top_rated">Top Rated</button>
+                       <button class="tab-btn" data-category="upcoming">Upcoming</button>
+                    </div>
+                    <div class="movies-content"></div>
                 </div>
                 
             `;
@@ -65,6 +68,8 @@
             setupMoviesEventListeners();
             createNewsModal();
             createWeatherModal();
+            createSportsModal();
+
         }
         
         function playMovieTrailer(trailerKey) {
@@ -241,4 +246,177 @@
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             addMoviesButton();
             createMoviesModal();
+        }
+
+      
+        function createSportsModal() {
+            const sportsModal = document.createElement('div');
+            sportsModal.id = 'sportsModal';
+            sportsModal.className = 'sports-modal';
+            sportsModal.innerHTML = `
+                <div class="modal-header">
+                    <h2>Sports News</h2>
+                    <div class="modal-controls">
+                        <button id="closeSports"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="main-cont">
+                    <div class="modal-search">
+                        <input type="text" id="sportsSearch" placeholder="Search sports...">
+                        <button id="searchSportsBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="sports-tabs">
+                        <button class="tab-btn active" data-sport="soccer">Soccer</button>
+                        <button class="tab-btn" data-sport="basketball">Basketball</button>
+                        <button class="tab-btn" data-sport="tennis">Tennis</button>
+                        <button class="tab-btn" data-sport="formula1">Formula 1</button>
+                    </div>
+                    <div class="sports-content"></div>
+                </div>
+            `;
+            document.body.appendChild(sportsModal);
+            setupSportsEventListeners();
+        }
+
+        async function loadSportsData(sport) {
+            const API_KEY = '72fbdc1a00cf1ee326120b73ccf61375';
+            const sportsContent = document.querySelector('.sports-content');
+            sportsContent.innerHTML = '<div class="loading">Loading...</div>';
+        
+            try {
+                // نستخدم API مختلف حسب نوع الرياضة
+                let endpoint;
+                switch(sport) {
+                    case 'soccer':
+                        endpoint = 'https://v3.football.api-sports.io/fixtures?live=all';
+                        break;
+                    case 'basketball':
+                        endpoint = 'https://v1.basketball.api-sports.io/games?live=all';
+                        break;
+                    case 'formula1':
+                        endpoint = 'https://v1.formula-1.api-sports.io/races';
+                        break;
+                    case 'tennis':
+                        endpoint = 'https://v1.tennis.api-sports.io/games?live=all';
+                        break;
+                }
+        
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'x-apisports-key': API_KEY
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.response) {
+                    displaySportsData(data.response, sport);
+                } else {
+                    throw new Error('No data available');
+                }
+            } catch (error) {
+                sportsContent.innerHTML = `
+                    <div class="error">
+                        <p>Unable to load sports data</p>
+                        <small>Please try again later</small>
+                    </div>`;
+            }
+        }
+        
+        function displaySportsData(data, sportType) {
+            const sportsContent = document.querySelector('.sports-content');
+            
+            if (data.length === 0) {
+                sportsContent.innerHTML = `
+                    <div class="no-matches">
+                        <p>No live matches available at the moment</p>
+                    </div>`;
+                return;
+            }
+        
+            let html = '';
+            
+            switch(sportType) {
+                case 'soccer':
+                    html = data.map(match => `
+                        <div class="sport-card">
+                            <div class="league-info">
+                                <img src="${match.league.logo}" alt="${match.league.name}" class="league-logo">
+                                <span>${match.league.name}</span>
+                            </div>
+                            <div class="match-info">
+                                <div class="team">
+                                    <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo">
+                                    <span>${match.teams.home.name}</span>
+                                </div>
+                                <div class="score">
+                                    <span class="time">${match.fixture.status.elapsed}'</span>
+                                    <div class="result">
+                                        ${match.goals.home} - ${match.goals.away}
+                                    </div>
+                                </div>
+                                <div class="team">
+                                    <img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="team-logo">
+                                    <span>${match.teams.away.name}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    break;
+        
+                case 'basketball':
+                    html = data.map(game => `
+                        <div class="sport-card">
+                            <div class="league-info">
+                                <span>${game.league.name}</span>
+                            </div>
+                            <div class="match-info">
+                                <div class="team">
+                                    <span>${game.teams.home.name}</span>
+                                </div>
+                                <div class="score">
+                                    <span class="time">${game.status.long}</span>
+                                    <div class="result">
+                                        ${game.scores.home.total} - ${game.scores.away.total}
+                                    </div>
+                                </div>
+                                <div class="team">
+                                    <span>${game.teams.away.name}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    break;
+        
+                // يمكن إضافة المزيد من أنواع الرياضات هنا
+            }
+        
+            sportsContent.innerHTML = html;
+        }
+
+        function setupSportsEventListeners() {
+            const moviesModal = document.getElementById('moviesContainer');
+            const sportsModal = document.getElementById('sportsModal');
+            const openSportsBtn = document.getElementById('openSports');
+            const closeSportsBtn = document.getElementById('closeSports');
+            const sportsTabs = document.querySelectorAll('.sports-tabs .tab-btn');
+            
+            openSportsBtn.addEventListener('click', () => {
+                moviesModal.classList.add('with-sports');
+                sportsModal.classList.add('visible');
+                loadSportsData('soccer'); // تحميل افتراضي لكرة القدم
+            });
+        
+            closeSportsBtn.addEventListener('click', () => {
+                moviesModal.classList.remove('with-sports');
+                sportsModal.classList.remove('visible');
+            });
+        
+            sportsTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    sportsTabs.forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    loadSportsData(e.target.dataset.sport);
+                });
+            });
         }

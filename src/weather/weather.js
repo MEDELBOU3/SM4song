@@ -1,4 +1,6 @@
-     // Weather Modal
+  
+     
+     // إنشاء modal الطقس
      function createWeatherModal() {
         const weatherModal = document.createElement('div');
         weatherModal.id = 'weatherContainer';
@@ -61,7 +63,6 @@
     // css styles
     const weatherStyles = `
     <style>
-    
         .weather-modal {
             position: fixed;
             top: 0;
@@ -72,17 +73,19 @@
             background: var(--spotify-black);
             z-index: 1000;
         }
-    
+
         .weather-modal.active {
             right: 58.5%;
         }
-        
+
         .weather-content{
             overflow-y: auto;
-            height: 85vh;
+            height: 80vh;
             padding: 10px;
             background-color: var(--spotify-black);
+        
         }
+
         .save-city-btn {
             background: var(--spotify-green);
             color: white;
@@ -185,6 +188,7 @@
     // إضافة الأنماط إلى head
     document.head.insertAdjacentHTML('beforeend', weatherStyles);
 
+    
     // تهيئة أحداث modal الطقس
     function setupWeatherEventListeners() {
         const apiKey = 'f458a708df95ee78be02eb6eb535560e';
@@ -194,16 +198,22 @@
         const closeWeatherBtn = document.getElementById('closeWeather');
         const searchInput = document.getElementById('citySearch');
         const searchButton = document.getElementById('searchCityBtn');
-    
+        const moviesModal = document.getElementById('moviesContainer'); 
+
+
         openWeatherBtn.addEventListener('click', () => {
-            weatherModal.classList.add('active');
+            moviesModal.classList.add('with-weather');
+            weatherModal.classList.add('visible');
             getCurrentLocation();
         });
     
         closeWeatherBtn.addEventListener('click', () => {
-            weatherModal.classList.remove('active');
+            moviesModal.classList.remove('with-weather');
+            weatherModal.classList.remove('visible');
         });
-    
+
+        
+            
         searchButton.addEventListener('click', () => {
             const city = searchInput.value.trim();
             if (city) {
@@ -357,6 +367,7 @@
 
         const style = document.createElement('style');
         style.textContent = `
+
         .cities-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -411,8 +422,41 @@
         .current-location {
             border-left: 4px solid #4CAF50;
         }
+
+        #weatherContainer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 45%;
+            height: 100vh;
+            background: var(--spotify-black);
+            z-index: 1000;
+            overflow-y: auto;
+            transition: right 0.3s ease-in-out;
+        }
+    
+        #weatherContainer.visible {
+            right: 0;
+        }
+    
+        .side-modal.with-weather {
+            width: 55%;
+            transition: all var(--transition-speed);
+        }
+
+        .side-modal.with-weather {
+            right: 45%;
+        }
+
+        
+        
+        
+        
         `;
         document.head.appendChild(style);
+
+        
+
         function deleteCity(cityName) {
             let savedCities = JSON.parse(localStorage.getItem('savedCities')) || [];
             savedCities = savedCities.filter(city => city.name !== cityName);

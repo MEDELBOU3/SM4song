@@ -281,6 +281,25 @@
                 buttonsContainer.style.display = 'none';
             }
         }
+        //this functio to add sidebar Toggel
+        function setupSidebarToggle() {
+            const toggleBtn = document.createElement('button');
+            toggleBtn.id = 'sidebarToggle';
+            toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            toggleBtn.className = 'sidebar-toggle';
+            
+            // Insert the button at the start of main-content
+            const mainContent = document.querySelector('.main-content');
+            mainContent.insertBefore(toggleBtn, mainContent.firstChild);
+            
+            toggleBtn.addEventListener('click', () => {
+                document.querySelector('.container').classList.toggle('sidebar-collapsed');
+            });
+        }
+        
+        // Call this function when the page loads
+        document.addEventListener('DOMContentLoaded', setupSidebarToggle);
+        
     </script>
  
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

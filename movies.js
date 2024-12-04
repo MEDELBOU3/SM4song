@@ -1,6 +1,6 @@
         //these constants at the top of your main.js
         const TMDB_API_KEY = '431fb541e27bceeb9db2f4cab69b54e1';
-        const GNEWS_API_KEY = 'c3f1f1ea2b14265deb409dc3208001d7';
+        const GNEWS_API_KEY = 'd605509d52ed69ee619920835a0a60e8';
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
         const TMDB_IMAGE_BASE_URL1 = 'https://image.tmdb.org/t/p/w1280';

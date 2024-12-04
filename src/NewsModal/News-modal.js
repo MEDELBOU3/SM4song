@@ -280,3 +280,8 @@ async function searchNews(query) {
         newsContent.innerHTML = '<p class="error">Error searching news. Please try again later.</p>';
     }
 }
+
+
+
+
+

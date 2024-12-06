@@ -1,17 +1,17 @@
-       //these constants for movies , sports & news
+        //const for apis and URL
         const TMDB_API_KEY = '431fb541e27bceeb9db2f4cab69b54e1';
         const GNEWS_API_KEY = 'd605509d52ed69ee619920835a0a60e8';
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
         const TMDB_IMAGE_BASE_URL1 = 'https://image.tmdb.org/t/p/w1280';
-
+        
         //these functions to fetch movie data
         async function fetchTMDBData(endpoint, params = '') {
            const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}${params}`);
            return await response.json();
         }
-
-
+        
+        
         // movies button 
         function addMoviesButton() {
             //  checking if button already exists
@@ -28,7 +28,7 @@
             console.log('Movies button added');
         }
         
-
+        
         // Create  movies modal to the DOM
         function createMoviesModal() {
             const moviesModal = document.createElement('div');
@@ -48,17 +48,29 @@
                           <i class="fas fa-futbol"></i>
                         </button>
                         <button id="closeMovies"><i class="fa fa-times"></i></button>
+                        
                     </div>
                 </div>
                 <div class="main-cont">
                     <div class="modal-search">
                        <input type="text" id="movieSearch" placeholder="Search movies...">
+                        <select id="genreSelect">
+                          <option value="">All Genres</option>
+                        </select>
                        <button id="searchMovieBtn"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="movies-tabs">
                        <button class="tab-btn active" data-category="popular">Popular</button>
                        <button class="tab-btn" data-category="top_rated">Top Rated</button>
                        <button class="tab-btn" data-category="upcoming">Upcoming</button>
+                       
+                        <button id="savedMovies" class="saved-btn">
+                            <i class="fas fa-bookmark"></i> Saved
+                        </button>
+                        <button id="favorites" class="favorite-btn">
+                            <i class="fas fa-heart"></i> Favorite
+                        </button>
+                       
                     </div>
                     <div class="movies-content"></div>
                 </div>
@@ -67,11 +79,26 @@
             document.body.appendChild(moviesModal);
             setupMoviesEventListeners();
             createNewsModal();
+            loadGenres();
             createWeatherModal();
             createSportsModal();
-
-        }
         
+        }
+
+        // Load genres for select dropdown
+        async function loadGenres() {
+            const data = await fetchTMDBData('/genre/movie/list');
+            const select = document.getElementById('genreSelect');
+            data.genres.forEach(genre => {
+                const option = document.createElement('option');
+                option.value = genre.id;
+                option.textContent = genre.name;
+                select.appendChild(option);
+            });
+        }
+
+       
+
         function playMovieTrailer(trailerKey) {
             const trailerContainer = document.createElement('div');
             trailerContainer.className = 'trailer-modal';
@@ -89,8 +116,8 @@
             trailerContainer.querySelector('.close-trailer').onclick = () => 
                 trailerContainer.remove();
         }
-
-
+        
+        
         function toggleMoviesModal() {
             const moviesContainer = document.getElementById('moviesContainer');
             if (moviesContainer.classList.contains('active')) {
@@ -115,6 +142,8 @@
                     displayMovies(btn.dataset.category);
                 };
             });
+
+           
         }
         
         async function searchMovies() {
@@ -139,7 +168,73 @@
             document.querySelector('.movies-content').innerHTML = html;
             addMovieEventListeners();
         }
+        // Display saved movies
+        async function displaySavedMovies() {
+            const savedMovies = JSON.parse(localStorage.getItem('savedMovies') || '[]');
+            const movieDetails = await Promise.all(
+                savedMovies.map(id => fetchTMDBData(`/movie/${id}`))
+            );
+            document.querySelector('.movies-content').innerHTML = '<div class="saved-movies-container"></div>';
+            const container = document.querySelector('.saved-movies-container');
+            movieDetails.forEach(movie => {
+                container.innerHTML += createMovieCardWithDelete(movie, 'saved');
+            });
+            addMovieEventListeners();
+            addDeleteEventListeners();
+        }
+
         
+        
+        
+        // Display favorite movies
+        async function displayFavoriteMovies() {
+            const favorites = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+            const movieDetails = await Promise.all(
+                favorites.map(id => fetchTMDBData(`/movie/${id}`))
+            );
+            document.querySelector('.movies-content').innerHTML = '<div class="favorite-movies-container"></div>';
+            const container = document.querySelector('.favorite-movies-container');
+            movieDetails.forEach(movie => {
+                container.innerHTML += createMovieCardWithDelete(movie, 'favorite');
+            });
+            addMovieEventListeners();
+            addDeleteEventListeners();
+        }
+        
+        
+        function addDeleteEventListeners() {
+            document.querySelectorAll('.delete-movie-btn').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    const movieId = btn.dataset.id;
+                    const type = btn.dataset.type;
+                    
+                    if (type === 'saved') {
+                        deleteFromSaved(movieId);
+                        displaySavedMovies();
+                    } else if (type === 'favorite') {
+                        deleteFromFavorites(movieId);
+                        displayFavoriteMovies();
+                    }
+                };
+            });
+        }
+        
+        function deleteFromSaved(movieId) {
+            let savedMovies = JSON.parse(localStorage.getItem('savedMovies') || '[]');
+            savedMovies = savedMovies.filter(id => id != movieId);
+            localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+            showToast('Movie removed from saved list!');
+        }
+        
+        function deleteFromFavorites(movieId) {
+            let favorites = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+            favorites = favorites.filter(id => id != movieId);
+            localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
+            showToast('Movie removed from favorites!');
+        }
+
+       
         function createMovieCard(movie) {
             const posterPath = movie.poster_path 
                 ? `${TMDB_IMAGE_BASE_URL}${movie.poster_path}`
@@ -152,6 +247,38 @@
                         <div class="movie-overlay">
                             <button class="movie-details-btn" data-id="${movie.id}">
                                 <i class="fas fa-info-circle"></i> Details
+                            </button>
+                            
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>${movie.title}</h3>
+                        <div class="movie-meta">
+                            <span class="rating">
+                                <i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}
+                            </span>
+                            <span class="year">${movie.release_date?.split('-')[0] || 'N/A'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createMovieCardWithDelete(movie, type) {
+            const posterPath = movie.poster_path 
+                ? `${TMDB_IMAGE_BASE_URL}${movie.poster_path}`
+                : 'path/to/default/movie/poster.jpg';
+            
+            return `
+                <div class="movie-card" data-id="${movie.id}">
+                    <div class="movie-poster">
+                        <img src="${posterPath}" alt="${movie.title}">
+                        <div class="movie-overlay">
+                            <button class="movie-details-btn" data-id="${movie.id}">
+                                <i class="fas fa-info-circle"></i> Details
+                            </button>
+                            <button class="delete-movie-btn" data-id="${movie.id}" data-type="${type}">
+                                <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
@@ -169,19 +296,40 @@
         }
         
         async function showMovieDetails(movieId) {
-            const [movieData, credits, videos] = await Promise.all([
+            const [movieData, credits, videos, recommendations] = await Promise.all([
                 fetchTMDBData(`/movie/${movieId}`),
                 fetchTMDBData(`/movie/${movieId}/credits`),
-                fetchTMDBData(`/movie/${movieId}/videos`)
+                fetchTMDBData(`/movie/${movieId}/videos`),
+                fetchTMDBData(`/movie/${movieId}/recommendations`)
             ]);
-        
+
             const trailer = videos.results.find(video => video.type === "Trailer");
             const director = credits.crew.find(person => person.job === "Director");
             const cast = credits.cast.slice(0, 5);
         
+
             const detailsModal = document.createElement('div');
             detailsModal.className = 'movie-details-modal';
+            // Create cast cards HTML
+            const castHTML = credits.cast.slice(0, 10).map(actor => `
+            <div class="cast-card">
+               <img src="${actor.profile_path ? TMDB_IMAGE_BASE_URL + actor.profile_path : 'default-avatar.jpg'}" 
+               alt="${actor.name}">
+               <p>${actor.name}</p>
+               <span>${actor.character}</span>
+            </div>
+           `).join('');
+
+           // Create recommendations HTML
+           const recommendationsHTML = recommendations.results.slice(0, 6).map(movie => `
+            <div class="recommendation-card" data-id="${movie.id}">
+                <img src="${TMDB_IMAGE_BASE_URL + movie.poster_path}" alt="${movie.title}">
+                <p>${movie.title}</p>
+            </div>
+           `).join('');
+
             detailsModal.innerHTML = `
+            
                 <div class="details-content">
                     <button class="close-details">&times;</button>
                     <div class="movie-backdrop" style="background-image: url('${TMDB_IMAGE_BASE_URL1}${movieData.backdrop_path}')">
@@ -192,14 +340,24 @@
                         <div class="detail-info">
                             <h2>${movieData.title}</h2>
                             <p class="tagline">${movieData.tagline}</p>
+                            <div class="action-buttons">
+                                <button class="save-movie" data-id="${movieId}">
+                                  <i class="fas fa-bookmark"></i> Save
+                                </button>
+                                <button class="add-favorite" data-id="${movieId}">
+                                   <i class="fas fa-heart"></i> Favorite
+                                </button>
+                            </div>
                             <div class="meta-info">
                                 <span>${movieData.release_date.split('-')[0]}</span>
                                 <span>${movieData.runtime} min</span>
                                 <span>${movieData.vote_average.toFixed(1)} ⭐</span>
                             </div>
+
                             <div class="genres">
                                 ${movieData.genres.map(genre => `<span>${genre.name}</span>`).join('')}
                             </div>
+
                             <p class="overview">${movieData.overview}</p>
                             <div class="credits">
                                 <p><strong>Director:</strong> ${director?.name || 'N/A'}</p>
@@ -210,13 +368,27 @@
                                     <i class="fas fa-play"></i> Watch Trailer
                                 </button>
                             ` : ''}
+                            <div class="cast-section">
+                                <h3>Cast</h3>
+                                <div class="cast-grid">
+                                   ${castHTML}
+                                </div>
+                            </div>
+                            <div class="recommendations-section">
+                               <h3>Recommendations</h3>
+                                <div class="recommendations-grid">
+                                  ${recommendationsHTML}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
         
+    
             document.querySelector('.movies-content').appendChild(detailsModal);
-            
+            setupDetailEventListeners(detailsModal, movieId);
+
             detailsModal.querySelector('.close-details').onclick = () => detailsModal.remove();
             
             const trailerBtn = detailsModal.querySelector('.play-trailer');
@@ -231,24 +403,86 @@
             document.querySelectorAll('.movie-details-btn').forEach(btn => {
                 btn.onclick = () => showMovieDetails(btn.dataset.id);
             });
+
+            // Add event listeners for saved and favorites buttons
+            document.getElementById('savedMovies').onclick = displaySavedMovies;
+            document.getElementById('favorites').onclick = displayFavoriteMovies;
+
+           // Genre filtering
+            document.getElementById('genreSelect').addEventListener('change', async function() {
+               const genreId = this.value;
+                if (genreId) {
+                   const data = await fetchTMDBData('/discover/movie', `&with_genres=${genreId}`);
+                   displayMovieResults(data.results);
+                } else {
+                   displayMovies('popular');
+                }
+            });
         }
         
+        //event listeners for new functionality
+        function setupDetailEventListeners(modal, movieId) {
+            modal.querySelector('.close-details').onclick = () => modal.remove();
+            
+            const trailerBtn = modal.querySelector('.play-trailer');
+            if (trailerBtn) {
+                trailerBtn.onclick = () => playMovieTrailer(trailerBtn.dataset.key);
+            }
         
+            modal.querySelector('.save-movie').onclick = () => saveMovie(movieId);
+            modal.querySelector('.add-favorite').onclick = () => addToFavorites(movieId);
+            
+            modal.querySelectorAll('.recommendation-card').forEach(card => {
+                card.onclick = () => {
+                    modal.remove();
+                    showMovieDetails(card.dataset.id);
+                };
+            });
 
+              
+        }
+
+        // Save and Favorite functionality
+        function saveMovie(movieId) {
+            let savedMovies = JSON.parse(localStorage.getItem('savedMovies') || '[]');
+            if (!savedMovies.includes(movieId)) {
+                savedMovies.push(movieId);
+                localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+                showToast('Movie saved successfully!');
+            }
+        }
+
+        function addToFavorites(movieId) {
+            let favorites = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+            if (!favorites.includes(movieId)) {
+                favorites.push(movieId);
+                localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
+                showToast('Added to favorites!');
+            }
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
         // Initialize movies feature
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM loaded, initializing movies feature');
             addMoviesButton();
             createMoviesModal();
         });
-
+        
         // Alternatively, trying running it immediately if the DOM is already loaded
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             addMoviesButton();
             createMoviesModal();
         }
 
-      
         function createSportsModal() {
             const sportsModal = document.createElement('div');
             sportsModal.id = 'sportsModal';

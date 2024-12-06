@@ -1,20 +1,20 @@
-       // Add these constants at the top of your main.js
+       //these constants for movies , sports & news
         const TMDB_API_KEY = '431fb541e27bceeb9db2f4cab69b54e1';
         const GNEWS_API_KEY = 'd605509d52ed69ee619920835a0a60e8';
         const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
         const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
         const TMDB_IMAGE_BASE_URL1 = 'https://image.tmdb.org/t/p/w1280';
 
-        // Add these functions to fetch movie data
+        //these functions to fetch movie data
         async function fetchTMDBData(endpoint, params = '') {
            const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}${params}`);
            return await response.json();
         }
 
 
-        // Add a movies button to your navigation
+        // movies button 
         function addMoviesButton() {
-            // First check if button already exists
+            //  checking if button already exists
             if (document.getElementById('movies-btn')) return;
             
             // Create button directly in body instead of nav
@@ -29,7 +29,7 @@
         }
         
 
-        // Create and add movies modal to the DOM
+        // Create  movies modal to the DOM
         function createMoviesModal() {
             const moviesModal = document.createElement('div');
             moviesModal.id = 'moviesContainer';
@@ -242,7 +242,7 @@
             createMoviesModal();
         });
 
-        // Alternatively, you can try running it immediately if the DOM is already loaded
+        // Alternatively, trying running it immediately if the DOM is already loaded
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             addMoviesButton();
             createMoviesModal();

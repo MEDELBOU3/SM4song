@@ -844,3 +844,202 @@
     color: var(--text-color-secondary);
 }
 
+
+/* Cast Section Styling */
+.delete-movie-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;  /* Hidden by default */
+    z-index: 2;
+}
+
+.delete-movie-btn:hover {
+    background-color: rgb(255, 0, 0);
+    transform: scale(1.1);
+}
+
+.movie-card:hover .delete-movie-btn {
+    opacity: 1;  /* Show on hover */
+}
+
+.delete-movie-btn i {
+    font-size: 16px;
+}
+
+/* Animation for delete button */
+@keyframes deleteButtonAppear {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.movie-card:hover .delete-movie-btn {
+    animation: deleteButtonAppear 0.3s ease forwards;
+}
+.action-buttons{
+    margin: 10px auto;
+}
+.mv-saved{
+    padding: 10px;
+    background-color: var(--hover-bg);
+}
+.save-movie, .add-favorite, .saved-btn, .favorite-btn{
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 2px solid var(--art-bg);
+    outline: none;
+    background: var(--active-bg);
+    color: var(--text-color);
+}
+
+.save-movie:hover, .add-favorite:hover, .saved-btn:hover, .favorite-btn:hover{
+    box-shadow: var(--active-shadow);
+}
+
+.cast-section {
+    margin-top: 2rem;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+}
+
+.cast-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.cast-card:hover {
+    transform: translateY(-5px);
+}
+
+.cast-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.cast-card p {
+    padding: 0.5rem;
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.cast-card span {
+    display: block;
+    padding: 0 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Recommendations Section Styling */
+.recommendations-section {
+    margin-top: 2rem;
+}
+
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.recommendation-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.recommendation-card:hover {
+    transform: scale(1.05);
+}
+
+.recommendation-card img {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+}
+
+.recommendation-card p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    margin: 0;
+    background: var(--card-background);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* Fix for genre filtering */
+#genreSelect {
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Saved and Favorites Display */
+.saved-movies-container,
+.favorite-movies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+}
+
+
+
+/* Toast Notification Styling */
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    z-index: 1000;
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+

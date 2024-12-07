@@ -177,6 +177,9 @@
             width: 80%;
             overflow-y: auto;
             background: linear-gradient(to bottom, #3c3c3c, var(--spotify-black));
+             transition: background-color 0.5s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
        
         #searchInput {

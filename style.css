@@ -16,6 +16,7 @@
             --card-background: rgba(255, 246, 246, 0.8);
             --playlist-bg: #e7eedf;
             --art-bg: silver;
+            --submenu-item-bg: azure;
             --tab-countent: rgba(255, 255, 255, 0.4);
             --active-shadow: 0 0 8px #2be0d7,
                              0 0 25px #2be0d7,
@@ -38,6 +39,7 @@
             --hover-bg3: #122020;
             --card-background: rgba(25, 20, 20, 0.8);
             --playlist-bg: #110707;
+            --submenu-item-bg: rgba(255, 255, 255, 0.1);
             --art-bg: rgb(19, 18, 18);
             --tab-countent: rgba(0, 0, 0, 0.4);
             --active-shadow: 0 0 8px #1db985,
@@ -57,7 +59,7 @@
             line-height: 1.5;
             color: var(--text-color);
         }
-         /* Add this to your CSS */
+        /* Add this to your CSS */
         .sidebar-toggle {
             background: none;
             border: none;
@@ -87,6 +89,8 @@
             overflow-y: auto;
             overflow-x: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         
         /* New styles for collapsed state */
@@ -172,7 +176,7 @@
             overflow-y: auto;
             background: linear-gradient(to bottom, #3c3c3c, var(--spotify-black));
         }
-        
+       
         #searchInput {
             width: 100%;
             padding: 12px 40px 12px 12px;
@@ -230,16 +234,23 @@
             color: var(--text-color);
         }
         .player-controls {
+            background-color: var(--hover-bg);
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--hover-bg);
             padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 90px;
+        }
+
+        .player-controls {
+            /* Other existing styles remain the same */
+            transition: background-color 0.5s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         .now-playing {
             display: flex;
@@ -272,10 +283,15 @@
             height: 140px;
             border-top-left-radius: 24px;
             border-top-right-radius: 24px;
-            box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.3);
             margin-left: 3rem;
             padding: 1rem;
             background-color: var(--hover-bg1);
+            
+        }
+        .player-center {
+            transition: background-color 0.5s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         .player-buttons {
             margin-bottom: 12px;
@@ -356,7 +372,7 @@
             background: var(--spotify-white);
             cursor: pointer;
         }
-        #lyricsContainer {
+        .lyrics-container {
             display: none;
             background-image: url(https://cdn.pixabay.com/animation/2024/05/02/07/43/07-43-00-535_512.gif);
             position: fixed;
@@ -364,12 +380,15 @@
             right: -350px;
             width: 350px;
             height: calc(100vh - 90px);
-            background-color: var(--hover-bg);
+            background-color: var(--tab-countent);
             border-top-left-radius: 60px;
             box-shadow: 0 0 3rem rgba(0, 0, 0, 0.3);
             padding: 20px;
             overflow-y: auto;
             transition: right 0.3s ease-in-out;
+            
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         #lyricsContainer::-webkit-scrollbar, .modal::-webkit-scrollbar, .modal-content::-webkit-scrollbar, body::-webkit-scrollbar{
@@ -402,7 +421,7 @@
             border-radius: 5px;
         }
         #toggleLyrics {
-            margin-right: 2rem;
+            margin-right: 1rem;
             background-color: var(--spotify-green);
             color: var(--spotify-white);
             border: none;
@@ -635,8 +654,8 @@
             color: var(--spotify-white);
             padding: 5px 8px;
             position: absolute;
-            top: 60px;
-            right: 10px;
+            top: 50px;
+            right: 0;
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
             border-radius: 50%;
         }
@@ -869,6 +888,7 @@
             background: #1ed760;
           }
 
+
           
           .submenu-item {
             padding: 8px 15px;
@@ -877,13 +897,15 @@
             color: var(--text-color);
             transition: background-color 0.3s;
             font-size: 0.9em;
+            border-radius: 5px;
         }
         
         .submenu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--submenu-item-bg);
             border-radius: 5px;
         }
         
         #discover-buttons {
             transition: all 0.3s ease;
         }
+

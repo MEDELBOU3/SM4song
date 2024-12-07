@@ -404,17 +404,20 @@
             const playerCenter = document.querySelector('.player-center');
             const lyricsContainer = document.querySelector('.lyrics-container');
             const sidebar = document.querySelector('.sidebar');
+            const mainContainer = document.querySelector('.main-content');
         
             // Reset to default colors
             playerControls.style.backgroundColor = '';
             playerCenter.style.backgroundColor = '';
             lyricsContainer.style.backgroundColor = '';
             sidebar.style.backgroundColor = '';
+            mainContainer.style.backgroundColor = '';
             
             playerControls.style.backgroundImage = '';
             playerCenter.style.backgroundImage = '';
             lyricsContainer.style.backgroundImage = '';
             sidebar.style.backgroundImage = '';
+            mainContainer.style.backgroundImage = '';
         }
         
         function updatePlayerControlsBackground(imageUrl) {
@@ -434,14 +437,17 @@
                     const playerCenter = document.querySelector('.player-center');
                     const lyricsContainer = document.querySelector('.lyrics-container');
                     const sidebar = document.querySelector('.sidebar');
+                    const mainContainer = document.querySelector('.main-content');
                     
                     playerControls.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.3)`;
                     playerCenter.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.6)`;
                     lyricsContainer.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.98)`;
                     sidebar.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.98)`;
-        
+                    mainContainer.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.98)`;
+                    
                     lyricsContainer.style.backgroundImage = 
-                    sidebar.style.backgroundImage = `
+                    sidebar.style.backgroundImage =
+                    mainContainer.style.backgroundImage = `
                         linear-gradient(
                             rgba(0, 0, 0, 0.8),
                             rgba(${color.r}, ${color.g}, ${color.b}, 0.98)

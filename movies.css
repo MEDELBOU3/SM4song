@@ -166,24 +166,31 @@
     background: var(--card-background);
     border-radius: 8px;
     overflow: hidden;
+    width: 100%;
     max-width: 180px;
-    max-height: 350px;
+    height: auto;
     transition: transform var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .movie-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .movie-poster {
     position: relative;
     aspect-ratio: 3/4;
+    width: 100%;
 }
 
 .movie-poster img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .movie-overlay {
@@ -211,33 +218,56 @@
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.movie-details-btn:hover {
+    background: rgba(var(--spotify-green-rgb), 0.8);
 }
 
 .movie-info {
-    padding: 15px;
+    padding: 12px;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .movie-info h3 {
     margin: 0;
     color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+    /* Single line with ellipsis */
+    white-space: nowrap;
     overflow: hidden;
-    font-size: 1rem;
-    height: 30px;
-    width: 145px;
     text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* Optional: Use this class for titles that need multiple lines */
+.movie-info h3.multiline {
     display: -webkit-box;
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    height: auto;
+    max-height: 2.4em; /* 2 lines × 1.2 line-height */
 }
 
 .movie-meta {
     background-color: var(--meta-bg);
-    padding: 5px 4px;
-    border-radius: 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    align-items: center;
     color: var(--rating-color);
+    font-size: 12px;
+    margin-top: auto;
 }
 
 /* Movie Details Modal */

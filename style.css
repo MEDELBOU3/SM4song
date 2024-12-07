@@ -15,6 +15,7 @@
             --transition-speed: 0.3s;
             --card-background: rgba(255, 246, 246, 0.8);
             --playlist-bg: #e7eedf;
+            --now-playing-info-bg: rgba(240, 255, 255, 0.925);
             --art-bg: silver;
             --submenu-item-bg: azure;
             --tab-countent: rgba(255, 255, 255, 0.4);
@@ -39,6 +40,7 @@
             --hover-bg3: #122020;
             --card-background: rgba(25, 20, 20, 0.8);
             --playlist-bg: #110707;
+            --now-playing-info-bg: rgba(0, 0, 0, 0.35);
             --submenu-item-bg: rgba(255, 255, 255, 0.1);
             --art-bg: rgb(19, 18, 18);
             --tab-countent: rgba(0, 0, 0, 0.4);

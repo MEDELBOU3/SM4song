@@ -50,8 +50,26 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="playlist.css">
     <link rel="stylesheet" href="movies.css">
+    <link rel="stylesheet" href="Clr-Extraction & Call Page/theme&layout.css">
 </head>
 <body>
+     <div id="promo-modal" class="promo-overlay">
+        <div class="promo-content">
+            <img src="brandmark.png" alt="Brandmark" class="promo-logo">
+            <h1>Welcome to SM4music</h1>
+            <p>Enjoy an unparalleled music experience, wherever you are</p>
+            <button id="close-window">Get Started</button>
+        </div>
+        <div class="image-cont">
+            <img src="https://cdn.pixabay.com/photo/2024/05/30/19/37/girl-8799169_1280.jpg" >
+            <img src="https://media.istockphoto.com/id/1827161388/vector/girl-listens-to-music-with-headphones-concept-of-audio-listening-musical-entertainment.jpg?s=612x612&w=0&k=20&c=oEPTN4TLr5SHCgiYqseQ-jCO1sq5mEex3F-Qk1mmMfE=">
+            <img src="https://media.istockphoto.com/id/1340206832/vector/modern-dj-playing-music-records-with-electronic-audio-controller-happy-man-in-headphones-at.jpg?s=612x612&w=0&k=20&c=gv43-_L2uJnUnVRn4QQrCShWC5BGziqtY02a3Ks3IXQ=">
+            <img src="https://media.istockphoto.com/id/2149497634/vector/flat-vector-illustration-of-business-people-operating-work-scene.jpg?s=612x612&w=0&k=20&c=zS4QL6SAL5CeD4kHgLbK-o09oDvcDuFT47FeIb62YBI=">
+            <img src="https://media.istockphoto.com/id/475672182/vector/skate-scenes-with-riders-and-grunge-backgrounds.jpg?s=612x612&w=0&k=20&c=vXB9q9DZ9DKpOWhZNV56ocRuLlSJCSItDfFh07FZUcY=">
+            <img src="https://media.istockphoto.com/id/1384181816/vector/a-young-man-stands-leaning-on-a-tape-recorder.jpg?s=612x612&w=0&k=20&c=Mi9qafpkemWL3SMpfiy533ksgw63WgqlAxQGqSPVq1I=">
+            <img src="https://media.istockphoto.com/id/1125682367/vector/modern-abstract-art-geometric-background-with-flat-minimalistic-style-vector-poster.jpg?s=612x612&w=0&k=20&c=L0KM46dhBe31LdzgOCx18ooR1LNE8G64pnA0BRhXcu0=">
+        </div>
+    </div>
     <div class="container">
         <div class="sidebar">
             <div class="logo">
@@ -152,13 +170,14 @@
         
         <div class="player-right">
             <button id="toggleLyrics">Lyrics</button>
+            <button id="colorToggle" class="toggle-button"><i class="fa fa-palette" style="font-size: 24px;"></i><span id="toggleText">On</span></button>
             <i id="volumeIcon" class="fas fa-volume-up"></i>
             <input type="range" id="volumeControl" min="0" max="100" value="100">
         </div>
 
     </div>
     
-    <div id="lyricsContainer">
+    <div id="lyricsContainer" class="lyrics-container">
         <h2>Lyrics</h2>
         <div id="lyricsContent">
         </div>
@@ -308,5 +327,6 @@
     <script src="src/usage-data.js"></script>
     <script src="src/NewsModal/News-modal.js"></script>
     <script src="src/weather/weather.js"></script>
+    <script src="Clr-Extraction & Call Page/dynamic-colors.js"></script>
 </body>
 </html>

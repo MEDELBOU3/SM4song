@@ -888,24 +888,26 @@
             background: #1ed760;
           }
 
-
-          
-          .submenu-item {
+         .submenu-item {
             padding: 8px 15px;
             margin: 5px 0;
             cursor: pointer;
             color: var(--text-color);
-            transition: background-color 0.3s;
+            background-color: var(--spotify-light-black);
             font-size: 0.9em;
             border-radius: 5px;
         }
         
         .submenu-item:hover {
-            background-color: var(--submenu-item-bg);
             border-radius: 5px;
+            color: var(--spotify-green);
+            background-color: var(--hover-bg);
         }
+        
         
         #discover-buttons {
             transition: all 0.3s ease;
         }
+          
+          
 

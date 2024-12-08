@@ -77,6 +77,41 @@
             <img src="https://media.istockphoto.com/id/1125682367/vector/modern-abstract-art-geometric-background-with-flat-minimalistic-style-vector-poster.jpg?s=612x612&w=0&k=20&c=L0KM46dhBe31LdzgOCx18ooR1LNE8G64pnA0BRhXcu0=">
         </div>
     </div>
+        <div class="modal fade" id="rulingModal" tabindex="-1" aria-labelledby="rulingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rulingModalLabel">
+                        <i class="fas fa-music me-2"></i>
+                        <span class="title-text">Music in Islam</span>
+                    </h5>
+                    <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="language-buttons text-center mb-4">
+                        <button class="btn language-btn" onclick="changeLanguage('ar')">
+                            <i class="fas fa-globe-asia me-1"></i> العربية
+                        </button>
+                        <button class="btn language-btn active" onclick="changeLanguage('en')">
+                            <i class="fas fa-globe-americas me-1"></i> English
+                        </button>
+                        <button class="btn language-btn" onclick="changeLanguage('fr')">
+                            <i class="fas fa-globe-europe me-1"></i> Français
+                        </button>
+                        <button class="btn language-btn" onclick="changeLanguage('ja')">
+                            <i class="fas fa-globe-asia me-1"></i> 日本語
+                        </button>
+                    </div>
+                    <a class="attention">
+                        <i class="fas fa-triangle-exclamation"></i>
+                    </a>
+                    <div id="modalText" class="modal-text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="sidebar">
             <div class="logo">

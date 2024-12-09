@@ -1,8 +1,7 @@
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
+    --primary-color1: #3d5e80;
+    --secondary-color1: #34495e;
     --accent-color: #3498db;
-    --titel4-color: rgb(0, 84, 133);
 }
 
 .modal {
@@ -92,11 +91,11 @@
     padding: 1rem;
 }
 .section-title1{
-    color: var(--titel4-color);
+    color: var(--secondary-color1);
     font-weight: 550;
 }
 .section-title {
-    color: var(--primary-color);
+    color: var(--primary-color1);
     font-weight: 700;
     background-color: rgba(255, 113, 113, 0.4);
     padding: 5px 2px;

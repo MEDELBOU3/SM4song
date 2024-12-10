@@ -6,7 +6,7 @@ class AdvancedUserTracker {
         this.currentSession = this.loadCurrentSession();
         this.audioPlaybackTime = this.loadAudioPlaybackTime();
         this.audioStartTime = null;
-        this.lastUpdateTime = Date.now(); // Add this line
+        this.lastUpdateTime = Date.now(); 
         this.chart = null;
         this.initializeTracker();
         this.usageData = this.loadUsageData();
@@ -14,6 +14,7 @@ class AdvancedUserTracker {
         this.internetTracker = new InternetUsageTracker();
         this.chart = null;
         this.initializeTracker();
+        
     }
 
     loadUsageData() {
@@ -30,17 +31,51 @@ class AdvancedUserTracker {
 
     async measureInternetSpeed() {
         try {
-            const startTime = performance.now();
-            const response = await fetch('https://www.google.com/favicon.ico');
-            const endTime = performance.now();
-            const duration = endTime - startTime;
-            const speed = response.headers.get('content-length') / (duration / 1000);
-            return speed / 1024 / 1024; // Convert to Mbps
+
+            // Use a larger file for more accurate measurement
+            const testFiles = [
+                'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+                'https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png'
+            ];
+            
+            const speeds = [];
+            
+            for (const url of testFiles) {
+                const startTime = performance.now();
+                const response = await fetch(url, { cache: 'no-store' });
+                const blob = await response.blob();
+                const endTime = performance.now();
+                
+                const duration = (endTime - startTime) / 1000; // Convert to seconds
+                const fileSize = blob.size / (1024 * 1024); // Convert to MB
+                const speed = fileSize / duration; // MB/s
+                
+                speeds.push(speed * 8); // Convert to Mbps
+            }
+            
+            // Return average speed
+            return speeds.reduce((a, b) => a + b, 0) / speeds.length;
         } catch (error) {
             console.error('Error measuring speed:', error);
-            return 0;
+            return this.getFallbackSpeed();
         }
     }
+
+    getFallbackSpeed() {
+        // If measurement fails, estimate based on navigation timing API
+        try {
+            const navigation = performance.getEntriesByType('navigation')[0];
+            if (navigation) {
+                const transferSize = navigation.transferSize; // in bytes
+                const duration = navigation.responseEnd - navigation.requestStart; // in ms
+                return ((transferSize * 8) / (1024 * 1024)) / (duration / 1000); // Convert to Mbps
+            }
+        } catch (error) {
+            console.error('Fallback speed measurement failed:', error);
+        }
+        return 0;
+    }
+
 
     async recordMeasurement() {
         const speed = await this.measureInternetSpeed();
@@ -52,17 +87,42 @@ class AdvancedUserTracker {
         const isDayTime = hour >= 6 && hour < 18;
         const timeCategory = isDayTime ? 'dayTime' : 'nightTime';
         
+        // Initialize the date object if it doesn't exist
         if (!this.usageData[timeCategory][date]) {
             this.usageData[timeCategory][date] = [];
         }
         
+        // Add the measurement with timestamp
         this.usageData[timeCategory][date].push({
             time: now.toISOString(),
             speed: speed
         });
 
-        this.saveData();
-        this.updateChart();
+        // Keep only last 100 measurements per category per day to manage storage
+        if (this.usageData[timeCategory][date].length > 100) {
+            this.usageData[timeCategory][date] = this.usageData[timeCategory][date].slice(-100);
+        }
+
+        // Clean up old data (older than 30 days)
+        this.cleanOldMeasurements();
+
+        localStorage.setItem('internetUsageData', JSON.stringify(this.usageData));
+        localStorage.setItem('lastInternetMeasurement', Date.now().toString());
+        
+        this.updateInternetChart();
+    }
+
+    cleanOldMeasurements() {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        ['dayTime', 'nightTime'].forEach(timeCategory => {
+            Object.keys(this.usageData[timeCategory]).forEach(date => {
+                if (new Date(date) < thirtyDaysAgo) {
+                    delete this.usageData[timeCategory][date];
+                }
+            });
+        });
     }
 
     // إضافة هذه الدالة
@@ -79,7 +139,10 @@ class AdvancedUserTracker {
         this.setupEventListeners();
         setInterval(() => this.recordMeasurement(), 3 * 60 * 60 * 1000); // Measure every 3 hours
         this.recordMeasurement();    // Initial measurement
-        this.createSpeedTestButton(); 
+        setInterval(() => this.recordMeasurement(), 5 * 60 * 1000); // Measure every 5 minutes instead of 3 hours for more accurate tracking
+        this.recordMeasurement();      // Initial measurement
+        this.createStatsButton();
+        this.createSpeedTestButton(); //  this line if not already present
     }
 
     createStatsButton() {
@@ -256,7 +319,7 @@ class AdvancedUserTracker {
     initializeInternetChart() {
         const ctx = document.getElementById('internetUsageChart').getContext('2d');
         const chart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: [],
                 datasets: [
@@ -632,7 +695,7 @@ updateAudioTime() {
         const data = [];
         const labels = [];
         const today = new Date();
-
+    
         for (let i = days - 1; i >= 0; i--) {
             const date = new Date(today);
             date.setDate(date.getDate() - i);
@@ -645,24 +708,32 @@ updateAudioTime() {
                 playback: stats.playbackTime / 3600
             });
         }
-
+    
         return {
             labels: labels,
             datasets: [{
                 label: 'Total Usage',
                 data: data.map(d => d.total),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                fill: true,  
+                barPercentage: 0.8,  
+                categoryPercentage: 0.9  
             }, {
                 label: 'Audio Playback',
                 data: data.map(d => d.playback),
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                fill: true,  
+                barPercentage: 0.8,  
+                categoryPercentage: 0.9  
             }]
         };
     }
+   
+   
 
     updateChart(days = 7) {
         this.chart.data = this.getChartData(days);
@@ -716,7 +787,8 @@ updateAudioTime() {
             setTimeout(() => warning.remove(), 500);
         });
     }
-            // this method to your existing class
+
+    // this method to your existing class
     createSpeedTestButton() {
         const button = document.createElement('button');
         button.id = 'speedTestButton';
@@ -788,6 +860,7 @@ updateAudioTime() {
         // Show the modal
         modal.style.display = 'flex';
 }
+   
 }
 
 let dailyListeningTime = 0;

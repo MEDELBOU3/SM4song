@@ -79,6 +79,7 @@ class AdvancedUserTracker {
         this.setupEventListeners();
         setInterval(() => this.recordMeasurement(), 3 * 60 * 60 * 1000); // Measure every 3 hours
         this.recordMeasurement();    // Initial measurement
+        this.createSpeedTestButton(); 
     }
 
     createStatsButton() {

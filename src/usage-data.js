@@ -715,6 +715,78 @@ updateAudioTime() {
             setTimeout(() => warning.remove(), 500);
         });
     }
+            // this method to your existing class
+    createSpeedTestButton() {
+        const button = document.createElement('button');
+        button.id = 'speedTestButton';
+        button.innerHTML = `
+            <i class="fas fa-tachometer-alt"></i>
+            Speed Test
+        `;
+        document.body.appendChild(button);
+        
+        // click event listener
+        button.addEventListener('click', () => {
+            this.showSpeedTestModal();
+        });
+    }
+
+    showSpeedTestModal() {
+        // Create modal if it doesn't exist
+        let modal = document.querySelector('.speed-test-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.className = 'speed-test-modal';
+            modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                   <h2>Internet Speed Test</h2>
+                   <button class="close-btn"><i class="fas fa-times"></i></button>
+                 </div>
+                <div class="speed-test-container">
+                <div class="speed-indicator">
+                    <div class="speed-value">0</div>
+                    <div class="speed-unit">Mbps</div>
+                </div>
+                <button class="start-test-btn">Start Test</button>
+                <div class="test-status">Click Start Test to begin</div>
+            </div>
+            </div>
+            `;
+
+            document.body.appendChild(modal);
+    
+            document.head.appendChild(styles);
+    
+            // Add event listeners
+            const closeBtn = modal.querySelector('.close-btn');
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+    
+            const startTestBtn = modal.querySelector('.start-test-btn');
+            startTestBtn.addEventListener('click', async () => {
+                const statusEl = modal.querySelector('.test-status');
+                const speedValueEl = modal.querySelector('.speed-value');
+                
+                statusEl.textContent = 'Testing...';
+                startTestBtn.disabled = true;
+                
+                try {
+                    const speed = await this.measureInternetSpeed();
+                    speedValueEl.textContent = speed.toFixed(2);
+                    statusEl.textContent = 'Test completed';
+                } catch (error) {
+                    statusEl.textContent = 'Test failed. Please try again.';
+                } finally {
+                    startTestBtn.disabled = false;
+                }
+            });
+        }
+    
+        // Show the modal
+        modal.style.display = 'flex';
+}
 }
 
 let dailyListeningTime = 0;

@@ -1,0 +1,210 @@
+:root {
+    --spotify-green: #1DB954;
+    --spotify-green1: #1db954a6;
+    
+    --spotify-black: #dadada;
+    --spotify-light-black: azure;
+    --rating-color: rgb(0, 160, 27);
+    --spotify-grey: #575757;
+    --spotify-white: #111010;
+    --text-color: black;
+    --hover-bg: white;
+    --modal-controls-bg: rgba(0, 0, 0, 0.4);
+    --hover-bg1: white;
+    --header-bg: rgba(220, 255, 245, 0.87);
+    --hover-bg2: #dfdddd;
+    --hover-bg3: #eff5f4;
+    --transition-speed: 0.3s;
+    --card-background: rgba(255, 246, 246, 0.8);
+    --meta-bg: rgba(255, 189, 124, 0.616);
+    --playlist-bg: #e7eedf;
+    --art-bg: silver;
+    --tab-countent: rgba(255, 255, 255, 0.4);
+    --active-shadow: 0 0 8px #2be0d7,
+                     0 0 25px #2be0d7,
+                     0 0 40px #2be0d7;
+    --active-bg: linear-gradient(to bottom left, rgb(189, 65, 189), rgb(3, 151, 209), rgb(72, 233, 233));
+}
+
+.dark-mode {
+    --spotify-green: #1DB954;
+    --spotify-black: #191414;
+    --spotify-light-black: #282828;
+    --spotify-grey: #B3B3B3;
+    --spotify-white: #FFFFFF;
+    --text-color: #fff;
+    --hover-bg: #333;
+    --hover-bg1: #111;
+    --modal-controls-bg: rgba(255, 255, 255, 0.1);
+    --spotify-green1: #00e6508f;
+    --header-bg: rgba(21, 54, 44, 0.87);
+    --hover-bg2: #3E3E3E;
+    --hover-bg3: #122020;
+    --card-background: rgba(25, 20, 20, 0.8);
+    --meta-bg: rgba(73, 73, 73, 0.3);
+    --playlist-bg: #110707;
+    --art-bg: rgb(19, 18, 18);
+    --tab-countent: rgba(0, 0, 0, 0.4);
+    --active-shadow: 0 0 8px #1db985,
+                     0 0 25px #1d88b9,
+                     0 0 40px #098133cc;
+    --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
+}
+
+
+.speed-test-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.speed-test-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--hover-bg1);
+    padding: 2rem;
+    color: var(--text-color);
+    border-radius: 10px;
+    width: 90%;
+    height: 80vh;
+    overflow-y: auto;
+    max-width: 1000px;
+}
+
+.speed-test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.close-speed-test {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.close-speed-test:hover {
+    background-color: red;
+}
+
+.speed-gauges {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.speed-gauge {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border-radius: 50%;
+    background: var(--hover-bg2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.speed-value {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.speed-unit {
+    font-size: 1rem;
+    color: var(--text-color);
+    display: block;
+}
+
+.speed-label {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+}
+
+.test-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: var(--active-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.test-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.test-status {
+    text-align: center;
+    margin: 1rem 0;
+    color: var(--text-color);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #f0f0f0;
+    border-radius: 2px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 0;
+    height: 100%;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-wrapper {
+    flex: 1;
+    min-height: 450px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .speed-test-content {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .speed-gauges {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .speed-gauge {
+        width: 150px;
+        height: 150px;
+    }
+
+    .speed-value {
+        font-size: 1.5rem;
+    }
+}

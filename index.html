@@ -61,6 +61,7 @@
     <link rel="stylesheet" href="movies.css">
     <link rel="stylesheet" href="Clr-Extraction & Call Page/theme&layout.css">
     <link rel="stylesheet" href="conditions/conditions.css">
+     <link rel="stylesheet" href="speed-test/net-meter.css">
 </head>
 <body>
      <div id="promo-modal" class="promo-overlay">
@@ -305,6 +306,43 @@
             <div class="resize-handle bottom-right"></div>
         </div>
     </div>
+    <div class="speed-test-modal">
+        <div class="speed-test-content">
+            <div class="speed-test-header">
+                <h2>Internet Speed Test</h2>
+                <button class="close-speed-test">&times;</button>
+            </div>
+
+            <div class="speed-gauges">
+                <div class="speed-gauge download">
+                    <div class="speed-value">0.00</div>
+                    <span class="speed-unit">Mbps</span>
+                    <div class="speed-label">Download</div>
+                </div>
+                <div class="speed-gauge upload">
+                    <div class="speed-value">0.00</div>
+                    <span class="speed-unit">Mbps</span>
+                    <div class="speed-label">Upload</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+
+            <div class="test-status">Ready to test</div>
+            <button class="test-button">Start Speed Test</button>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="speedHistoryChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="dailyAverageChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function toggleDiscoverButtons() {
             const buttonsContainer = document.getElementById('discover-buttons');
@@ -316,7 +354,7 @@
                 // Clear existing buttons
                 buttonsContainer.innerHTML = '';
                 
-                // Add Movies button
+                //  Movies button
                 const moviesBtn = document.createElement('div');
                 moviesBtn.className = 'submenu-item';
                 moviesBtn.innerHTML = '<i class="fas fa-film"></i> Movies';
@@ -329,7 +367,7 @@
                 };
                 buttonsContainer.appendChild(moviesBtn);
                 
-                // Add Stats button
+                //  Stats button
                 const statsBtn = document.createElement('div');
                 statsBtn.className = 'submenu-item';
                 statsBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Usage Statistics';
@@ -342,6 +380,21 @@
                     document.getElementById('statsButton').click();
                 };
                 buttonsContainer.appendChild(statsBtn);
+
+                 //test Speed Button
+                const testSpeedBtn = document.createElement('div');
+                testSpeedBtn.className = 'submenu-item';
+                testSpeedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Speed Test';
+                testSpeedBtn.onclick = () => {
+                    const existingBtn = document.getElementById('speedTestButton');
+                    if (!existingBtn) {
+                        createSpeedTestButton();
+                    }
+                    // Trigger click on the actual stats button
+                    document.getElementById('speedTestButton').click();
+                };
+                buttonsContainer.appendChild(testSpeedBtn);
+                
             } else {
                 // Hide buttons container
                 buttonsContainer.style.display = 'none';
@@ -563,5 +616,6 @@
     <script src="src/NewsModal/News-modal.js"></script>
     <script src="src/weather/weather.js"></script>
     <script src="conditions/conditions.js"></script>
+    <script src="speed-test/net-meter.js"></script>
 </body>
 </html>

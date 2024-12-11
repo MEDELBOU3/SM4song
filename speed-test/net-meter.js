@@ -30,7 +30,8 @@
                 return performance.now() - start;
             }
 
-              async measureDownloadSpeed() {
+
+            async measureDownloadSpeed() {
                 const testDuration = 8000; // 8 seconds test
                 const chunks = [];
                 let bytesReceived = 0;
@@ -81,9 +82,11 @@
                 }
             }
 
+            
+
             async measureUploadSpeed() {
                 const chunkSize = 1024 * 256; // 256KB chunks
-                const testDuration = 8000; // 8 seconds test
+                const testDuration = 8000; // 5 seconds test
                 let bytesSent = 0;
                 const startTime = performance.now();
                 const testData = new Uint8Array(chunkSize);
@@ -338,6 +341,3 @@
 
         // Initialize speed test
         const speedTest = new SpeedTest();
-
-        // Example: Show modal when needed
-        // speedTest.show();

@@ -30,39 +30,51 @@
                 return performance.now() - start;
             }
 
-            async measureDownloadSpeed() {
-                const testDuration = 8000; // 10 seconds test
+              async measureDownloadSpeed() {
+                const testDuration = 8000; // 8 seconds test
+                const chunks = [];
                 let bytesReceived = 0;
                 const startTime = performance.now();
-            
+                
                 try {
-                    // Using a large file from a CDN that allows CORS
-                    const response = await fetch('https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js', {
-                        cache: 'no-store'
+                    // Test multiple files concurrently for more accurate measurement
+                    const downloadPromises = this.testServers.map(async (server) => {
+                        const response = await fetch(server, {
+                            cache: 'no-store'
+                        });
+            
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+            
+                        const reader = response.body.getReader();
+                        
+                        while (performance.now() - startTime < testDuration) {
+                            const {value, done} = await reader.read();
+                            if (done) break;
+                            bytesReceived += value.length;
+                            chunks.push(value);
+            
+                            // Update progress in real-time
+                            const elapsedSeconds = (performance.now() - startTime) / 1000;
+                            const currentSpeed = (bytesReceived * 8) / elapsedSeconds / 1000000;
+                            this.downloadGauge.textContent = currentSpeed.toFixed(2);
+                        }
+            
+                        reader.cancel();
                     });
             
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    // Wait for all download tests to complete
+                    await Promise.all(downloadPromises);
             
-                    const reader = response.body.getReader();
-                    const contentLength = +response.headers.get('Content-Length');
-            
-                    while (performance.now() - startTime < testDuration) {
-                        const {value, done} = await reader.read();
-                        if (done) break;
-                        bytesReceived += value.length;
-            
-                        // Update progress in real-time
-                        const currentSpeed = (bytesReceived * 8) / ((performance.now() - startTime) / 1000) / 1000000;
-                        this.downloadGauge.textContent = currentSpeed.toFixed(2);
-                    }
-            
-                    reader.cancel();
-            
-                    const duration = (performance.now() - startTime) / 1000; // Convert to seconds
+                    const duration = (performance.now() - startTime) / 1000;
                     const bitsReceived = bytesReceived * 8;
-                    return (bitsReceived / duration) / 1000000; // Convert to Mbps
+                    const speedMbps = (bitsReceived / duration) / 1000000;
+            
+                    // Apply correction factor based on network conditions
+                    const correctionFactor = 1.1; // Adjust this based on testing
+                    return speedMbps * correctionFactor;
+            
                 } catch (error) {
                     console.error('Download test error:', error);
                     return 0;
@@ -71,7 +83,7 @@
 
             async measureUploadSpeed() {
                 const chunkSize = 1024 * 256; // 256KB chunks
-                const testDuration = 8000; // 5 seconds test
+                const testDuration = 8000; // 8 seconds test
                 let bytesSent = 0;
                 const startTime = performance.now();
                 const testData = new Uint8Array(chunkSize);

@@ -1,4 +1,5 @@
- class SpeedTest {
+
+class SpeedTest {
             
             constructor() {
                 this.modal = document.querySelector('.speed-test-modal');

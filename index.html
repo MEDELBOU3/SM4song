@@ -166,11 +166,24 @@
         </div>
         <div class="main-content">
             <div class="search-container">
-                <button class="mode-toggle" id="mode-toggle" >
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search for tracks...">
+                    <div class="search-suggestions"></div>
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                    <button id="voiceSearch"><i class="fas fa-microphone"></i></button>
+                </div>
+                <button class="mode-toggle" id="mode-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <input type="text" id="searchInput" placeholder="Search for tracks...">
-                <button id="searchButton"><i class="fas fa-search"></i></button>
+            </div>
+            <div id="search-filters">
+                <button class="filter-btn active" data-type="all">All</button>
+                <button class="filter-btn" data-type="artists">Artists</button>
+                <button class="filter-btn" data-type="tracks">Tracks</button>
+                <button class="filter-btn" data-type="albums">Albums</button>
             </div>
             <div id="content"></div>
         </div>

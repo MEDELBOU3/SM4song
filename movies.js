@@ -294,58 +294,117 @@
                 </div>
             `;
         }
+         async function getImageColors(imageUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = imageUrl;
+                
+                img.onerror = () => {
+                    resolve([
+                        [33, 33, 33],
+                        [66, 66, 66],
+                        [99, 99, 99]
+                    ]);
+                };
+                
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    ctx.drawImage(img, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                    
+                    const colorMap = {};
+                    for(let i = 0; i < imageData.length; i += 4) {
+                        const r = Math.floor(imageData[i] / 10) * 10;
+                        const g = Math.floor(imageData[i + 1] / 10) * 10;
+                        const b = Math.floor(imageData[i + 2] / 10) * 10;
+                        const rgb = `${r},${g},${b}`;
+                        colorMap[rgb] = (colorMap[rgb] || 0) + 1;
+                    }
+                    
+                    const sortedColors = Object.entries(colorMap)
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, 3)
+                        .map(([color]) => color.split(',').map(Number));
+                        
+                    resolve(sortedColors);
+                };
+            });
+        }
+        
         
         async function showMovieDetails(movieId) {
+            const existingModal = document.querySelector('.modal-container');
+            if (existingModal) {
+                existingModal.remove();
+            }
+        
+            const modalContainer = document.createElement('div');
+            modalContainer.className = 'modal-container';
+            document.body.appendChild(modalContainer);
+            
             const [movieData, credits, videos, recommendations] = await Promise.all([
                 fetchTMDBData(`/movie/${movieId}`),
                 fetchTMDBData(`/movie/${movieId}/credits`),
                 fetchTMDBData(`/movie/${movieId}/videos`),
                 fetchTMDBData(`/movie/${movieId}/recommendations`)
             ]);
-
+        
+            const backdropUrl = `${TMDB_IMAGE_BASE_URL1}${movieData.backdrop_path}`;
+            const dominantColors = await getImageColors(backdropUrl);
+            
+            const gradientColors = dominantColors.map(([r, g, b]) => `rgba(${r}, ${g}, ${b}, 0.85)`);
+            const gradientStyle = `linear-gradient(to bottom, transparent, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`;
+        
             const trailer = videos.results.find(video => video.type === "Trailer");
             const director = credits.crew.find(person => person.job === "Director");
             const cast = credits.cast.slice(0, 5);
         
-
+            const castHTML = credits.cast.slice(0, 10).map(actor => `
+                <div class="cast-card">
+                    <img src="${actor.profile_path ? TMDB_IMAGE_BASE_URL + actor.profile_path : 'default-avatar.jpg'}" 
+                        alt="${actor.name}">
+                    <p>${actor.name}</p>
+                    <span>${actor.character}</span>
+                </div>
+            `).join('');
+        
+            const recommendationsHTML = recommendations.results.slice(0, 10).map(movie => `
+                <div class="recommendation-card" data-id="${movie.id}">
+                    <img src="${TMDB_IMAGE_BASE_URL + movie.poster_path}" alt="${movie.title}">
+                    <p>${movie.title}</p>
+                </div>
+            `).join('');
+        
             const detailsModal = document.createElement('div');
             detailsModal.className = 'movie-details-modal';
-            // Create cast cards HTML
-            const castHTML = credits.cast.slice(0, 10).map(actor => `
-            <div class="cast-card">
-               <img src="${actor.profile_path ? TMDB_IMAGE_BASE_URL + actor.profile_path : 'default-avatar.jpg'}" 
-               alt="${actor.name}">
-               <p>${actor.name}</p>
-               <span>${actor.character}</span>
-            </div>
-           `).join('');
-
-           // Create recommendations HTML
-           const recommendationsHTML = recommendations.results.slice(0, 6).map(movie => `
-            <div class="recommendation-card" data-id="${movie.id}">
-                <img src="${TMDB_IMAGE_BASE_URL + movie.poster_path}" alt="${movie.title}">
-                <p>${movie.title}</p>
-            </div>
-           `).join('');
-
             detailsModal.innerHTML = `
-            
                 <div class="details-content">
                     <button class="close-details">&times;</button>
+                     <button class="expand-modal"><i class="fas fa-expand"></i></button>
                     <div class="movie-backdrop" style="background-image: url('${TMDB_IMAGE_BASE_URL1}${movieData.backdrop_path}')">
                         <div class="backdrop-overlay"></div>
                     </div>
-                    <div class="details-main">
+                    <div class="details-main" style="background: linear-gradient(to bottom, 
+                        transparent 0%,
+                        ${gradientColors[0]} 20%,
+                        ${gradientColors[1]} 50%,
+                        ${gradientColors[2]} 100%) !important;">
+
                         <img src="${TMDB_IMAGE_BASE_URL}${movieData.poster_path}" alt="${movieData.title}" class="detail-poster">
                         <div class="detail-info">
                             <h2>${movieData.title}</h2>
                             <p class="tagline">${movieData.tagline}</p>
                             <div class="action-buttons">
                                 <button class="save-movie" data-id="${movieId}">
-                                  <i class="fas fa-bookmark"></i> Save
+                                    <i class="fas fa-bookmark"></i> Save
                                 </button>
                                 <button class="add-favorite" data-id="${movieId}">
-                                   <i class="fas fa-heart"></i> Favorite
+                                    <i class="fas fa-heart"></i> Favorite
                                 </button>
                             </div>
                             <div class="meta-info">
@@ -353,11 +412,9 @@
                                 <span>${movieData.runtime} min</span>
                                 <span>${movieData.vote_average.toFixed(1)} ⭐</span>
                             </div>
-
                             <div class="genres">
                                 ${movieData.genres.map(genre => `<span>${genre.name}</span>`).join('')}
                             </div>
-
                             <p class="overview">${movieData.overview}</p>
                             <div class="credits">
                                 <p><strong>Director:</strong> ${director?.name || 'N/A'}</p>
@@ -371,13 +428,13 @@
                             <div class="cast-section">
                                 <h3>Cast</h3>
                                 <div class="cast-grid">
-                                   ${castHTML}
+                                    ${castHTML}
                                 </div>
                             </div>
                             <div class="recommendations-section">
-                               <h3>Recommendations</h3>
+                                <h3>Recommendations</h3>
                                 <div class="recommendations-grid">
-                                  ${recommendationsHTML}
+                                    ${recommendationsHTML}
                                 </div>
                             </div>
                         </div>
@@ -385,12 +442,45 @@
                 </div>
             `;
         
-    
-            document.querySelector('.movies-content').appendChild(detailsModal);
-            setupDetailEventListeners(detailsModal, movieId);
+            modalContainer.appendChild(detailsModal);
 
-            detailsModal.querySelector('.close-details').onclick = () => detailsModal.remove();
+
+        
+            // Event Listeners
+            const expandBtn = detailsModal.querySelector('.expand-modal');
+            expandBtn.onclick = () => {
+                const modal = document.querySelector('.movie-details-modal');
+                modal.classList.toggle('fullscreen');
+                
+                // تغيير أيقونة الزر
+                const icon = expandBtn.querySelector('i');
+                if (modal.classList.contains('fullscreen')) {
+                    icon.classList.remove('fa-expand');
+                    icon.classList.add('fa-compress');
+                } else {
+                    icon.classList.remove('fa-compress');
+                    icon.classList.add('fa-expand');
+                }
+            };
             
+            // إضافة دعم مفتاح Escape للخروج من وضع ملء الشاشة
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const modal = document.querySelector('.movie-details-modal');
+                    if (modal && modal.classList.contains('fullscreen')) {
+                        modal.classList.remove('fullscreen');
+                        const icon = document.querySelector('.expand-modal i');
+                        icon.classList.remove('fa-compress');
+                        icon.classList.add('fa-expand');
+                    }
+                }
+            });
+
+            detailsModal.querySelector('.close-details').onclick = () => {
+                modalContainer.style.animation = 'modalFadeOut 0.3s ease-in forwards';
+                setTimeout(() => modalContainer.remove(), 300);
+            };
+        
             const trailerBtn = detailsModal.querySelector('.play-trailer');
             if (trailerBtn) {
                 trailerBtn.onclick = () => {
@@ -398,7 +488,29 @@
                     playMovieTrailer(trailerKey);
                 };
             }
+        
+            modalContainer.addEventListener('click', (e) => {
+                if (e.target === modalContainer) {
+                    modalContainer.style.animation = 'modalFadeOut 0.3s ease-in forwards';
+                    setTimeout(() => modalContainer.remove(), 300);
+                }
+            });
+        
+            // Setup recommendation click handlers
+            const recommendationCards = detailsModal.querySelectorAll('.recommendation-card');
+            recommendationCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const movieId = card.dataset.id;
+                    modalContainer.remove();
+                    showMovieDetails(movieId);
+                });
+            });
+        
+            if (typeof setupDetailEventListeners === 'function') {
+                setupDetailEventListeners(detailsModal, movieId);
+            }
         }
+        
         function addMovieEventListeners() {
             document.querySelectorAll('.movie-details-btn').forEach(btn => {
                 btn.onclick = () => showMovieDetails(btn.dataset.id);

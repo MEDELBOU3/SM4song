@@ -116,17 +116,154 @@
             margin: 0 auto;
             width: 80%;
         }
-        
-        /* Adjust the search input width */
-        #searchInput {
-            flex-grow: 1;
-        }
+      
         
         /* Animation for the toggle button */
         .container.sidebar-collapsed .sidebar-toggle {
             transform: rotate(180deg);
         }
-       
+
+        
+        .search-box {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            background: var(--hover-bg1);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        #searchInput {
+            flex-grow: 1;
+            width: 80%;
+            background-color: var(--hover-bg1);
+            border: none;
+            padding: 10px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+        }
+        
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 8px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .search-box button:hover {
+            color: var(--spotify-green);
+        }
+        
+        /* أنماط الاقتراحات */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--hover-bg1);
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+        }
+        
+        .suggestion-section {
+            padding: 15px;
+        }
+        
+        .suggestion-section h4 {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 8px;
+        }
+        
+        .suggestion-item:hover {
+            background-color: var(--hover-bg2);
+        }
+        
+        /* أنماط الفلاتر */
+        #search-filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: var(--hover-bg1);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .filter-btn.active {
+            background: var(--spotify-green);
+            color: white;
+        }
+        
+        /* أنماط التحميل */
+        .search-loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-color);
+        }
+        
+        .spinner {
+            border: 4px solid rgba(var(--spotify-green-rgb), 0.1);
+            border-left-color: var(--spotify-green);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* التحسينات للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .search-container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            
+            .sidebar {
+                width: 250px;
+            }
+            
+            .filter-btn {
+                padding: 6px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
         
         .logo {
              padding: 5px;

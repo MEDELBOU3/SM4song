@@ -164,26 +164,13 @@
                 <!-- Buttons will be added here dynamically -->
             </div>
         </div>
-        <div class="main-content">
+         <div class="main-content">
             <div class="search-container">
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search for tracks...">
-                    <div class="search-suggestions"></div>
-                    <button id="searchButton"><i class="fas fa-search"></i></button>
-                    <button id="voiceSearch"><i class="fas fa-microphone"></i></button>
-                </div>
-                <button class="mode-toggle" id="mode-toggle">
+                <button class="mode-toggle" id="mode-toggle" >
                     <i class="fas fa-moon"></i>
                 </button>
-            </div>
-            <div id="search-filters">
-                <button class="filter-btn active" data-type="all">All</button>
-                <button class="filter-btn" data-type="artists">Artists</button>
-                <button class="filter-btn" data-type="tracks">Tracks</button>
-                <button class="filter-btn" data-type="albums">Albums</button>
+                <input type="text" id="searchInput" placeholder="Search for tracks...">
+                <button id="searchButton"><i class="fas fa-search"></i></button>
             </div>
             <div id="content"></div>
         </div>
@@ -624,7 +611,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="main.js"></script>
-    <script src="voice-search.js"></script>
     <script src="movies.js"></script>
     <script src="src/usage-data.js"></script>
     <script src="src/NewsModal/News-modal.js"></script>

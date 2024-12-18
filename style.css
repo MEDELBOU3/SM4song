@@ -993,7 +993,7 @@
             background-position: center;
             color: var(--text-color);
             padding: 40px;
-            margin-bottom: 30px;
+            margin: 30px auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }

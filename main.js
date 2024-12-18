@@ -306,52 +306,195 @@
 
         //display Artist tracks
         async function displayArtistDetails(artistId) {
-            const artist = await fetchSpotifyData(`artists/${artistId}`);
-            const topTracks = await fetchSpotifyData(`artists/${artistId}/top-tracks?market=US`);
-            const relatedArtists = await fetchSpotifyData(`artists/${artistId}/related-artists`);
-            
-            // Update currentPlaylist with the artist's top tracks
-            currentPlaylist = topTracks.tracks;
+    const artist = await fetchSpotifyData(`artists/${artistId}`);
+    const topTracks = await fetchSpotifyData(`artists/${artistId}/top-tracks?market=US`);
+    const relatedArtists = await fetchSpotifyData(`artists/${artistId}/related-artists`);
 
+    currentPlaylist = topTracks?.tracks || [];
 
-            let html = `
-                <div class="artist-profile" style="background-image: url('${artist.images[0]?.url || 'https://via.placeholder.com/1000'}');">
-                    <div class="artist-info">
-                        <h2>${artist.name}</h2>
-                        <p>${formatNumber(artist.followers.total)} Followers</p>
-                        <p>Popularity: ${artist.popularity}</p>
-                        <p>Genres: ${artist.genres.join(', ')}</p>
-                        <a href="spotify:artist:${artist.id}" class="spotify-link">Open in Spotify</a>
+    // Function to determine verification status and badge
+    const getVerificationBadge = (artist) => {
+        if (artist?.verified) {
+            return '<span class="verified-badge" title="Verified Artist">✓</span>';
+        } else if (artist?.reel) {
+            return '<span class="reel-badge" title="Spotify Reel Artist">⭐</span>';
+        }
+        return '';
+    };
+
+    // Calculate monthly listeners (example calculation)
+    const monthlyListeners = Math.floor(artist?.followers?.total * 0.4);
+
+    let html = `
+    <div class="artist-profile" style="background-image: url('${artist?.images[0]?.url || 'https://via.placeholder.com/1000'}');">
+        <div class="artist-info">
+            <div class="artist-header">
+                <h2>
+                    ${artist?.name || 'Unknown Artist'} 
+                    ${getVerificationBadge(artist)}
+                </h2>
+                <div class="artist-stats">
+                    <div class="stat">
+                        <span class="stat-value">${formatNumber(artist?.followers?.total || 0)}</span>
+                        <span class="stat-label">Followers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">${formatNumber(monthlyListeners)}</span>
+                        <span class="stat-label">Monthly Listeners</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">${artist?.popularity || 'N/A'}</span>
+                        <span class="stat-label">Popularity Score</span>
                     </div>
                 </div>
-                <h3>Top Tracks</h3>
-                <div class="tracks-container">
-            `;
-            
-            topTracks.tracks.forEach((track, index) => {
-                html += createTrackHTML(track, index);
-            });
-            
-            html += '</div>';
-            html += '<div id="videoContainer"></div>';
-            html += '<h3>Gallery</h3><div id="imageGallery" class="image-gallery"></div>';
-            
-            html += '<h3>Similar Artists</h3><div class="related-artists">';
-            relatedArtists.artists.slice(0, 10).forEach(relatedArtist => {
-                html += `
-                    <div class="related-artist-card">
-                        <img src="${relatedArtist.images[0]?.url || 'https://via.placeholder.com/100'}" alt="${relatedArtist.name}">
-                        <p>${relatedArtist.name}</p>
-                        <button onclick="displayArtistDetails('${relatedArtist.id}')">View</button>
+            </div>
+            <div class="artist-details">
+                <p class="genres">
+                    <strong>Genres:</strong> ${artist?.genres?.join(', ') || 'No genres available'}
+                </p>
+                ${artist?.external_urls?.spotify ? 
+                    `<div class="social-links">
+                        <a href="${artist.external_urls.spotify}" class="spotify-link" target="_blank">
+                            <i class="fab fa-spotify"></i> Open in Spotify
+                        </a>
+                    </div>` : ''
+                }
+            </div>
+        </div>
+    </div>
+    <h3>Top Tracks</h3>
+    <div class="tracks-container">
+    `; 
+
+    if (topTracks && topTracks.tracks) {
+        topTracks.tracks.forEach((track, index) => {
+            html += createTrackHTML(track, index);
+        });
+    } else {
+        html += '<p>No top tracks available for this artist.</p>';
+    }
+
+    html += '</div>';
+    html += '<div id="videoContainer" class="video-container"></div>';
+    html += '<h3>Gallery</h3><div id="imageGallery" class="image-gallery"></div>';
+
+    if (relatedArtists && relatedArtists.artists) {
+        html += '<h3>Similar Artists</h3><div class="related-artists">';
+        relatedArtists.artists.slice(0, 10).forEach(relatedArtist => {
+            html += `
+                <div class="related-artist-card">
+                    <img src="${relatedArtist.images[0]?.url || 'https://via.placeholder.com/100'}" 
+                         alt="${relatedArtist.name}">
+                    <div class="related-artist-info">
+                        <p>${relatedArtist.name} ${getVerificationBadge(relatedArtist)}</p>
+                        <span class="popularity">Popularity: ${relatedArtist.popularity}%</span>
+                        <button onclick="displayArtistDetails('${relatedArtist.id}')">View Artist</button>
                     </div>
-                `;
-            });
-            html += '</div>';
-            
-            document.getElementById('content').innerHTML = html;
-            fetchArtistVideos(artist.name);
-            fetchArtistImages(artist.id);
-        }
+                </div>
+            `;
+        });
+        html += '</div>';
+    } else {
+        html += '<p>No similar artists found.</p>';
+    }
+
+    document.getElementById('content').innerHTML = html;
+    fetchArtistVideos(artist?.name);
+    fetchArtistImages(artist?.id);
+}
+
+// Add this CSS to your stylesheet
+const style = `
+<style>
+    .verified-badge {
+        display: inline-block;
+        background-color: #1DB954;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    .reel-badge {
+        display: inline-block;
+        background-color: #FFD700;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    .artist-header {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .artist-stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-value {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .stat-label {
+        font-size: 0.9em;
+        color: #888;
+    }
+
+    .artist-details {
+        margin-top: 20px;
+    }
+
+    .social-links {
+        margin-top: 15px;
+    }
+
+    .related-artist-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .related-artist-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .related-artist-info {
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .popularity {
+        font-size: 0.8em;
+        color: #888;
+    }
+</style>
+`;
+
+// Add the style to the document head
+document.head.insertAdjacentHTML('beforeend', style);
        
 
         //creat Track html

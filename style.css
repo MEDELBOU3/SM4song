@@ -836,7 +836,7 @@
             padding: 5px 8px;
             position: absolute;
             top: 50px;
-            right: 0;
+            right: 50px;
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
             border-radius: 50%;
         }
@@ -892,6 +892,14 @@
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             justify-content: center;
             padding: 1rem;
+        }
+
+        .video-container{
+            margin: 1rem auto;
+        }
+
+       .tracks-container{
+            margin: 1rem auto;
         }
     
         .artist-card {
@@ -966,6 +974,7 @@
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 1rem auto;
             transition: transform 0.3s ease;
         }
     

@@ -61,7 +61,8 @@
     <link rel="stylesheet" href="movies.css">
     <link rel="stylesheet" href="Clr-Extraction & Call Page/theme&layout.css">
     <link rel="stylesheet" href="conditions/conditions.css">
-     <link rel="stylesheet" href="speed-test/net-meter.css">
+    <link rel="stylesheet" href="speed-test/net-meter.css">
+    <link rel="stylesheet" href="user/login.css">
 </head>
 <body>
      <div id="promo-modal" class="promo-overlay">
@@ -120,6 +121,10 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="brandmark.png" class="brandmark">
+            </div>
+            <div class="account-btn" onclick="handleAccountClick()">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
             </div>
             <div class="menu-item" data-page="home">
                 <i class="fas fa-home"></i>
@@ -343,6 +348,123 @@
             </div>
         </div>
     </div>
+
+    <!--Creat Account Modal-->
+        <div class="modl" id="createAccountModal">
+        <div class="modal-cnt">
+            <h2>Create Account</h2>
+            <form id="createAccountForm">
+                <div class="form-group">
+                
+                    <input class="account-input"  type="text" id="name" placeholder="Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <input  class="account-input" type="text" id="surname" placeholder="Surname"  required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" class="account-input"  id="age" placeholder="Age" required min="13">
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" class="account-input"  id="email" placeholder="E-mail" required>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <input type="password" class="account-input"   id="password" placeholder="Password" required onkeyup="checkPasswordStrength(this.value)">
+                    <i class="far fa-eye" onclick="togglePasswordVisibility('password')"></i>
+                    <div class="strength-meter">
+                        <div id="strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="file" class="account-input"  id="image" placeholder="Profile Picture" accept="image/*">
+                </div>
+
+                <button type="button" class="butn" onclick="createAccount()">Create Account</button>
+                
+                
+
+                <div class="hove-an-account">
+                    I am already registered
+                    <a href="#loginModal">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modl" id="loginModal">
+        <div class="modal-cnt">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" class="account-input"  id="loginEmail" placeholder="E-mail" required>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <input type="password" class="account-input"  id="loginPassword" placeholder="Password" required>
+                    <i class="far fa-eye" onclick="togglePasswordVisibility('loginPassword')"></i>
+                </div>
+
+                <button type="button" class="butn" onclick="login()">Login</button>
+
+
+                <div class="havent-account">
+                    I dont have an account
+                    <a href="#createAccountModal">create Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Panel -->
+    <div class="user-panel" id="userPanel">
+        <div class="resizer" id="resizer"></div>
+        <button class="close-panel" onclick="closeUserPanel()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="user-info">
+            <img id="userImage" alt="Profile Picture">
+            <h3 id="userName"></h3>
+            <p id="userEmail"></p>
+            <p id="userAge"></p>
+            <button class="butn"  onclick="logout()">Logout</button>
+        </div>
+
+        <div class="playlist-creation">
+            <h3>Create a Playlist</h3>
+            <input class="account-input"  type="text" id="playlistName" placeholder="Enter Playlist Name">
+            <input class="account-input"  type="text" id="playlistGenre" placeholder="Enter Playlist Genre">
+            <input class="account-input"  type="file" id="playlistImage" accept="image/*">
+            <button class="creat-butn" onclick="createPlaylist()">Create</button>
+        </div>
+    
+        <div class="playlists-section">
+            <h3>Your Playlists</h3>
+            <div id="playUrList"></div>
+        </div>
+    </div>
+
+    <div id="modl" class="modl">
+        <div class="modal-cnt">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalPlaylistName"></h3>
+            <input class="account-input"  type="file" id="songFile" accept="audio/*">
+            <input class="account-input"  type="text" id="songName" placeholder="Song Name">
+            <input type="file" id="songImage" accept="image/*">
+            <button class="butn" onclick="addSong()">Add Song</button>
+            <div class="songs-list" id="songsList"></div>
+        </div>
+    </div>
+
+    <div class="notifications" id="notifications">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-message"></span>
+    </div>
+    
     <script>
         function toggleDiscoverButtons() {
             const buttonsContainer = document.getElementById('discover-buttons');
@@ -617,5 +739,6 @@
     <script src="src/weather/weather.js"></script>
     <script src="conditions/conditions.js"></script>
     <script src="speed-test/net-meter.js"></script>
+    <script src="user/login.js"></script>
 </body>
 </html>

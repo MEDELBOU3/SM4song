@@ -63,6 +63,7 @@
     <link rel="stylesheet" href="conditions/conditions.css">
     <link rel="stylesheet" href="speed-test/net-meter.css">
     <link rel="stylesheet" href="user/login.css">
+    <link rel="stylesheet" href="user/Call/call.css">
 </head>
 <body>
      <div id="promo-modal" class="promo-overlay">
@@ -433,7 +434,19 @@
             <p id="userAge"></p>
             <button class="butn"  onclick="logout()">Logout</button>
         </div>
+    <button id="join-btn">Join Stream</button>
 
+    <div id="stream-wrapper">
+        <div id="video-streams"></div>
+
+        <div id="stream-controls">
+            <button id="leave-btn">Leave Stream</button>
+            <button id="mic-btn">Mic On</button>
+            <button id="camera-btn">Camera on</button>
+            <button id="screen-btn">Share Screen</button>
+        </div>
+    </div>
+        
         <div class="playlist-creation">
             <h3>Create a Playlist</h3>
             <input class="account-input"  type="text" id="playlistName" placeholder="Enter Playlist Name">
@@ -740,5 +753,7 @@
     <script src="conditions/conditions.js"></script>
     <script src="speed-test/net-meter.js"></script>
     <script src="user/login.js"></script>
+    <script src="user/Call/call.js"></script>
+    <script src="user/Call/AgoraRTC_N-4.7.3.js"></script>
 </body>
 </html>

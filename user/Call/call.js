@@ -1,4 +1,4 @@
- const APP_ID = "560b78f73de54cbb8be941304218b140"
+const APP_ID = "560b78f73de54cbb8be941304218b140"
 const TOKEN = "007eJxTYIi6/VJVo77bK2HuFXnu9jm6c9ZyVkZ/S5h57hpHtO3BG7kKDKZmBknmFmnmximppibJSUkWSamWJobGBiZGhhZJhiYGktrp6Q2BjAz+Uz8yMjJAIIjPxRCcq5Ccn1eSmFzCwAAA0Ykgaw=="
 const CHANNEL = "Sm contact"
 
@@ -152,3 +152,4 @@ document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLoc
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('screen-btn').addEventListener('click', toggleScreenShare)
+ 

@@ -1,6 +1,6 @@
-const APP_ID = "560b78f73de54cbb8be941304218b140"
-const TOKEN = "007eJxTYIi6/VJVo77bK2HuFXnu9jm6c9ZyVkZ/S5h57hpHtO3BG7kKDKZmBknmFmnmximppibJSUkWSamWJobGBiZGhhZJhiYGktrp6Q2BjAz+Uz8yMjJAIIjPxRCcq5Ccn1eSmFzCwAAA0Ykgaw=="
-const CHANNEL = "Sm contact"
+ const APP_ID = "5f7a328ba1e64658a9fcecc620c789b0"
+const TOKEN = "007eJxTYDj0f46owrbknFkP9pfNd+O72af/3bcr2DbV8N3ujp9CW54pMJimmScaG1kkJRqmmpmYmVokWqYlpyYnmxkZJJtbWCYZ7H6ant4QyMjgaVLGwsgAgSA+B0NxrkluaXFmMgMDAFx0Ip0="
+const CHANNEL = "sm4music"
 
 const client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
 
@@ -152,4 +152,3 @@ document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLoc
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('screen-btn').addEventListener('click', toggleScreenShare)
- 

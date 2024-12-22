@@ -53,7 +53,7 @@
                      0 0 40px #098133cc;
     --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
 }
-
+   
      #join-btn{
             display: flex;
             justify-content: center;

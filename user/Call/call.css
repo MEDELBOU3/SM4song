@@ -1,4 +1,60 @@
-#join-btn{
+
+
+:root {
+    --spotify-green: #1DB954;
+    --spotify-green1: #1db954a6;
+    --spotify-green1: #1db954a6;
+    --spotify-black: #dadada;
+    --spotify-light-black: azure;
+    --spotify-grey: #575757;
+    --spotify-white: #111010;
+    --text-color: black;
+    --hover-bg: white;
+    --hover-bg1: white;
+    --header-bg: rgba(220, 255, 245, 0.87);
+    --hover-bg2: #dfdddd;
+    --hover-bg3: #eff5f4;
+    --transition-speed: 0.3s;
+    --card-background: rgba(255, 246, 246, 0.98);
+    --playlist-bg: #e7eedf;
+    --art-bg: silver;
+    --submenu-item-bg: azure;
+    --now-playing-info-bg: rgba(240, 255, 255, 0.925);
+    --tab-countent: rgba(255, 255, 255, 0.4);
+    --active-shadow: 0 0 8px #2be0d7,
+                     0 0 25px #2be0d7,
+                     0 0 40px #2be0d7;
+    --active-bg: linear-gradient(to bottom left, rgb(189, 65, 189), rgb(3, 151, 209), rgb(72, 233, 233));
+    --sidebar-width: 250px;
+    --modal-width: 50%;
+}
+
+.dark-mode {
+    --spotify-green: #1DB954;
+    --spotify-black: #191414;
+    --spotify-light-black: #282828;
+    --spotify-grey: #B3B3B3;
+    --spotify-white: #FFFFFF;
+    --text-color: #fff;
+    --hover-bg: #333;
+    --hover-bg1: #111;
+    --spotify-green1: #00e6508f;
+    --header-bg: rgba(21, 54, 44, 0.87);
+    --hover-bg2: #3E3E3E;
+    --hover-bg3: #122020;
+    --card-background: rgba(25, 20, 20, 0.98);
+    --playlist-bg: #110707;
+    --submenu-item-bg: rgba(255, 255, 255, 0.3);
+    --now-playing-info-bg: rgba(0, 0, 0, 0.35);
+    --art-bg: rgb(19, 18, 18);
+    --tab-countent: rgba(0, 0, 0, 0.4);
+    --active-shadow: 0 0 8px #1db985,
+                     0 0 25px #1d88b9,
+                     0 0 40px #098133cc;
+    --active-bg: linear-gradient(to bottom right, rgb(173, 16, 173), rgb(53, 172, 53), rgb(235, 134, 151));
+}
+
+     #join-btn{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -7,19 +63,29 @@
             font-size:18px;
             padding:20px 40px;
         }
-        
+
+
+        #stream-wraper{
+            width: auto;
+            height: auto;
+            padding: 1rem;
+            color: var(--text-color);
+        }
         #video-streams{
             display:grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
             height: 90vh;
-            width: 1400px;
+            width: 45%;
+            max-width: 100%;
+            min-width: 30%;
             margin:0 auto;
         }
         
         .video-container{
             max-height: 100%;
             border: 2px solid black;
-            background-color: #203A49;
+            border-radius: 12px;
+            background-color: var(--spotify-light-black);
         }
         
         .video-player{
@@ -29,8 +95,8 @@
         
         .stream-btn{
             border:none;
-            background-color: cadetblue;
-            color:#fff;
+            background-color: var(--spotify-green);
+            color: var(--text-color);
             padding:10px 20px;
             font-size:16px;
             margin:2px;
@@ -38,7 +104,7 @@
         }
         
         .stream-btn:disabled {
-            background-color: #888;
+            background-color: var(--spotify-green1);
             cursor: not-allowed;
         }
         

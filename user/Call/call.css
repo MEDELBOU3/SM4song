@@ -3,7 +3,6 @@
 :root {
     --spotify-green: #1DB954;
     --spotify-green1: #1db954a6;
-    --spotify-green1: #1db954a6;
     --spotify-black: #dadada;
     --spotify-light-black: azure;
     --spotify-grey: #575757;
@@ -60,6 +59,7 @@
             align-items: center;
             text-align: center;
             margin: 10px auto;
+            background-color: var( --spotify-green1);
             font-size:18px;
             padding:20px 40px;
         }

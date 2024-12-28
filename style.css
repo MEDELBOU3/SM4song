@@ -1388,7 +1388,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px;
-            background-color: var(--hover-bg);
+            background-color: var(--hover-bg1);
             border-radius: 8px 8px 0 0;
         }
         
@@ -1403,7 +1403,7 @@
         .player-controls-top button {
             background: none;
             border: none;
-            color: #fff;
+            color: var(--text-color);
             cursor: pointer;
             padding: 5px;
             margin-left: 10px;

@@ -1292,16 +1292,15 @@
                     transform: scale(1.02);
                 }
                 
-                .music-thumbnail {
-                    position: relative;
-                    width: 70px;
-                    height: 70px;
-
+                 .music-thumbnail {
+                    margin-right: 10px;
+                    width: 75px;
+                    height: 7px;
                 }
                 
                 .music-thumbnail img {
-                    width: 70px;
-                    height: 70px;
+                    width: 75px;
+                    height: 75px;
                     object-fit: cover;
                 }
                 
@@ -1311,8 +1310,8 @@
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    width: 70px;
-                    height: 77px;
+                    width: 75px;
+                    height: 75px;
                     background-color: rgba(0, 0, 0, 0.5);
                     display: flex;
                     justify-content: center;
@@ -1330,15 +1329,19 @@
                     font-size: 2rem;
                 }
                 
-                .music-info {
+                 .music-info {
                     padding: 12px;
-                    margin-left: 10px;
+                    flex-grow: 1;
                     width: 80%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
                 
                 .music-info h3 {
                     color: var(--text-color);
                     font-size: 14px;
+                    max-width: 80%;
                     margin: 0 0 8px 0;
                     overflow: hidden;
                     text-overflow: ellipsis;

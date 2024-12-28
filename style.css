@@ -1355,11 +1355,13 @@
         
         /* Add this CSS for the video player */
         .youtube-player-container {
-            position: absolute;
+            position: fixed;
             bottom: 10%;
             top: 22%;
             right: 20px;
             width: 400px;
+            user-select: none;
+            touch-action: none;
             background: var(--hover-bg);
             border-radius: 8px;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
@@ -1398,7 +1400,9 @@
             color: var(--text-color);
         }
         
-        
+        .drag-handle i {
+           pointer-events: none;
+        }
         
         .player-controls-top button {
             background: none;

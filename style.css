@@ -1300,8 +1300,8 @@
                 }
                 
                 .music-thumbnail img {
-                    width: 100%;
-                    height: 100%;
+                    width: 70px;
+                    height: 71px;
                     object-fit: cover;
                 }
                 
@@ -1311,6 +1311,8 @@
                     left: 0;
                     right: 0;
                     bottom: 0;
+                    width: 70px;
+                    height: 71px;
                     background-color: rgba(0, 0, 0, 0.5);
                     display: flex;
                     justify-content: center;
@@ -1330,6 +1332,7 @@
                 
                 .music-info {
                     padding: 12px;
+                    margin-left: 10px;
                     width: 80%;
                 }
                 

@@ -33,7 +33,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 async function fetchMusicVideos() {
-    const API_KEY = 'AIzaSyDULbpO4E6_GML55UQVVjIEkR3oicW3820';
+    const API_KEY = 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY';
     try {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&videoCategoryId=10&maxResults=20&key=${API_KEY}`);
         const data = await response.json();
@@ -100,7 +100,7 @@ document.addEventListener('input', function(e) {
 async function searchMusic(query) {
     if (query.length < 3) return;
 
-    const API_KEY = 'AIzaSyDULbpO4E6_GML55UQVVjIEkR3oicW3820';
+    const API_KEY = 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY';
     try {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&videoCategoryId=10&maxResults=20&key=${API_KEY}`);
         const data = await response.json();
@@ -117,7 +117,7 @@ async function searchMusic(query) {
 // YouTube Video Player and Queue Management
 let videoPlayer;
 let queue = [];
-const API_KEY = 'AIzaSyDULbpO4E6_GML55UQVVjIEkR3oicW3820';
+const API_KEY = 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY';
 let currentVideoIndex = -1;
 let isPlayerExpanded = false;
 

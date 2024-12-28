@@ -174,6 +174,98 @@ function getVideoPlayerHTML() {
     `;
 }
 
+function initializeDraggable() {
+    const playerContainer = document.getElementById('youtube-player-container');
+    const dragHandle = playerContainer.querySelector('.drag-handle');
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    function setTranslate(xPos, yPos) {
+        playerContainer.style.transform = `translate(${xPos}px, ${yPos}px)`;
+    }
+
+    function dragStart(e) {
+        if (e.type === "touchstart") {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        }
+
+        if (e.target === dragHandle || e.target.parentElement === dragHandle) {
+            isDragging = true;
+        }
+    }
+
+    function dragEnd() {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+
+            if (e.type === "touchmove") {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            // Add boundaries to keep the player within the viewport
+            const rect = playerContainer.getBoundingClientRect();
+            const parentRect = playerContainer.parentElement.getBoundingClientRect();
+
+            if (currentX < -rect.width/2) currentX = -rect.width/2;
+            if (currentX > parentRect.width - rect.width/2) currentX = parentRect.width - rect.width/2;
+            if (currentY < 0) currentY = 0;
+            if (currentY > parentRect.height - rect.height) currentY = parentRect.height - rect.height;
+
+            setTranslate(currentX, currentY);
+        }
+    }
+
+    // Add event listeners
+    dragHandle.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    dragHandle.addEventListener('touchstart', dragStart);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', dragEnd);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for the player to be added to the DOM
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length) {
+                const playerContainer = document.getElementById('youtube-player-container');
+                if (playerContainer) {
+                    initializeDraggable();
+                    observer.disconnect();
+                }
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
+
 async function displayVariousMusic() {
     const content = document.getElementById('content');
     content.innerHTML = `

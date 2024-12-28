@@ -1341,6 +1341,7 @@
                     font-size: 14px;
                     margin: 0 0 8px 0;
                     overflow: hidden;
+                    flex-grow: 1;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }

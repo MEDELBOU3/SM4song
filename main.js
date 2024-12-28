@@ -1623,6 +1623,9 @@ document.head.insertAdjacentHTML('beforeend', style);
                     case 'featured-playlists':
                         await displayFeaturedPlaylists();
                         break;
+                    case 'various-music':
+                        await displayVariousMusic();
+                        break;        
                     case 'new-releases':
                         await displayNewReleases();
                         break;

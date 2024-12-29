@@ -1,4 +1,7 @@
- async function displayVariousMusic() {
+   // Add this to your existing JavaScript file
+
+
+async function displayVariousMusic() {
     const content = document.getElementById('content');
     content.innerHTML = `
         <div class="various-music-section">
@@ -33,7 +36,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 async function fetchMusicVideos() {
-    const API_KEY = 'AIzaSyB0-q2rcbRKwE_mNZTg7uV8WTqpeot5q84';
+    const API_KEY = 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY';
     try {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&videoCategoryId=10&maxResults=20&key=${API_KEY}`);
         const data = await response.json();
@@ -100,7 +103,7 @@ document.addEventListener('input', function(e) {
 async function searchMusic(query) {
     if (query.length < 3) return;
 
-    const API_KEY = 'AIzaSyB0-q2rcbRKwE_mNZTg7uV8WTqpeot5q84';
+    const API_KEY = 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY';
     try {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&videoCategoryId=10&maxResults=20&key=${API_KEY}`);
         const data = await response.json();
@@ -333,10 +336,14 @@ function updateProgressBar() {
     requestAnimationFrame(updateProgressBar);
 }
 
+
+
 function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 function playYoutubeVideo(video) {
@@ -453,7 +460,13 @@ const GENRES = {
     'R&B': 'r&b music',
     'Country': 'country music',
     'Latin': 'latin music',
-    'Funks': 'Funks music'
+    'Funks': 'Funks music',
+    'Arab': 'arabic music',
+    'Anime': 'anime music',
+    'Spacetoon': 'spacetoon music',
+    'Movies': 'movies and tv-shows music',
+    'Motivation': 'motivational music',
+
 };
 
 // Enhanced Genre Implementation
@@ -618,72 +631,121 @@ const state = {
 // Add genre selector HTML
 function getGenreSelectorHTML() {
     return `
-        <div class="genre-selector">
-            ${Object.keys(GENRES).map(genre => `
-                <button class="genre-btn ${state.currentGenre === genre ? 'active' : ''}" 
-                        onclick="handleGenreSelect('${genre}')">
-                    ${genre}
-                </button>
-            `).join('')}
+        <div class="genre-selector-wrapper">
+            <button class="arrow left" onclick="scrollGenreLeft()"><i class="bx bx-chevron-left" style="font-size: 14px;"></i></button>
+            <div class="genre-selector">
+                ${Object.keys(GENRES).map(genre => `
+                    <button class="genre-btn ${state.currentGenre === genre ? 'active' : ''}" 
+                            onclick="handleGenreSelect('${genre}')">
+                        ${genre}
+                    </button>
+                `).join('')}
+            </div>
+            <button class="arrow right" onclick="scrollGenreRight()"><i class="bx bx-chevron-right" style="font-size: 14px;"></i></button>
         </div>
     `;
 }
+
 
 // Add channel section HTML
 function getChannelSectionHTML() {
     return `
-    <div class="channels-wrapper">
-        <button class="arrow left" onclick="scrollLeft()"><i class="bx bx-chevron-left" style="font-size: 14px;"></i></button>
-        <div class="channels-section">
-           <h3>Popular Music Channels</h3>
-           <div class="channel-list"></div>
+        <div class="channels-wrapper">
+            <button class="arrow left" onclick="scrollChannelLeft()"><i class="bx bx-chevron-left" style="font-size: 14px;"></i></button>
+            <div class="channels-section">
+               <h3>Popular Music Channels</h3>
+               <div class="channel-list"></div>
+            </div>
+            <button class="arrow right" onclick="scrollChannelRight()"><i class="bx bx-chevron-right" style="font-size: 14px;"></i></button>
         </div>
-        <button class="arrow right" onclick="scrollRight()"><i class="bx bx-chevron-right" style="font-size: 14px;"></i></button>
-    </div>
     `;
 }
 
-function scrollLeft() {
+function scrollGenreLeft() {
+    const genreSelector = document.querySelector('.genre-selector');
+    const scrollAmount = genreSelector.offsetWidth * 0.8;
+    genreSelector.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+    });
+    setTimeout(() => updateArrowState('genre'), 300);
+}
+
+function scrollGenreRight() {
+    const genreSelector = document.querySelector('.genre-selector');
+    const scrollAmount = genreSelector.offsetWidth * 0.8;
+    genreSelector.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+    });
+    setTimeout(() => updateArrowState('genre'), 300);
+}
+
+function scrollChannelLeft() {
     const channelList = document.querySelector('.channel-list');
     const scrollAmount = channelList.offsetWidth * 0.8;
     channelList.scrollBy({
         left: -scrollAmount,
         behavior: 'smooth'
     });
-    setTimeout(updateArrowState, 300);
+    setTimeout(() => updateArrowState('channel'), 300);
 }
 
-function scrollRight() {
+function scrollChannelRight() {
     const channelList = document.querySelector('.channel-list');
     const scrollAmount = channelList.offsetWidth * 0.8;
     channelList.scrollBy({
         left: scrollAmount,
         behavior: 'smooth'
     });
-    setTimeout(updateArrowState, 300);
+    setTimeout(() => updateArrowState('channel'), 300);
 }
 
-function updateArrowState() {
-    const channelList = document.querySelector('.channel-list');
-    const leftArrow = document.querySelector('.arrow.left');
-    const rightArrow = document.querySelector('.arrow.right');
+function updateArrowState(type) {
+    if (type === 'genre') {
+        const genreSelector = document.querySelector('.genre-selector');
+        const wrapper = document.querySelector('.genre-selector-wrapper');
+        const leftArrow = wrapper.querySelector('.arrow.left');
+        const rightArrow = wrapper.querySelector('.arrow.right');
 
-    // Check if scrolling is possible
-    const isAtStart = channelList.scrollLeft === 0;
-    const isAtEnd = channelList.scrollLeft + channelList.offsetWidth >= channelList.scrollWidth;
+        const isAtStart = genreSelector.scrollLeft <= 0;
+        const isAtEnd = genreSelector.scrollLeft + genreSelector.offsetWidth >= genreSelector.scrollWidth - 1;
 
-    leftArrow.classList.toggle('disabled', isAtStart);
-    rightArrow.classList.toggle('disabled', isAtEnd);
+        leftArrow.classList.toggle('disabled', isAtStart);
+        rightArrow.classList.toggle('disabled', isAtEnd);
+    } else if (type === 'channel') {
+        const channelList = document.querySelector('.channel-list');
+        const wrapper = document.querySelector('.channels-wrapper');
+        const leftArrow = wrapper.querySelector('.arrow.left');
+        const rightArrow = wrapper.querySelector('.arrow.right');
+
+        const isAtStart = channelList.scrollLeft <= 0;
+        const isAtEnd = channelList.scrollLeft + channelList.offsetWidth >= channelList.scrollWidth - 1;
+
+        leftArrow.classList.toggle('disabled', isAtStart);
+        rightArrow.classList.toggle('disabled', isAtEnd);
+    }
 }
 
-// Initialize the channels section
+// Initialize
 document.getElementById('channelsContainer').innerHTML = getChannelSectionHTML();
 
-// Add scroll event listener to update arrow states
-document.querySelector('.channel-list').addEventListener('scroll', updateArrowState);
+// Add scroll event listeners
+document.querySelector('.genre-selector').addEventListener('scroll', () => updateArrowState('genre'));
+document.querySelector('.channel-list').addEventListener('scroll', () => updateArrowState('channel'));
 
-// Add window resize listener to update arrow states
-window.addEventListener('resize', updateArrowState);
+// Add window resize listener
+window.addEventListener('resize', () => {
+    updateArrowState('genre');
+    updateArrowState('channel');
+});
+
+// Initial arrow state update
+setTimeout(() => {
+    updateArrowState('genre');
+    updateArrowState('channel');
+}, 100);
+
 
 // Enhanced displayVariousMusic function
 async function displayVariousMusic() {

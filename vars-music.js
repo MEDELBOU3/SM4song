@@ -1,7 +1,5 @@
-   // Add this to your existing JavaScript file
-
-
-async function displayVariousMusic() {
+   // Various music container
+   async function displayVariousMusic() {
     const content = document.getElementById('content');
     content.innerHTML = `
         <div class="various-music-section">
@@ -274,18 +272,28 @@ async function displayVariousMusic() {
     content.innerHTML = `
         <div class="various-music-section">
             <div class="section-header">
-                <h2>Various Music</h2>
+                <h2>Music Explorer</h2>
                 <div class="music-search">
                     <input type="text" id="musicSearchInput" placeholder="Search music...">
                 </div>
             </div>
-            <div class="music-grid" id="musicGrid"></div>
+            ${getGenreSelectorHTML()}
+            ${getShortsSection()}
+            ${getChannelSectionHTML()}
+            <div class="music-content">
+                <div class="music-grid" id="musicGrid"></div>
+                <div class="featured-section" id="featuredSection"></div>
+            </div>
         </div>
         ${getVideoPlayerHTML()}
     `;
 
+    // Initialize components
     initializeYouTubePlayer();
+    fetchMusicShorts();
+    fetchPopularMusicChannels();
     fetchMusicVideos();
+    initializeEventListeners();
 }
 
 function initializeYouTubePlayer() {
@@ -747,33 +755,7 @@ setTimeout(() => {
 }, 100);
 
 
-// Enhanced displayVariousMusic function
-async function displayVariousMusic() {
-    const content = document.getElementById('content');
-    content.innerHTML = `
-        <div class="various-music-section">
-            <div class="section-header">
-                <h2>Music Explorer</h2>
-                <div class="music-search">
-                    <input type="text" id="musicSearchInput" placeholder="Search music...">
-                </div>
-            </div>
-            ${getGenreSelectorHTML()}
-            ${getChannelSectionHTML()}
-            <div class="music-content">
-                <div class="music-grid" id="musicGrid"></div>
-                <div class="featured-section" id="featuredSection"></div>
-            </div>
-        </div>
-        ${getVideoPlayerHTML()}
-    `;
 
-    // Initialize components
-    initializeYouTubePlayer();
-    fetchPopularMusicChannels();
-    fetchMusicVideos();
-    initializeEventListeners();
-}
 
 // Initialize event listeners
 function initializeEventListeners() {
@@ -841,4 +823,81 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
+}
+
+function getShortsSection() {
+    return `
+        <div class="shorts-section">
+            <div class="shorts-header">
+                <h3>Music Shorts</h3>
+            </div>
+            <div class="shorts-container-wrapper">
+                <button id="leftArrow" class="arrow left" onclick="scrollShortsLeft()">
+                   <i class="bx bx-chevron-left"></i>
+                </button>
+                <div class="shorts-container" id="shortsContainer"></div>
+                <button id="rightArrow" class="arrow right" onclick="scrollShortsRight()">
+                   <i class="bx bx-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+
+async function fetchMusicShorts() {
+    const API_KEY = 'AIzaSyB0-q2rcbRKwE_mNZTg7uV8WTqpeot5q84';
+    try {
+        const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoDuration=short&maxResults=15&videoCategoryId=10&key=${API_KEY}`
+        );
+        const data = await response.json();
+        displayShorts(data.items);
+    } catch (error) {
+        console.error('Error fetching shorts:', error);
+    }
+}
+
+function displayShorts(shorts) {
+    const shortsContainer = document.getElementById('shortsContainer');
+    shortsContainer.innerHTML = shorts.map(short => `
+        <div class="short-card" onclick="playShort('${short.id.videoId}')">
+            <div class="short-thumbnail">
+                <img src="${short.snippet.thumbnails.high.url}" alt="${short.snippet.title}">
+                <div class="short-duration">
+                    <i class="fas fa-clock"></i> Short
+                </div>
+                <div class="short-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="short-info">
+                <h4>${short.snippet.title.substring(0, 40)}${short.snippet.title.length > 40 ? '...' : ''}</h4>
+                <p>${short.snippet.channelTitle}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function playShort(videoId) {
+    const playerContainer = document.getElementById('youtube-player-container');
+    playerContainer.classList.remove('hidden');
+    videoPlayer.loadVideoById(videoId);
+    updatePlayPauseButton();
+}
+
+function scrollShortsLeft() {
+    const container = document.querySelector('.shorts-container');
+    container.scrollBy({
+        left: -300,
+        behavior: 'smooth'
+    });
+}
+
+function scrollShortsRight() {
+    const container = document.querySelector('.shorts-container');
+    container.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+    });
 }

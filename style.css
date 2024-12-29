@@ -1107,14 +1107,20 @@
             background-color: var(--hover-bg1);
         }
 
+       .genre-selector-wrapper {
+            position: relative;
+            max-width: 100%;
+            padding: 0 40px;
+        }
+    
         .genre-selector {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding: 10px 0 10px 0;
+            padding: 10px 0;
             margin-bottom: 20px;
-            margin-left: 20px;
             scrollbar-width: none;
+            scroll-behavior: smooth;
         }
         
         .genre-selector::-webkit-scrollbar {
@@ -1142,7 +1148,6 @@
             background-color: var(--hover-bg);
             transform: translateY(-2px);
         }
-        
 
         .channels-wrapper {
             position: relative;

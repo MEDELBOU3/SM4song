@@ -1635,6 +1635,9 @@ document.head.insertAdjacentHTML('beforeend', style);
                     case 'search':
                         document.getElementById('searchInput').focus();
                         break;
+                    case 'settings':
+                            displayLocalStorage();
+                        break;    
                     case 'recommended':
                         await displayRecommendedTracks();
                         break;

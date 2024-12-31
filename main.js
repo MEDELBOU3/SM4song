@@ -1636,7 +1636,104 @@ document.head.insertAdjacentHTML('beforeend', style);
                         document.getElementById('searchInput').focus();
                         break;
                     case 'settings':
+                                 document.getElementById('content').innerHTML =`
+                        <div class="settings-section">
+                        <!-- Settings Header -->
+                        
+                        <div class="settings-header" onclick="toggleStorageSection()">
+                            <div class="settings-title">
+                                <div class="settings-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span>Storage Manager</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                
+                        <!-- Analytics Section -->
+                        <div id="storageContent" class="settings-content" style="display: none;">
+                            <div class="analytics-container">
+                                <div class="analytics-grid">
+                                    <div class="analytics-card">
+                                        <div class="analytics-title">Total Files</div>
+                                        <div class="analytics-value" id="totalFiles">0</div>
+                                        <div class="analytics-trend">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>12% from last month</span>
+                                        </div>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <div class="analytics-title">Total Storage Used</div>
+                                        <div class="analytics-value" id="totalStorage">0 KB</div>
+                                        <div class="analytics-trend">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>8% from last month</span>
+                                        </div>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <div class="analytics-title">Average File Size</div>
+                                        <div class="analytics-value" id="avgFileSize">0 KB</div>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <div class="analytics-title">Last Modified</div>
+                                        <div class="analytics-value" id="lastModified">Never</div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- Files Container -->
+                            <div class="files-container">
+                                <div class="files-header">
+                                    <h3>Stored Files</h3>
+                                    <button class="btn btn-primary" onclick="addNewFile()">
+                                        <i class="fas fa-plus"></i> Add New File
+                                    </button>
+                                </div>
+                                <div id="filesGrid" class="files-grid"></div>
+                            </div>
+
+                            <!-- AI Analysis Section -->
+                            <div class="ai-analysis-section">
+                                <div class="ai-header">
+                                    <h3>AI Data Analysis</h3>
+                                    <button class="btn btn-primary" onclick="analyzeDataWithAI()">
+                                        <i class="fas fa-robot"></i> Generate Analysis
+                                    </button>
+                                </div>
+                                <div class="ai-content">
+                                    <div class="ai-loading" style="display: none;">
+                                        <div class="spinner"></div>
+                                        <p>Analyzing data...</p>
+                                    </div>
+                                    <div id="aiAnalysisResults" class="ai-results"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                
+                    <!-- Edit Modal -->
+                    <div id="editModal" class="modal1">
+                        <div class="modal-content1">
+                            <div class="modal-header1">
+                                <div class="modal-title">Edit File</div>
+                                <button class="btn btn-secondary" onclick="closeModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="editor-container">
+                                <textarea id="fileEditor" class="editor"></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                                <button class="btn btn-primary" onclick="saveFile()">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                        `
                             displayLocalStorage();
+                            addAIAnalysisSection();
                         break;    
                     case 'recommended':
                         await displayRecommendedTracks();

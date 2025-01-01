@@ -464,9 +464,9 @@ function displayEnhancedAnalysis(data) {
 
             <div class="recommendations">
                 <h3>Recommendations</h3>
-                <div class="recommendations-grid">
+                <div class="recommendations-grid1">
                     ${data.recommendations.map(rec => `
-                        <div class="recommendation-card">
+                        <div class="recommendation-card1">
                             <div class="rec-icon">
                                 <i class="fas fa-lightbulb"></i>
                             </div>

@@ -1709,8 +1709,163 @@ document.head.insertAdjacentHTML('beforeend', style);
                                 </div>
                             </div>
                         </div>
-
-
+                         <div class="settings-header" onclick="toggleAPISection()">
+                        <div class="settings-title">
+                            <div class="settings-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <span>API Keys Manager</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                
+                    <div id="apiContent" class="settings-content" style="display: none;">
+                        <div class="api-manager-container">
+                            <div class="api-manager-header">
+                                <h3>Manage Your API Keys</h3>
+                                <button class="btn btn-primary" onclick="toggleAPIGuide()">
+                                    <i class="fas fa-question-circle"></i> Setup Guide
+                                </button>
+                            </div>
+                
+                            <div class="api-services-grid">
+                                <!-- YouTube API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fab fa-youtube"></i>
+                                        <h4>YouTube API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="youtubeApiKey" 
+                                            placeholder="Enter YouTube API Key"
+                                            value="${localStorage.getItem('user_youtube_api') || ''}">
+                                        <div class="api-status" id="youtubeApiStatus">
+                                            ${localStorage.getItem('user_youtube_api') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('youtube')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('youtube')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                
+                                <!-- TMDB API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fas fa-film"></i>
+                                        <h4>TMDB API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="tmdbApiKey" 
+                                            placeholder="Enter TMDB API Key"
+                                            value="${localStorage.getItem('user_tmdb_api') || ''}">
+                                        <div class="api-status" id="tmdbApiStatus">
+                                            ${localStorage.getItem('user_tmdb_api') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('tmdb')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('tmdb')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                
+                                <!-- Weather API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fas fa-cloud"></i>
+                                        <h4>Weather API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="weatherApiKey" 
+                                            placeholder="Enter OpenWeather API Key"
+                                            value="${localStorage.getItem('user_weather_api') || ''}">
+                                        <div class="api-status" id="weatherApiStatus">
+                                            ${localStorage.getItem('user_weather_api') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('weather')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('weather')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                
+                                <!-- Gemini API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fas fa-robot"></i>
+                                        <h4>Gemini API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="geminiApiKey" 
+                                            placeholder="Enter Gemini API Key"
+                                            value="${localStorage.getItem('user_gemini_api') || ''}">
+                                        <div class="api-status" id="geminiApiStatus">
+                                            ${localStorage.getItem('user_gemini_api') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('gemini')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('gemini')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                
+                                <!-- Pixabay API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fas fa-images"></i>
+                                        <h4>Pixabay API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="pixabayApiKey" 
+                                            placeholder="Enter Pixabay API Key"
+                                            value="${localStorage.getItem('user_pixabay_api') || ''}">
+                                        <div class="api-status" id="pixabayApiStatus">
+                                            ${localStorage.getItem('user_pixabay_api') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('pixabay')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('pixabay')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                
+                                <!-- Spotify API -->
+                                <div class="api-service-card">
+                                    <div class="service-header">
+                                        <i class="fab fa-spotify"></i>
+                                        <h4>Spotify API</h4>
+                                    </div>
+                                    <div class="service-content">
+                                        <input type="text" id="spotifyClientId" 
+                                            placeholder="Enter Client ID"
+                                            value="${localStorage.getItem('user_spotify_client_id') || ''}">
+                                        <input type="text" id="spotifyClientSecret" 
+                                            placeholder="Enter Client Secret"
+                                            value="${localStorage.getItem('user_spotify_client_secret') || ''}">
+                                        <div class="api-status" id="spotifyApiStatus">
+                                            ${localStorage.getItem('user_spotify_client_id') ? 'Active' : 'Using Default'}
+                                        </div>
+                                    </div>
+                                    <div class="service-actions">
+                                        <button onclick="saveAPIKey('spotify')" class="btn btn-primary">Save</button>
+                                        <button onclick="testAPIKey('spotify')" class="btn btn-secondary">Test</button>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="api-actions">
+                                <button onclick="exportAPIKeys()" class="btn btn-secondary">
+                                    <i class="fas fa-download"></i> Export Keys
+                                </button>
+                                <button onclick="importAPIKeys()" class="btn btn-secondary">
+                                    <i class="fas fa-upload"></i> Import Keys
+                                </button>
+                                <button onclick="resetAllAPIKeys()" class="btn btn-danger">
+                                    <i class="fas fa-undo"></i> Reset to Default
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 
                     <!-- Edit Modal -->
@@ -1827,4 +1982,242 @@ document.head.insertAdjacentHTML('beforeend', style);
             renderPersonalPlaylist();
             
         });
-  
+
+ function toggleAPISection() {
+            const Content = document.getElementById('apiContent');
+            const Chevron = document.querySelector('.settings-header .fa-chevron-down');
+            
+            if (Content.style.display === 'none') {
+                Content.style.display = 'block';
+                Chevron.style.transform = 'rotate(180deg)';
+            } else {
+                Content.style.display = 'none';
+                Chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Default API keys
+const DEFAULT_KEYS = {
+    youtube: 'AIzaSyA8gx66XUFZ-abihuxnF3mvLed5qgOnvdY',
+    tmdb: '431fb541e27bceeb9db2f4cab69b54e1',
+    weather: 'f458a708df95ee78be02eb6eb535560e',
+    gemini: 'AIzaSyBnKZOpnLn18aiuDMT5B2CCbEHHOXSUYeY',
+    pixabay: '42636651-cfb9c563a2e43f1a099ee33b8',
+    spotify_client_id: '52055e9524af40dcac80249b98ddb7db',
+    spotify_client_secret: '71e2042b2b614c2cb035672ac98ed69c'
+};
+
+// Toggle API section visibility
+function toggleAPISection() {
+    const content = document.getElementById('apiContent');
+    const chevron = document.querySelector('.settings-header .fa-chevron-down');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        chevron.style.transform = 'rotate(180deg)';
+    } else {
+        content.style.display = 'none';
+        chevron.style.transform = 'rotate(0deg)';
+    }
+}
+
+// Save API key
+async function saveAPIKey(service) {
+    let key;
+    let status;
+    
+    if (service === 'spotify') {
+        const clientId = document.getElementById('spotifyClientId').value;
+        const clientSecret = document.getElementById('spotifyClientSecret').value;
+        
+        if (clientId && clientSecret) {
+            localStorage.setItem('user_spotify_client_id', clientId);
+            localStorage.setItem('user_spotify_client_secret', clientSecret);
+        }
+        status = document.getElementById('spotifyApiStatus');
+    } else {
+        key = document.getElementById(`${service}ApiKey`).value;
+        status = document.getElementById(`${service}ApiStatus`);
+        
+        if (key) {
+            localStorage.setItem(`user_${service}_api`, key);
+        }
+    }
+    
+    if (key || (service === 'spotify' && clientId && clientSecret)) {
+        status.textContent = 'Active';
+        await testAPIKey(service);
+    }
+}
+
+// Get active API key (user's or default)
+function getAPIKey(service) {
+    if (service === 'spotify') {
+        return {
+            clientId: localStorage.getItem('user_spotify_client_id') || DEFAULT_KEYS.spotify_client_id,
+            clientSecret: localStorage.getItem('user_spotify_client_secret') || DEFAULT_KEYS.spotify_client_secret
+        };
+    }
+    return localStorage.getItem(`user_${service}_api`) || DEFAULT_KEYS[service];
+}
+
+// Test API keys
+async function testAPIKey(service) {
+    const statusElement = document.getElementById(`${service}ApiStatus`);
+    statusElement.textContent = 'Testing...';
+    
+    try {
+        let isValid = false;
+        
+        switch(service) {
+            case 'youtube':
+                isValid = await testYouTubeAPI(getAPIKey('youtube'));
+                break;
+            case 'tmdb':
+                isValid = await testTMDBAPI(getAPIKey('tmdb'));
+                break;
+            case 'weather':
+                isValid = await testWeatherAPI(getAPIKey('weather'));
+                break;
+            case 'gemini':
+                isValid = await testGeminiAPI(getAPIKey('gemini'));
+                break;
+            case 'pixabay':
+                isValid = await testPixabayAPI(getAPIKey('pixabay'));
+                break;
+            case 'spotify':
+                const {clientId, clientSecret} = getAPIKey('spotify');
+                isValid = await testSpotifyAPI(clientId, clientSecret);
+                break;
+        }
+        
+        statusElement.textContent = isValid ? 'Active' : 'Invalid Key';
+    } catch (error) {
+        statusElement.textContent = 'Error Testing';
+        console.error(`Error testing ${service} API:`, error);
+    }
+}
+
+// API Test Functions
+async function testYouTubeAPI(key) {
+    const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=1&key=${key}`
+    );
+    return response.status === 200;
+}
+
+async function testTMDBAPI(key) {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${key}`
+    );
+    return response.status === 200;
+}
+
+async function testWeatherAPI(key) {
+    const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${key}`
+    );
+    return response.status === 200;
+}
+
+async function testGeminiAPI(key) {
+    const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${key}`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Test" }] }]
+            })
+        }
+    );
+    return response.status === 200;
+}
+
+async function testPixabayAPI(key) {
+    const response = await fetch(
+        `https://pixabay.com/api/?key=${key}&q=test&per_page=1`
+    );
+    return response.status === 200;
+}
+
+async function testSpotifyAPI(clientId, clientSecret) {
+    const auth = btoa(`${clientId}:${clientSecret}`);
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'grant_type=client_credentials'
+    });
+    return response.status === 200;
+}
+
+// Export API Keys
+function exportAPIKeys() {
+    const keys = {};
+    const services = ['youtube', 'tmdb', 'weather', 'gemini', 'pixabay', 'spotify_client_id', 'spotify_client_secret'];
+    
+    services.forEach(service => {
+        const key = localStorage.getItem(`user_${service}_api`);
+        if (key) keys[service] = key;
+    });
+    
+    const blob = new Blob([JSON.stringify(keys, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'api_keys.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Import API Keys
+function importAPIKeys() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    
+    input.onchange = async (e) => {
+        try {
+            const file = e.target.files[0];
+            const text = await file.text();
+            const keys = JSON.parse(text);
+            
+            Object.entries(keys).forEach(([service, key]) => {
+                localStorage.setItem(`user_${service}_api`, key);
+                const input = document.getElementById(`${service}ApiKey`);
+                const status = document.getElementById(`${service}ApiStatus`);
+                if (input) input.value = key;
+                if (status) status.textContent = 'Active';
+            });
+            
+            alert('API keys imported successfully!');
+        } catch (error) {
+            alert('Error importing API keys. Please check the file format.');
+            console.error('Error importing API keys:', error);
+        }
+    };
+    
+    input.click();
+}
+
+// Reset all API keys to default
+function resetAllAPIKeys() {
+    if (!confirm('Are you sure you want to reset all API keys to default?')) return;
+    
+    const services = ['youtube', 'tmdb', 'weather', 'gemini', 'pixabay', 'spotify_client_id', 'spotify_client_secret'];
+    
+    services.forEach(service => {
+        localStorage.removeItem(`user_${service}_api`);
+        const input = document.getElementById(`${service}ApiKey`);
+        const status = document.getElementById(`${service}ApiStatus`);
+        if (input) input.value = '';
+        if (status) status.textContent = 'Using Default';
+    });
+    
+    alert('All API keys have been reset to default.');
+}

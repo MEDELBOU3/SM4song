@@ -359,3 +359,28 @@
     margin-right: auto;
 }
 
+.notification-preferences {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+.preference-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.preference-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.preference-options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}

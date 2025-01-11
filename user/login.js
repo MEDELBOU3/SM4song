@@ -35,6 +35,92 @@ if (currentUser?.preferences?.darkMode) {
     document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
 }
 
+// Email notification system
+const EmailNotificationSystem = {
+    // Initialize EmailJS
+    init: function() {
+        emailjs.init("R4skSLP0hClfAxyhZ"); // Replace with your EmailJS user ID
+    },
+
+    // Send notification email
+    sendNotification: async function(user, notification) {
+        try {
+            const templateParams = {
+                to_name: user.name,
+                to_email: user.email,
+                message: notification.message,
+                subject: notification.subject
+            };
+
+            await emailjs.send(
+                'service_a0uo1sn', // Replace with your EmailJS service ID
+                'template_e67xksq', // Replace with your EmailJS template ID
+                templateParams
+            );
+
+            return true;
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            return false;
+        }
+    }
+};
+
+// Notification preferences system
+const NotificationPreferences = {
+    getDefaults: function() {
+        return {
+            newContent: true,
+            systemUpdates: true,
+            newFeatures: true,
+            emailNotifications: true
+        };
+    },
+
+    // Save user preferences
+    savePreferences: function(preferences) {
+        if (currentUser) {
+            currentUser.preferences = {
+                ...currentUser.preferences,
+                notifications: preferences
+            };
+            
+            // Update localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Update in registeredUsers
+            const userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                registeredUsers[userIndex] = currentUser;
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            }
+        }
+    }
+};
+
+// Content tracking system
+const ContentTracker = {
+    getLastViewedContent: function() {
+        return localStorage.getItem('lastViewedContent') || null;
+    },
+
+    setLastViewedContent: function(contentId) {
+        localStorage.setItem('lastViewedContent', contentId);
+    },
+
+    checkForNewContent: function() {
+        // This would typically check against your API or content database
+        const lastViewed = this.getLastViewedContent();
+        // Mock check for new content - replace with actual implementation
+        return {
+            hasNew: true,
+            newItems: [
+                { id: 'new1', type: 'song', title: 'New Release' },
+                { id: 'new2', type: 'playlist', title: 'Featured Playlist' }
+            ]
+        };
+    }
+};
 
 function showNotification(message, type = 'success') {
     const notification = document.getElementById('notifications');
@@ -161,9 +247,18 @@ function createAccount() {
                 password,
                 image: reader.result,
                 preferences: {},
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                preferences: {
+                  ...NotificationPreferences.getDefaults(),
+                  darkMode: false
+                }
             };
 
+            // After creating account, send welcome email
+            EmailNotificationSystem.sendNotification(newUser, {
+                subject: 'Welcome to Our Music Platform',
+                message: `Welcome ${newUser.name}! Thank you for joining our platform.`
+            });
             registeredUsers.push(newUser);
             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
 
@@ -183,6 +278,25 @@ function createAccount() {
 }
 
 
+//periodic content check
+function startContentCheck() {
+    setInterval(() => {
+        if (currentUser?.preferences?.notifications?.newContent) {
+            const newContent = ContentTracker.checkForNewContent();
+            
+            if (newContent.hasNew) {
+                showNotification('New content is available!');
+                
+                if (currentUser.preferences.emailNotifications) {
+                    EmailNotificationSystem.sendNotification(currentUser, {
+                        subject: 'New Content Available',
+                        message: `Check out our latest updates: ${newContent.newItems.map(item => item.title).join(', ')}`
+                    });
+                }
+            }
+        }
+    }, 3600000); // Check every hour
+}
 
 function login() {
     const email = document.getElementById("loginEmail").value;
@@ -252,6 +366,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+     EmailNotificationSystem.init();
+     startContentCheck();
 });
 
 

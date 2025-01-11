@@ -35,11 +35,19 @@ if (currentUser?.preferences?.darkMode) {
     document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
 }
 
+// Email notification system configuration
+const EmailConfig = {
+    PUBLIC_KEY: 'R4skSLP0hClfAxyhZ',
+    PRIVATE_KEY: 'us_dTSxTPxaebAMzDgoWH',
+    TEMPLATE_ID: 'template_e67xksq',
+    SERVICE_ID: 'service_a0uo1sn'
+};
+
 // Email notification system
 const EmailNotificationSystem = {
     // Initialize EmailJS
     init: function() {
-        emailjs.init("R4skSLP0hClfAxyhZ"); // Replace with your EmailJS user ID
+        emailjs.init(EmailConfig.PUBLIC_KEY);
     },
 
     // Send notification email
@@ -49,18 +57,25 @@ const EmailNotificationSystem = {
                 to_name: user.name,
                 to_email: user.email,
                 message: notification.message,
-                subject: notification.subject
+                subject: notification.subject,
+                website_name: 'Your Music Platform',
+                from_name: 'Music Platform Team'
             };
 
-            await emailjs.send(
-                'service_a0uo1sn', // Replace with your EmailJS service ID
-                'template_e67xksq', // Replace with your EmailJS template ID
+            const response = await emailjs.send(
+                EmailConfig.SERVICE_ID,
+                EmailConfig.TEMPLATE_ID,
                 templateParams
             );
 
-            return true;
+            if (response.status === 200) {
+                showNotification('Email notification sent successfully', 'success');
+                return true;
+            }
+            return false;
         } catch (error) {
             console.error('Failed to send email:', error);
+            showNotification('Failed to send email notification', 'error');
             return false;
         }
     }
@@ -97,6 +112,7 @@ const NotificationPreferences = {
         }
     }
 };
+
 
 // Content tracking system
 const ContentTracker = {
@@ -222,6 +238,7 @@ function checkPasswordStrength(password) {
 }
 
 
+// Modify the createAccount function to include email notification
 function createAccount() {
     const name = document.getElementById("name").value;
     const surname = document.getElementById("surname").value;
@@ -238,7 +255,7 @@ function createAccount() {
 
     if (name && surname && age && email && password && imageFile) {
         const reader = new FileReader();
-        reader.onload = () => {
+        reader.onload = async () => {
             const newUser = {
                 name,
                 surname,
@@ -246,21 +263,36 @@ function createAccount() {
                 email,
                 password,
                 image: reader.result,
-                preferences: {},
-                createdAt: new Date().toISOString(),
                 preferences: {
-                  ...NotificationPreferences.getDefaults(),
-                  darkMode: false
-                }
+                    ...NotificationPreferences.getDefaults(),
+                    darkMode: false
+                },
+                createdAt: new Date().toISOString()
             };
 
-            // After creating account, send welcome email
-            EmailNotificationSystem.sendNotification(newUser, {
-                subject: 'Welcome to Our Music Platform',
-                message: `Welcome ${newUser.name}! Thank you for joining our platform.`
-            });
             registeredUsers.push(newUser);
             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+            // Send welcome email
+            await EmailNotificationSystem.sendNotification(newUser, {
+                subject: 'Welcome to Our Music Platform',
+                message: `
+                    Dear ${newUser.name},
+                    
+                    Welcome to our Music Platform! We're excited to have you join our community.
+                    
+                    With your new account, you can:
+                    - Create and manage playlists
+                    - Discover new music
+                    - Join live streaming sessions
+                    - Connect with other music lovers
+                    
+                    Start exploring now!
+                    
+                    Best regards,
+                    The Music Platform Team
+                `
+            });
 
             showNotification("Account created successfully! Please login.", "success");
             document.getElementById("createAccountModal").style.display = "none";
@@ -277,6 +309,40 @@ function createAccount() {
     }
 }
 
+// Add function to send content update notifications
+async function sendContentUpdateNotification(user, newContent) {
+    if (user?.preferences?.notifications?.emailNotifications) {
+        await EmailNotificationSystem.sendNotification(user, {
+            subject: 'New Content Available on Music Platform',
+            message: `
+                Hi ${user.name},
+                
+                We've got some new content that might interest you:
+                
+                ${newContent.newItems.map(item => 
+                    `- New ${item.type}: ${item.title}`
+                ).join('\n')}
+                
+                Log in to check it out!
+                
+                Best regards,
+                The Music Platform Team
+            `
+        });
+    }
+}
+
+// Modify the content checker to include email notifications
+function checkForNewContent() {
+    if (currentUser?.preferences?.notifications?.newContent) {
+        const newContent = ContentTracker.checkForNewContent();
+        
+        if (newContent.hasNew) {
+            showNotification('New content is available!');
+            sendContentUpdateNotification(currentUser, newContent);
+        }
+    }
+}
 
 //periodic content check
 function startContentCheck() {
@@ -366,10 +432,45 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-     EmailNotificationSystem.init();
-     startContentCheck();
+    
+
+    // Initialize email system
+    EmailNotificationSystem.init();
+    
+    // Start periodic content checks
+    setInterval(checkForNewContent, 3600000);
 });
 
+
+// Add function to handle notification preference updates
+function updateNotificationPreferences() {
+    if (currentUser) {
+        const preferences = {
+            newContent: document.getElementById('newContentNotif').checked,
+            systemUpdates: document.getElementById('systemUpdatesNotif').checked,
+            emailNotifications: document.getElementById('emailNotif').checked
+        };
+
+        NotificationPreferences.savePreferences(preferences);
+        showNotification('Notification preferences updated', 'success');
+
+        // Send test email if email notifications are enabled
+        if (preferences.emailNotifications) {
+            EmailNotificationSystem.sendNotification(currentUser, {
+                subject: 'Notification Settings Updated',
+                message: `
+                    Hi ${currentUser.name},
+                    
+                    This email confirms that your notification preferences have been updated.
+                    You will now receive email notifications about new content and updates.
+                    
+                    Best regards,
+                    The Music Platform Team
+                `
+            });
+        }
+    }
+}
 
 //user-songs
 let playLists = JSON.parse(localStorage.getItem('playUrList')) || [];

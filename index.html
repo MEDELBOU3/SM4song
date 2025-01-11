@@ -443,7 +443,29 @@
             <button class="butn"  onclick="logout()">Logout</button>
         </div>
         
-     
+     <!-- Add this to your user panel HTML -->
+     <div class="notification-preferences">
+         <h4>Notification Preferences</h4>
+         <div class="preference-options">
+            <label>
+               <input type="checkbox" id="newContentNotif" 
+                   onchange="updateNotificationPreferences()">
+                New Content Notifications
+            </label>
+        
+            <label>
+               <input type="checkbox" id="systemUpdatesNotif" 
+                   onchange="updateNotificationPreferences()">
+              System Updates
+            </label>
+        
+            <label>
+              <input type="checkbox" id="emailNotif" 
+                   onchange="updateNotificationPreferences()">
+              Email Notifications
+            </label>
+            </div>
+     </div>
         
         <div class="playlist-creation">
             <h3>Create a Playlist</h3>

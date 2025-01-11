@@ -37,10 +37,10 @@ if (currentUser?.preferences?.darkMode) {
 
 // Email notification system configuration
 const EmailConfig = {
-    PUBLIC_KEY: 'R4skSLP0hClfAxyhZ',
-    PRIVATE_KEY: 'us_dTSxTPxaebAMzDgoWH',
-    TEMPLATE_ID: 'template_e67xksq',
-    SERVICE_ID: 'service_a0uo1sn'
+    PUBLIC_KEY: 'GOfCZNYXzR58LXuRZ',
+    PRIVATE_KEY: 'jj470Qik0SCLcHvYh_6Vy',
+    TEMPLATE_ID: 'template_dbxinwm',
+    SERVICE_ID: 'service_a1mspwz'
 };
 
 // Email notification system
@@ -344,25 +344,7 @@ function checkForNewContent() {
     }
 }
 
-//periodic content check
-function startContentCheck() {
-    setInterval(() => {
-        if (currentUser?.preferences?.notifications?.newContent) {
-            const newContent = ContentTracker.checkForNewContent();
-            
-            if (newContent.hasNew) {
-                showNotification('New content is available!');
-                
-                if (currentUser.preferences.emailNotifications) {
-                    EmailNotificationSystem.sendNotification(currentUser, {
-                        subject: 'New Content Available',
-                        message: `Check out our latest updates: ${newContent.newItems.map(item => item.title).join(', ')}`
-                    });
-                }
-            }
-        }
-    }, 3600000); // Check every hour
-}
+
 
 function login() {
     const email = document.getElementById("loginEmail").value;

@@ -1,0 +1,168 @@
+  .advanced-banner {
+            position: fixed;
+            bottom: 90px;
+            left: 0;
+            right: 0;
+            background-color: var(--hover-bg);
+            backdrop-filter: blur(20px);
+            height: 0;
+            min-height: 0;
+            max-height: 80vh;
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+        }
+
+        .advanced-banner.active {
+            height: 400px;
+            min-height: 200px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .resize-handle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: ns-resize;
+        }
+
+        .resize-handle:hover {
+            background-color: var(--spotify-green);
+        }
+
+        .banner-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            color: var(--spotify-white);
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 999;
+        }
+
+        .banner-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            padding: 20px;
+            overflow-y: auto;
+            margin-top: 6px;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .section h3 {
+            color: var(--spotify-white);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .track-detail {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            align-items: center;
+        }
+
+        .track-detail h4 {
+            color: var(--spotify-grey);
+            font-size: 14px;
+        }
+
+        .track-detail p {
+            color: var(--spotify-white);
+            font-size: 14px;
+        }
+
+        .related-track {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .related-track:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .related-track img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .related-track-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .related-track-info .title {
+            color: var(--spotify-white);
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .related-track-info .artist {
+            color: var(--spotify-grey);
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .stats-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-item i {
+            color: var(--spotify-green);
+            font-size: 18px;
+        }
+
+        .stat-item .value {
+            color: var(--spotify-white);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .stat-item .label {
+            color: var(--spotify-grey);
+            font-size: 12px;
+            margin-left: auto;
+        }

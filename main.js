@@ -1866,6 +1866,101 @@ document.head.insertAdjacentHTML('beforeend', style);
                             </div>
                         </div>
                     </div>
+                      <div id="performanceContent" class="settings-content" style="display: none;">
+                <div class="performance-dashboard">
+                    <!-- Real-time Performance Metrics -->
+                    <div class="metrics-container">
+                        <div class="metric-card">
+                            <canvas id="cpuChart"></canvas>
+                            <div class="metric-info">
+                                <h4>CPU Usage</h4>
+                                <span id="cpuValue" class="metric-value">0%</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <canvas id="memoryChart"></canvas>
+                            <div class="metric-info">
+                                <h4>Memory Usage</h4>
+                                <span id="memoryValue" class="metric-value">0 MB</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <canvas id="networkChart"></canvas>
+                            <div class="metric-info">
+                                <h4>Network Speed</h4>
+                                <span id="networkValue" class="metric-value">0 Mbps</span>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Optimization Controls -->
+                    <div class="optimization-controls">
+                        <h3>Performance Optimization</h3>
+                        <div class="control-grid">
+                            <div class="control-card">
+                                <div class="control-header">
+                                    <i class="fas fa-memory"></i>
+                                    <h4>Cache Management</h4>
+                                </div>
+                                <div class="control-content">
+                                    <div class="cache-info">
+                                        <span>Cache Size: </span>
+                                        <span id="cacheSize">0 MB</span>
+                                    </div>
+                                    <button onclick="clearCache()" class="btn btn-warning">
+                                        <i class="fas fa-broom"></i> Clear Cache
+                                    </button>
+                                </div>
+                            </div>
+            
+                            <div class="control-card">
+                                <div class="control-header">
+                                    <i class="fas fa-bolt"></i>
+                                    <h4>Performance Mode</h4>
+                                </div>
+                                <div class="control-content">
+                                    <select id="performanceMode" onchange="updatePerformanceMode()">
+                                        <option value="balanced">Balanced</option>
+                                        <option value="performance">High Performance</option>
+                                        <option value="powersaver">Power Saver</option>
+                                    </select>
+                                </div>
+                            </div>
+            
+                            <div class="control-card" id="controlCard">
+                                <div class="control-header">
+                                    <i class="fas fa-clock"></i>
+                                    <h4>Background Processes</h4>
+                                </div>
+                                <div class="control-content">
+                                    <div id="processList" class="process-list"></div>
+                                    <button onclick="optimizeProcesses()" class="btn btn-primary">
+                                        <i class="fas fa-magic"></i> Optimize
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Performance History -->
+                    <div class="performance-history">
+                        <h3>Performance History</h3>
+                        <canvas id="performanceHistoryChart"></canvas>
+                        <div class="history-controls">
+                            <select id="historyMetric" onchange="updateHistoryChart()">
+                                <option value="cpu">CPU Usage</option>
+                                <option value="memory">Memory Usage</option>
+                                <option value="network">Network Speed</option>
+                            </select>
+                            <select id="historyPeriod" onchange="updateHistoryChart()">
+                                <option value="1h">Last Hour</option>
+                                <option value="24h">Last 24 Hours</option>
+                                <option value="7d">Last 7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
                     </div>
                 
                     <!-- Edit Modal -->

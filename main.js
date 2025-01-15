@@ -1866,7 +1866,16 @@ document.head.insertAdjacentHTML('beforeend', style);
                             </div>
                         </div>
                     </div>
-                      <div id="performanceContent" class="settings-content" style="display: none;">
+                      <div class="settings-header" onclick="togglePerformanceSection()">
+                    <div class="settings-title">
+                    <div class="settings-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <span>System Performance & Optimization</span>
+                    </div>
+                <i class="fas fa-chevron-down"></i>
+                </div>
+                 <div id="performanceContent" class="settings-content" style="display: none;">
                 <div class="performance-dashboard">
                     <!-- Real-time Performance Metrics -->
                     <div class="metrics-container">

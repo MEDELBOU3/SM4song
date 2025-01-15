@@ -1,0 +1,122 @@
+ /* Add this to your existing CSS file */
+        .performance-dashboard {
+            padding: 20px;
+            background: var(--hover-bg1);
+            color: var(--text-color);
+            border-radius: 10px;
+        }
+        
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: var(--hover-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            /* Fixed height for metric cards */
+            height: 350px;
+            width: 400px;
+        }
+        /* Specific styles for different chart types */
+        #cpuChart, #memoryChart {
+            max-width: 250px;
+            max-height: 180px;
+            margin: 0 auto;
+        }
+
+        #performanceHistoryChart{
+            width: 100%;
+            max-height: 380px;
+            margin: 0 auto;
+        }
+        #networkChart{
+            max-width: 300px;
+            max-height: 250px;
+            margin: 0 auto;
+        }
+        .metric-info {
+            text-align: center;
+            margin-top: 10px;
+            height: 250px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .optimization-controls {
+            margin-top: 30px;
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .control-card {
+            background: var(--hover-bg2);
+            padding: 20px;
+            width: 100%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .control-card::-webkit-scrollbar{
+            height: 8px;
+        }
+        .control-card::-webkit-scrollbar-thumb{
+            background-color: var(--spotify-green);
+        }
+        .control-card::-webkit-scrollbar-track{
+            background: var(--chat-user-bg);
+        }
+        .control-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .control-header i {
+            font-size: 20px;
+            color: #2196F3;
+        }
+        
+        .process-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        
+        .performance-history {
+            margin-top: 30px;
+            background: var(--chat-user-bg);
+            max-height: 500px;
+            padding: 20px;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .history-controls {
+            display: flex;
+            gap: 15px;
+            margin: 15px auto;
+        }
+        
+        .history-controls select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }

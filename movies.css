@@ -1118,3 +1118,180 @@
     from { opacity: 1; }
     to { opacity: 0; }
 }
+
+.player-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1003;
+}
+
+.player-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.close-player {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 50%;
+    background: #ff0000;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.play-movie {
+    background: linear-gradient(135deg, #e50914, #b20710); /* Netflix-like red gradient */
+    border: none;
+    color: var(--text-color);
+    padding: 10px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px; /* Rounded corners */
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+    margin-right: 1rem;
+    position: relative;
+    overflow: hidden;
+    animation: glow 2s infinite alternate;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.play-movie i {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect */
+.play-movie:hover {
+    background: linear-gradient(135deg, #b20710, #e50914); /* Reverse gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+    transform: translateY(-2px); /* Slight lift */
+}
+
+.play-movie:hover i {
+    transform: scale(1.2); /* Slightly enlarge the play icon */
+}
+
+/* Active Effect */
+.play-movie:active {
+    transform: translateY(0); /* Reset lift */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Reset shadow */
+}
+
+/* Ripple Effect */
+.play-movie::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.play-movie:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: transform 0s, opacity 0s;
+}
+
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(229, 9, 20, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(229, 9, 20, 0.9);
+    }
+}
+.player {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.quality-btn {
+    background: #333;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.quality-btn:hover {
+    background: #555;
+}
+
+.server-controls {
+  position: absolute;
+  top: 15px;
+  left: 50px;
+  z-index: 1001;
+  display: flex;
+  gap: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.server-select {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.server-select:hover {
+  border-color: #e50914;
+}
+
+.quality-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.quality-btn {
+  background: #444;
+  border: 1px solid #666;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.quality-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+  transform: translateY(-2px);
+}

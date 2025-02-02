@@ -336,8 +336,7 @@
             });
         }
         
-        
-        async function showMovieDetails(movieId) {
+         async function showMovieDetails(movieId) {
             const existingModal = document.querySelector('.modal-container');
             if (existingModal) {
                 existingModal.remove();
@@ -346,7 +345,7 @@
             const modalContainer = document.createElement('div');
             modalContainer.className = 'modal-container';
             document.body.appendChild(modalContainer);
-            
+        
             const [movieData, credits, videos, recommendations] = await Promise.all([
                 fetchTMDBData(`/movie/${movieId}`),
                 fetchTMDBData(`/movie/${movieId}/credits`),
@@ -356,7 +355,7 @@
         
             const backdropUrl = `${TMDB_IMAGE_BASE_URL1}${movieData.backdrop_path}`;
             const dominantColors = await getImageColors(backdropUrl);
-            
+        
             const gradientColors = dominantColors.map(([r, g, b]) => `rgba(${r}, ${g}, ${b}, 0.85)`);
             const gradientStyle = `linear-gradient(to bottom, transparent, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`;
         
@@ -385,7 +384,7 @@
             detailsModal.innerHTML = `
                 <div class="details-content">
                     <button class="close-details">&times;</button>
-                     <button class="expand-modal"><i class="fas fa-expand"></i></button>
+                    <button class="expand-modal"><i class="fas fa-expand"></i></button>
                     <div class="movie-backdrop" style="background-image: url('${TMDB_IMAGE_BASE_URL1}${movieData.backdrop_path}')">
                         <div class="backdrop-overlay"></div>
                     </div>
@@ -394,7 +393,7 @@
                         ${gradientColors[0]} 20%,
                         ${gradientColors[1]} 50%,
                         ${gradientColors[2]} 100%) !important;">
-
+        
                         <img src="${TMDB_IMAGE_BASE_URL}${movieData.poster_path}" alt="${movieData.title}" class="detail-poster">
                         <div class="detail-info">
                             <h2>${movieData.title}</h2>
@@ -421,6 +420,9 @@
                                 <p><strong>Cast:</strong> ${cast.map(actor => actor.name).join(', ')}</p>
                             </div>
                             ${trailer ? `
+                                <button class="play-movie" data-id="${movieId}">
+                                    <i class="fas fa-play"></i> Play Movie
+                                </button>
                                 <button class="play-trailer" data-key="${trailer.key}">
                                     <i class="fas fa-play"></i> Watch Trailer
                                 </button>
@@ -443,15 +445,13 @@
             `;
         
             modalContainer.appendChild(detailsModal);
-
-
         
             // Event Listeners
             const expandBtn = detailsModal.querySelector('.expand-modal');
             expandBtn.onclick = () => {
                 const modal = document.querySelector('.movie-details-modal');
                 modal.classList.toggle('fullscreen');
-                
+        
                 // تغيير أيقونة الزر
                 const icon = expandBtn.querySelector('i');
                 if (modal.classList.contains('fullscreen')) {
@@ -462,7 +462,7 @@
                     icon.classList.add('fa-expand');
                 }
             };
-            
+        
             // إضافة دعم مفتاح Escape للخروج من وضع ملء الشاشة
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
@@ -475,7 +475,7 @@
                     }
                 }
             });
-
+        
             detailsModal.querySelector('.close-details').onclick = () => {
                 modalContainer.style.animation = 'modalFadeOut 0.3s ease-in forwards';
                 setTimeout(() => modalContainer.remove(), 300);
@@ -486,6 +486,14 @@
                 trailerBtn.onclick = () => {
                     const trailerKey = trailerBtn.dataset.key;
                     playMovieTrailer(trailerKey);
+                };
+            }
+        
+            const playMovieBtn = detailsModal.querySelector('.play-movie');
+            if (playMovieBtn) {
+                playMovieBtn.onclick = () => {
+                    const movieId = playMovieBtn.dataset.id;
+                    playMovie(movieId);
                 };
             }
         
@@ -510,6 +518,86 @@
                 setupDetailEventListeners(detailsModal, movieId);
             }
         }
+        // Add server configuration
+        const SERVERS = {
+            VIDSRC: {
+              name: "VidSrc",
+              qualities: ["360p", "480p", "720p", "1080p"],
+              getUrl: (id, q) => `https://vidsrc.me/embed/${id}?quality=${q}`
+            },
+            VIDPRO: {
+              name: "VidPro",
+              qualities: ["720p", "1080p", "2K", "4K"],
+              getUrl: (id, q) => `https://vidpro.stream/embed/${id}/${q}`
+            },
+            SUPEREMBED: {
+              name: "SuperEmbed",
+              qualities: ["1080p", "2K", "4K"],
+              getUrl: (id, q) => `https://superembed.xyz/${id}?q=${q}`
+            },
+            VIDIN: {
+              name: "Vid.in",
+              qualities: ["480p", "720p", "1080p"],
+              getUrl: (id, q) => `https://vid.in/player/${id}?res=${q}`
+            }
+          };
+          
+          async function playMovie(movieId) {
+            const playerContainer = document.createElement('div');
+            playerContainer.className = 'player-container';
+            playerContainer.innerHTML = `
+              <div class="player-content">
+                <button class="close-player">&times;</button>
+                <div class="server-controls">
+                  <select class="server-select">
+                    ${Object.entries(SERVERS).map(([key, s]) => 
+                      `<option value="${key}">${s.name}</option>`
+                    ).join('')}
+                  </select>
+                  <div class="quality-selector" id="qualitySelector"></div>
+                </div>
+                <div class="player">
+                  <iframe id="moviePlayer" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            `;
+          
+            document.body.appendChild(playerContainer);
+          
+            // Quality buttons generator
+            const updateQualities = () => {
+              const server = SERVERS[document.querySelector('.server-select').value];
+              const qualitySelector = document.getElementById('qualitySelector');
+              qualitySelector.innerHTML = server.qualities.map(q => `
+                <button class="quality-btn" data-quality="${q}">${q}</button>
+              `).join('');
+            };
+          
+            // Initial setup
+            updateQualities();
+            
+            // Event listeners
+            document.querySelector('.server-select').addEventListener('change', updateQualities);
+            
+            document.getElementById('qualitySelector').addEventListener('click', (e) => {
+              if(e.target.classList.contains('quality-btn')) {
+                const quality = e.target.dataset.quality;
+                const server = SERVERS[document.querySelector('.server-select').value];
+                document.getElementById('moviePlayer').src = server.getUrl(movieId, quality);
+              }
+            });
+          
+            // Set default
+            const defaultServer = SERVERS.VIDSRC;
+            document.getElementById('moviePlayer').src = defaultServer.getUrl(movieId, '720p');
+          
+            // Close button
+            playerContainer.querySelector('.close-player').onclick = () => 
+              playerContainer.remove();
+          }
+
+       
+
         
         function addMovieEventListeners() {
             document.querySelectorAll('.movie-details-btn').forEach(btn => {
